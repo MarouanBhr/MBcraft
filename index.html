@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MBCraft Studio — Création de sites web</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="cinematic.css">
+<script>
+(function(){var d=document.documentElement;if(!matchMedia('(prefers-reduced-motion: reduce)').matches){d.classList.add('cine','cine-loading');setTimeout(function(){d.classList.remove('cine-loading')},7000);}})();
+</script>
+</head>
+<body>
+
+<div class="preloader" aria-hidden="true">
+  <div class="preloader-panel top"></div>
+  <div class="preloader-panel bottom"></div>
+  <div class="preloader-inner">
+    <div class="preloader-logo">MB<span>Craft</span></div>
+    <div class="preloader-bar"><i></i></div>
+    <div class="preloader-count">0%</div>
+  </div>
+</div>
+
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+
+<nav>
+  <a href="#" class="logo">MB<span>Craft</span></a>
+  <button class="hamburger" id="hamburger">
+    <span></span><span></span><span></span>
+  </button>
+  <ul id="nav-menu">
+    <li><a href="#services" data-i18n="nav-services">Services</a></li>
+    <li><a href="#process" data-i18n="nav-method">Méthode</a></li>
+    <li><a href="#portfolio" data-i18n="nav-portfolio">Portfolio</a></li>
+    <li><a href="#tarifs" data-i18n="nav-pricing">Tarifs</a></li>
+    <li><a href="#contact" data-i18n="nav-contact">Contact</a></li>
+    <li class="lang-switcher">
+      <a href="#" class="lang active" data-lang="fr">FR</a>
+      <a href="#" class="lang" data-lang="en">EN</a>
+      <a href="#" class="lang" data-lang="nl">NL</a>
+    </li>
+  </ul>
+</nav>
+
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-number">WEB</div>
+  <div class="hero-content">
+    <div class="hero-badge" data-i18n="hero-badge">Freelance · Création web</div>
+    <h1 class="hero-title" data-i18n="hero-title">Des sites qui<br><em>travaillent</em><br>pour vous.</h1>
+    <p class="hero-desc" data-i18n="hero-desc">Je crée des sites web sur-mesure — vitrines, boutiques en ligne, portfolios — pensés pour convertir vos visiteurs en clients.</p>
+    <div class="hero-cta">
+      <a href="#contact" class="btn btn-primary" data-i18n="hero-btn1">Démarrer un projet</a>
+      <a href="#portfolio" class="btn btn-outline" data-i18n="hero-btn2">Voir mes réalisations</a>
+    </div>
+  </div>
+</section>
+
+<section id="stats">
+  <div class="stat"><span class="stat-num">+40</span><span class="stat-label" data-i18n="stat1-label">Sites livrés</span></div>
+  <div class="stat"><span class="stat-num">3</span><span class="stat-label" data-i18n="stat2-label">Ans d'expérience</span></div>
+  <div class="stat"><span class="stat-num">100%</span><span class="stat-label" data-i18n="stat3-label">Clients satisfaits</span></div>
+  <div class="stat"><span class="stat-num" data-i18n="stat4-num">30j</span><span class="stat-label" data-i18n="stat4-label">Délai moyen</span></div>
+</section>
+
+<section id="services">
+  <div class="section-header">
+    <div>
+      <div class="section-tag" data-i18n="section-tag-services">Ce que je propose</div>
+      <h2 class="section-title" data-i18n="section-title-services">Mes<br>services</h2>
+    </div>
+    <p class="section-sub" data-i18n="section-sub-services">Des solutions adaptées à chaque besoin, livrées clé en main.</p>
+  </div>
+  <div class="services-grid">
+    <div class="service-card"><span class="service-icon">🏪</span><span class="service-num">01</span><h3 class="service-name" data-i18n="s1-name">Site Vitrine</h3><p class="service-desc" data-i18n="s1-desc">Présentez votre activité avec élégance.</p><div class="service-tags"><span class="tag">Design sur-mesure</span><span class="tag">SEO</span><span class="tag">Mobile</span></div></div>
+    <div class="service-card"><span class="service-icon">🛒</span><span class="service-num">02</span><h3 class="service-name" data-i18n="s2-name">Boutique en ligne</h3><p class="service-desc" data-i18n="s2-desc">Vendez 24h/24.</p><div class="service-tags"><span class="tag">WooCommerce</span><span class="tag">Shopify</span><span class="tag">Paiement</span></div></div>
+    <div class="service-card"><span class="service-icon">📸</span><span class="service-num">03</span><h3 class="service-name" data-i18n="s3-name">Portfolio & Blog</h3><p class="service-desc" data-i18n="s3-desc">Mettez en valeur votre travail.</p><div class="service-tags"><span class="tag">CMS</span><span class="tag">WordPress</span><span class="tag">Contenu</span></div></div>
+    <div class="service-card"><span class="service-icon">⚡</span><span class="service-num">04</span><h3 class="service-name" data-i18n="s4-name">Landing Page</h3><p class="service-desc" data-i18n="s4-desc">Une page unique et percutante.</p><div class="service-tags"><span class="tag">Conversion</span><span class="tag">A/B testing</span><span class="tag">Rapide</span></div></div>
+    <div class="service-card"><span class="service-icon">🔧</span><span class="service-num">05</span><h3 class="service-name" data-i18n="s5-name">Refonte & Maintenance</h3><p class="service-desc" data-i18n="s5-desc">Votre site est vieillissant ?</p><div class="service-tags"><span class="tag">Modernisation</span><span class="tag">Performance</span><span class="tag">Support</span></div></div>
+    <div class="service-card"><span class="service-icon">📈</span><span class="service-num">06</span><h3 class="service-name" data-i18n="s6-name">SEO & Analytics</h3><p class="service-desc" data-i18n="s6-desc">Apparaissez sur Google.</p><div class="service-tags"><span class="tag">Google</span><span class="tag">Analytics</span><span class="tag">Audit</span></div></div>
+  </div>
+</section>
+
+<section id="process">
+  <div class="section-header">
+    <div>
+      <div class="section-tag" data-i18n="section-tag-process">Comment ça marche</div>
+      <h2 class="section-title" data-i18n="section-title-process">Ma<br>méthode</h2>
+    </div>
+    <p class="section-sub" data-i18n="section-sub-process">Un processus clair et transparent.</p>
+  </div>
+  <div class="process-grid">
+    <div class="process-step"><div class="step-circle">1</div><h4 class="step-title" data-i18n="step1-title">Découverte</h4><p class="step-desc" data-i18n="step1-desc">Appel gratuit pour comprendre vos objectifs.</p></div>
+    <div class="process-step"><div class="step-circle">2</div><h4 class="step-title" data-i18n="step2-title">Devis & Contrat</h4><p class="step-desc" data-i18n="step2-desc">Proposition détaillée, planning et signature.</p></div>
+    <div class="process-step"><div class="step-circle">3</div><h4 class="step-title" data-i18n="step3-title">Design</h4><p class="step-desc" data-i18n="step3-desc">Maquettes visuelles à valider.</p></div>
+    <div class="process-step"><div class="step-circle">4</div><h4 class="step-title" data-i18n="step4-title">Développement</h4><p class="step-desc" data-i18n="step4-desc">Intégration, tests et prévisualisation.</p></div>
+    <div class="process-step"><div class="step-circle">5</div><h4 class="step-title" data-i18n="step5-title">Mise en ligne</h4><p class="step-desc" data-i18n="step5-desc">Déploiement, formation et 30 jours de support.</p></div>
+  </div>
+</section>
+
+<section id="portfolio">
+  <div class="section-header">
+    <div>
+      <div class="section-tag" data-i18n="section-tag-portfolio">Mes réalisations</div>
+      <h2 class="section-title" data-i18n="section-title-portfolio">Portfolio</h2>
+    </div>
+    <p class="section-sub" data-i18n="section-sub-portfolio">Quelques projets réalisés récemment.</p>
+  </div>
+  <div class="portfolio-grid">
+    <div class="portfolio-item large" style="background:linear-gradient(135deg,#1a1200,#2a1e00)"><div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:5rem;opacity:.3">🍷</div><div class="portfolio-overlay"><div class="portfolio-type">E-commerce</div><div class="portfolio-name">Domaine Leclerc<br>Vins & Spiritueux</div></div></div>
+    <div class="portfolio-item" style="background:linear-gradient(135deg,#001a0d,#001a15)"><div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:4rem;opacity:.3">🌿</div><div class="portfolio-overlay"><div class="portfolio-type">Site vitrine</div><div class="portfolio-name">Cabinet de naturopathie</div></div></div>
+    <div class="portfolio-item" style="background:linear-gradient(135deg,#0a001a,#150028)"><div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:4rem;opacity:.3">💎</div><div class="portfolio-overlay"><div class="portfolio-type">E-commerce</div><div class="portfolio-name">Bijouterie Artisanale</div></div></div>
+    <div class="portfolio-item" style="background:linear-gradient(135deg,#001a1a,#001516)"><div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:4rem;opacity:.3">🏗️</div><div class="portfolio-overlay"><div class="portfolio-type">Site vitrine</div><div class="portfolio-name">Agence Architecture</div></div></div>
+    <div class="portfolio-item" style="background:linear-gradient(135deg,#1a0500,#150800)"><div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:4rem;opacity:.3">🍕</div><div class="portfolio-overlay"><div class="portfolio-type">Restaurant</div><div class="portfolio-name">Trattoria da Marco</div></div></div>
+    <div class="portfolio-item" style="background:linear-gradient(135deg,#0a0a1a,#0a0a14)"><div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:4rem;opacity:.3">📸</div><div class="portfolio-overlay"><div class="portfolio-type">Portfolio</div><div class="portfolio-name">Photographe événementiel</div></div></div>
+  </div>
+</section>
+
+<section id="tarifs">
+  <div class="section-header">
+    <div>
+      <div class="section-tag" data-i18n="section-tag-pricing">Combien ça coûte ?</div>
+      <h2 class="section-title" data-i18n="section-title-pricing">Devis gratuit<br><em style="color:var(--or);font-style:italic;">& sans engagement</em></h2>
+    </div>
+    <p class="section-sub" data-i18n="section-sub-pricing">Chaque projet est unique.</p>
+  </div>
+  <div style="border:1px solid rgba(201,168,76,.3);background:rgba(201,168,76,.05);padding:40px 50px;display:flex;align-items:center;gap:40px;margin-bottom:60px;flex-wrap:wrap;">
+    <div style="font-size:3rem;">💬</div>
+    <div style="flex:1;min-width:200px;">
+      <div style="font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;margin-bottom:10px;" data-i18n="pricing-banner-title">Un simple échange suffit</div>
+      <p style="font-size:.9rem;line-height:1.75;color:rgba(245,240,232,.6);" data-i18n="pricing-banner-desc">Décrivez-moi votre projet par message ou par téléphone.</p>
+    </div>
+    <a href="#contact" class="btn btn-primary" style="white-space:nowrap;" data-i18n="pricing-banner-btn">Demander mon devis →</a>
+  </div>
+  <div style="margin-bottom:16px;">
+    <div class="section-tag" style="margin-bottom:24px;" data-i18n="pricing-tag">Ce qui influence le prix</div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:3px;">
+      <div class="service-card" style="padding:36px 30px;"><span class="service-icon">📄</span><h3 class="service-name" style="font-size:1.1rem;" data-i18n="p1-name">Le nombre de pages</h3><p class="service-desc" data-i18n="p1-desc">Un site 3 pages coûte moins cher.</p></div>
+      <div class="service-card" style="padding:36px 30px;"><span class="service-icon">⚙️</span><h3 class="service-name" style="font-size:1.1rem;" data-i18n="p2-name">Les fonctionnalités</h3><p class="service-desc" data-i18n="p2-desc">Chaque fonctionnalité a un impact.</p></div>
+      <div class="service-card" style="padding:36px 30px;"><span class="service-icon">🎨</span><h3 class="service-name" style="font-size:1.1rem;" data-i18n="p3-name">Le niveau de design</h3><p class="service-desc" data-i18n="p3-desc">Simple ou haut de gamme ?</p></div>
+      <div class="service-card" style="padding:36px 30px;"><span class="service-icon">📝</span><h3 class="service-name" style="font-size:1.1rem;" data-i18n="p4-name">Le contenu fourni</h3><p class="service-desc" data-i18n="p4-desc">Textes et photos fournis = plus rapide.</p></div>
+      <div class="service-card" style="padding:36px 30px;"><span class="service-icon">⏱️</span><h3 class="service-name" style="font-size:1.1rem;" data-i18n="p5-name">Le délai souhaité</h3><p class="service-desc" data-i18n="p5-desc">Je livre en 2 à 6 semaines.</p></div>
+      <div class="service-card" style="padding:36px 30px;"><span class="service-icon">🔧</span><h3 class="service-name" style="font-size:1.1rem;" data-i18n="p6-name">La maintenance</h3><p class="service-desc" data-i18n="p6-desc">Suivi après livraison inclus.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="section-header">
+    <div>
+      <div class="section-tag" data-i18n="section-tag-contact">Parlons de votre projet</div>
+      <h2 class="section-title" data-i18n="section-title-contact">Contact</h2>
+    </div>
+    <p class="section-sub" data-i18n="section-sub-contact">Premier échange gratuit et sans engagement.</p>
+  </div>
+  <div class="contact-wrap">
+    <div class="contact-info">
+      <h3 data-i18n="contact-title">Votre projet mérite un site à la hauteur.</h3>
+      <p data-i18n="contact-desc">Que vous ayez une idée précise ou que vous débutiez, je vous accompagne de A à Z.</p>
+      <div class="contact-detail"><span class="contact-detail-icon">📧</span><div class="contact-detail-text"><strong>Email</strong>contact@mbcraft.be</div></div>
+      <div class="contact-detail"><span class="contact-detail-icon">📱</span><div class="contact-detail-text"><strong>Téléphone</strong>+32 4 95 94 17 06</div></div>
+      <div class="contact-detail"><span class="contact-detail-icon">📍</span><div class="contact-detail-text"><strong>Localisation</strong>Belgique · Disponible à distance</div></div>
+    </div>
+    <div class="contact-form">
+      <div class="form-row">
+        <div class="form-group"><label data-i18n="label-firstname">Prénom</label><input type="text" data-i18n-placeholder="firstname" placeholder="Jean"></div>
+        <div class="form-group"><label data-i18n="label-lastname">Nom</label><input type="text" data-i18n-placeholder="lastname" placeholder="Dupont"></div>
+      </div>
+      <div class="form-group"><label data-i18n="label-email">Email</label><input type="email" data-i18n-placeholder="email" placeholder="jean@exemple.be"></div>
+      <div class="form-group">
+        <label data-i18n="label-project">Type de projet</label>
+        <select>
+          <option data-i18n="opt-select">Sélectionner...</option>
+          <option data-i18n="opt-vitrine">Site vitrine</option>
+          <option data-i18n="opt-ecom">Boutique e-commerce</option>
+          <option data-i18n="opt-portfolio">Portfolio / Blog</option>
+          <option data-i18n="opt-landing">Landing page</option>
+          <option data-i18n="opt-refonte">Refonte de site existant</option>
+          <option data-i18n="opt-seo">Maintenance / SEO</option>
+          <option data-i18n="opt-other">Autre</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label data-i18n="label-budget">Budget indicatif</label>
+        <select>
+          <option data-i18n="opt-budget0">Sélectionner...</option>
+          <option data-i18n="opt-budget1">Moins de 500 €</option>
+          <option data-i18n="opt-budget2">500 – 800 €</option>
+          <option data-i18n="opt-budget3">800 – 1 500 €</option>
+          <option data-i18n="opt-budget4">+ de 1 500 €</option>
+          <option data-i18n="opt-budget5">À définir</option>
+        </select>
+      </div>
+      <div class="form-group"><label data-i18n="label-message">Décrivez votre projet</label><textarea data-i18n-placeholder="message" placeholder="Parlez-moi de votre activité..."></textarea></div>
+      <button class="btn btn-primary" style="width:100%;" data-i18n="btn-send">Envoyer ma demande →</button>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p data-i18n="footer-copy">© 2025 MBCraft — Création de sites web sur-mesure</p>
+  <div class="footer-links">
+    <a href="mentions-legales.html" data-i18n="footer-legal">Mentions légales</a>
+    <a href="politique-confidentialite.html" data-i18n="footer-privacy">Politique de confidentialité</a>
+    <a href="https://linkedin.com" target="_blank">LinkedIn</a>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+<script src="script.js"></script>
+<script src="cinematic.js"></script>
+</body>
+</html>

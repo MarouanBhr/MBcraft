@@ -1,0 +1,153 @@
+/* ══════════════════════════════════════════
+   MBCraft — couche 3D & cinématique
+   ══════════════════════════════════════════ */
+
+/* ── CANVAS 3D (fond fixe) ── */
+#scene3d {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+section, footer { position: relative; z-index: 1; }
+.hero-bg {
+  background:
+    radial-gradient(ellipse at 70% 50%, rgba(201,168,76,.10) 0%, transparent 60%),
+    radial-gradient(ellipse at 50% 50%, transparent 55%, rgba(0,0,0,.55) 100%);
+}
+
+/* ── LENIS (scroll fluide) ── */
+html.lenis, html.lenis body { height: auto; }
+html.lenis { scroll-behavior: auto; }
+.lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+.lenis.lenis-stopped { overflow: hidden; }
+
+/* ── HERO piloté par GSAP ── */
+html.cine .hero-badge,
+html.cine .hero-title,
+html.cine .hero-desc,
+html.cine .hero-cta,
+html.cine .stat { animation: none; opacity: 1; }
+
+/* ── PRELOADER ── */
+.preloader { display: none; }
+html.cine-loading .preloader {
+  display: flex;
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  align-items: center;
+  justify-content: center;
+}
+html.cine-loading body { overflow: hidden; }
+.preloader-panel {
+  position: absolute;
+  left: 0; right: 0;
+  height: 50.5%;
+  background: var(--noir);
+}
+.preloader-panel.top { top: 0; }
+.preloader-panel.bottom { bottom: 0; }
+.preloader-inner {
+  position: relative;
+  text-align: center;
+  width: min(320px, 70vw);
+}
+.preloader-logo {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 5vw, 3rem);
+  letter-spacing: .08em;
+  color: var(--creme);
+  margin-bottom: 28px;
+}
+.preloader-logo span { color: var(--or); }
+.preloader-bar {
+  height: 1px;
+  background: rgba(245,240,232,.12);
+  overflow: hidden;
+}
+.preloader-bar i {
+  display: block;
+  height: 100%;
+  background: var(--or);
+  transform: scaleX(0);
+  transform-origin: left;
+}
+.preloader-count {
+  margin-top: 14px;
+  font-size: .7rem;
+  letter-spacing: .3em;
+  color: var(--gris);
+}
+
+/* ── GRAIN DE FILM ── */
+.grain {
+  position: fixed;
+  inset: -100%;
+  width: 300%;
+  height: 300%;
+  z-index: 9000;
+  pointer-events: none;
+  opacity: .055;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation: grain 1s steps(6) infinite;
+}
+@keyframes grain {
+  0%   { transform: translate(0, 0); }
+  20%  { transform: translate(-4%, 3%); }
+  40%  { transform: translate(3%, -5%); }
+  60%  { transform: translate(-6%, -2%); }
+  80%  { transform: translate(5%, 4%); }
+  100% { transform: translate(0, 0); }
+}
+
+/* ── BARRE DE PROGRESSION ── */
+.scroll-progress {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  z-index: 101;
+  background: linear-gradient(90deg, var(--or), var(--or-light));
+  transform: scaleX(0);
+  transform-origin: left;
+  pointer-events: none;
+}
+
+/* ── CARTES 3D : reflet ── */
+.glare {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity .35s;
+  background: radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgba(232,201,122,.16), transparent 55%);
+  z-index: 2;
+}
+.service-card:hover .glare,
+.portfolio-item:hover .glare { opacity: 1; }
+.portfolio-item > div:first-child { will-change: transform; }
+
+/* ── BOUTONS MAGNÉTIQUES ── */
+.btn.magnetic { transition: background .25s, color .25s, border-color .25s; }
+
+/* ── MÉTHODE : ligne qui se dessine ── */
+.process-progress {
+  position: absolute;
+  top: 30px; left: 10%; right: 10%;
+  height: 1px;
+  background: linear-gradient(90deg, var(--or), var(--or-light));
+  transform: scaleX(0);
+  transform-origin: left;
+  box-shadow: 0 0 12px rgba(201,168,76,.6);
+}
+
+@media (max-width: 900px) {
+  .process-progress { display: none; }
+  .grain { opacity: .04; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .grain { animation: none; }
+}
