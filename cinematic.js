@@ -15,7 +15,7 @@
   gsap.registerPlugin(ScrollTrigger);
 
   /* ── ÉTAT PARTAGÉ DE LA SCÈNE 3D ── */
-  const state = { x: 1.8, y: 0, scale: 1, opacity: 1, morph: 1, intro: reduceMotion ? 1 : 0, camZ: reduceMotion ? 6 : 11 };
+  const state = { x: 1.8, y: 0, scale: 1, opacity: 1, morph: 1, intro: reduceMotion ? 1 : 0, camZ: reduceMotion ? 6 : 11, dive: 0, travel: 0 };
   const pointer = { x: 0, y: 0, tx: 0, ty: 0 };
 
   /* ══════════ SCÈNE THREE.JS ══════════ */
@@ -192,16 +192,41 @@
     group.add(glow);
 
     // Poussière d'étoiles
-    const DN = mobile ? 500 : 1200;
+    const DN = mobile ? 1500 : 3500;
+    const DEPTH = 80;
     const dpos = new Float32Array(DN * 3);
     for (let i = 0; i < DN; i++) {
       dpos[i * 3]     = (Math.random() - 0.5) * 30;
       dpos[i * 3 + 1] = (Math.random() - 0.5) * 20;
-      dpos[i * 3 + 2] = (Math.random() - 0.5) * 20 - 4;
+      dpos[i * 3 + 2] = 6 - Math.random() * DEPTH;
     }
     const dustGeo = new THREE.BufferGeometry();
     dustGeo.setAttribute('position', new THREE.BufferAttribute(dpos, 3));
-    const dustMat = new THREE.PointsMaterial({ color: 0xe8c97a, size: 0.025, transparent: true, opacity: 0.5, depthWrite: false, blending: THREE.AdditiveBlending });
+    const dustMat = new THREE.ShaderMaterial({
+      transparent: true,
+      depthWrite: false,
+      blending: THREE.AdditiveBlending,
+      uniforms: { uShift: { value: 0 }, uOpacity: { value: 0.6 }, uSize: { value: 9 * dpr } },
+      vertexShader: `
+        uniform float uShift, uSize;
+        varying float vFade;
+        void main(){
+          vec3 p = position;
+          p.z = mod(p.z + 74.0 + uShift, ${DEPTH.toFixed(1)}) - 74.0;
+          vec4 mv = modelViewMatrix * vec4(p, 1.0);
+          gl_Position = projectionMatrix * mv;
+          gl_PointSize = uSize / -mv.z;
+          vFade = smoothstep(-74.0, -40.0, p.z) * (1.0 - smoothstep(2.0, 6.0, p.z));
+        }`,
+      fragmentShader: `
+        uniform float uOpacity;
+        varying float vFade;
+        void main(){
+          float d = length(gl_PointCoord - 0.5);
+          if (d > 0.5) discard;
+          gl_FragColor = vec4(0.91, 0.79, 0.48, smoothstep(0.5, 0.0, d) * vFade * uOpacity);
+        }`,
+    });
     const dust = new THREE.Points(dustGeo, dustMat);
     scene.add(dust);
 
@@ -216,24 +241,24 @@
       materials.forEach(m => {
         m.uniforms.uTime.value = t;
         m.uniforms.uIntro.value = state.intro;
-        m.uniforms.uOpacity.value = state.opacity;
+        m.uniforms.uOpacity.value = state.opacity * (1 - state.dive * 0.55);
       });
       sphereMat.uniforms.uMorph.value = state.morph;
       coreMat.opacity = 0.12 * state.opacity * state.intro;
       glowMat.opacity = 0.9 * state.opacity * state.intro;
-      dustMat.opacity = 0.5 * Math.max(state.opacity, 0.4);
+      dustMat.uniforms.uOpacity.value = 0.7 * state.intro;
+      dustMat.uniforms.uShift.value = state.travel * 120 + t * 0.4;
 
-      group.position.x = state.x;
+      group.position.x = state.x * (1 - state.dive);
       group.position.y = state.y;
-      group.scale.setScalar(state.scale);
+      group.scale.setScalar(state.scale * (1 + state.dive * 0.5));
       group.rotation.y = t * 0.08 + pointer.x * 0.35 + scrollVel;
       group.rotation.x = pointer.y * 0.25;
       ring.rotation.z = 0.35 + t * 0.05;
       core.rotation.set(-t * 0.15, -t * 0.2, 0);
-      dust.rotation.y = t * 0.01;
-      dust.position.y = window.scrollY * 0.0008;
+      dust.rotation.z = t * 0.01 + state.travel * 1.2;
 
-      camera.position.z = state.camZ;
+      camera.position.z = state.camZ - state.dive * 1.6;
       camera.position.x = pointer.x * 0.3;
       camera.position.y = -pointer.y * 0.2;
       camera.lookAt(0, 0, 0);
@@ -357,15 +382,54 @@
     setTimeout(() => { if (!intro.isActive() && intro.progress() === 0) startIntro(); }, 3500);
   }
 
-  /* ══════════ HERO : SORTIE AU SCROLL ══════════ */
-  gsap.to('.hero-content', {
-    y: -160, opacity: 0, ease: 'none',
-    scrollTrigger: { trigger: '#hero', start: 'top top', end: 'bottom top', scrub: true },
-  });
-  gsap.to('.hero-number', {
-    xPercent: -18, letterSpacing: '0.1em', ease: 'none',
-    scrollTrigger: { trigger: '#hero', start: 'top top', end: 'bottom top', scrub: true },
-  });
+  /* ══════════ VOYAGE : on avance dans les particules ══════════ */
+  gsap.to(state, { travel: 1, ease: 'none', scrollTrigger: { start: 0, end: 'max', scrub: 1.2 } });
+
+  /* ══════════ SÉQUENCE 1 : PLONGÉE VERS LA SPHÈRE ══════════ */
+  const heroContent = document.querySelector('.hero-content');
+  gsap.timeline({
+    defaults: { ease: 'none' },
+    scrollTrigger: { trigger: '#hero', start: 'top top', end: () => '+=' + window.innerHeight * (isMobile() ? 0.8 : 1.1), pin: true, scrub: 1 },
+  })
+    .to('.scroll-hint', { opacity: 0, y: 30, duration: 0.15 }, 0)
+    .to(state, { dive: 1, duration: 0.8, ease: 'power1.in' }, 0)
+    .to(heroContent, { '--split': 14, scale: 1.25, filter: 'blur(10px)', opacity: 0, duration: 0.55, ease: 'power2.in' }, 0.05)
+    .to('.hero-number', { scale: 2.4, opacity: 0, duration: 0.6, ease: 'power2.in' }, 0);
+
+  /* ══════════ SÉQUENCE 2 : PHRASES QUI ARRIVENT DU FOND ══════════ */
+  const story = document.getElementById('story');
+  if (story) {
+    const lines = story.querySelectorAll('.story-line');
+    const counter = story.querySelector('.story-count span');
+    gsap.set(lines, { opacity: 0, scale: 0.55, filter: 'blur(16px)', '--split': 12 });
+    const tl = gsap.timeline({
+      defaults: { ease: 'power2.out' },
+      scrollTrigger: { trigger: story, start: 'top top', end: () => '+=' + window.innerHeight * lines.length * 0.9, pin: true, scrub: 1 },
+    });
+    tl.to(story.querySelector('.story-count'), { opacity: 1, duration: 0.3 }, 0);
+    lines.forEach((line, i) => {
+      const at = i * 1.2;
+      tl.to(line, { opacity: 1, scale: 1, filter: 'blur(0px)', '--split': 0, duration: 0.5 }, at)
+        .add(() => { if (counter) counter.textContent = String(i + 1).padStart(2, '0'); }, at + 0.25);
+      if (i < lines.length - 1) {
+        tl.to(line, { opacity: 0, scale: 1.7, filter: 'blur(16px)', '--split': 12, duration: 0.5, ease: 'power2.in' }, at + 0.85);
+      }
+    });
+    tl.to(state, { dive: 0, duration: 0.6, ease: 'power1.inOut' }, '>-0.1')
+      .to(lines[lines.length - 1], { opacity: 0, scale: 1.4, filter: 'blur(10px)', duration: 0.4, ease: 'power2.in' }, '<+0.2')
+      .to(story.querySelector('.story-count'), { opacity: 0, duration: 0.3 }, '<');
+  }
+
+  /* ══════════ LA PAGE A DU POIDS : inclinaison selon la vitesse ══════════ */
+  if (lenis && !isMobile()) {
+    const tilted = gsap.utils.toArray('#services, #process, #portfolio, #tarifs, #contact');
+    gsap.set(tilted, { transformPerspective: 1400, transformOrigin: '50% 50%' });
+    const setters = tilted.map(el => gsap.quickTo(el, 'rotationX', { duration: 0.6, ease: 'power3.out' }));
+    lenis.on('scroll', e => {
+      const r = gsap.utils.clamp(-5, 5, e.velocity * 0.12);
+      setters.forEach(set => set(r));
+    });
+  }
 
   /* ══════════ PARCOURS DE LA SPHÈRE DANS LA PAGE ══════════ */
   const mm = gsap.matchMedia();
@@ -373,7 +437,7 @@
     gsap.set(state, frames[0]);
     const tl = gsap.timeline({
       defaults: { ease: 'sine.inOut', duration: 1 },
-      scrollTrigger: { start: 0, end: 'max', scrub: 1.4 },
+      scrollTrigger: { trigger: '#stats', start: 'top bottom', end: 'max', scrub: 1.4 },
     });
     frames.slice(1).forEach(f => tl.to(state, f));
     return () => tl.kill();

@@ -143,6 +143,88 @@ html.cine-loading body { overflow: hidden; }
   box-shadow: 0 0 12px rgba(201,168,76,.6);
 }
 
+/* ── EFFET DÉDOUBLEMENT RGB ── */
+.hero-content, .story-line { --split: 0; }
+.hero-title, .story-line {
+  text-shadow:
+    calc(var(--split) * -1px) 0 rgba(255, 70, 70, .55),
+    calc(var(--split) * 1px) 0 rgba(70, 200, 255, .55);
+}
+
+/* ── INDICATEUR DE SCROLL ── */
+.scroll-hint {
+  position: absolute;
+  left: 50%; bottom: 40px;
+  width: 34px; height: 34px;
+  margin-left: -17px;
+  border: 1px solid rgba(245,240,232,.5);
+  border-radius: 50%;
+  z-index: 2;
+}
+.scroll-hint span {
+  position: absolute;
+  left: 50%; top: 8px;
+  width: 4px; height: 7px;
+  margin-left: -2px;
+  border-radius: 2px;
+  background: var(--or);
+  animation: scrollHint 1.8s ease-in-out infinite;
+}
+@keyframes scrollHint {
+  0%   { opacity: 0; transform: translateY(0); }
+  30%  { opacity: 1; }
+  100% { opacity: 0; transform: translateY(12px); }
+}
+
+/* ── SÉQUENCE DE PHRASES ── */
+#story {
+  padding: 120px 60px;
+  text-align: center;
+}
+.story-line {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 5.5vw, 5rem);
+  font-weight: 900;
+  line-height: 1.1;
+  max-width: 1100px;
+  margin: 0 auto 60px;
+}
+.story-line em { font-style: italic; color: var(--or); }
+.story-count { display: none; }
+
+html.cine #story {
+  height: 100vh;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+html.cine .story-line {
+  position: absolute;
+  left: 24px; right: 24px;
+  margin: 0 auto;
+  opacity: 0;
+  will-change: transform, filter, opacity;
+}
+html.cine .story-count {
+  display: block;
+  position: absolute;
+  bottom: 40px; left: 0; right: 0;
+  font-size: .72rem;
+  letter-spacing: .3em;
+  color: var(--gris);
+  opacity: 0;
+}
+.story-count span { color: var(--or); }
+
+@media (max-width: 900px) {
+  .scroll-hint { bottom: 20px; }
+  html.cine #hero { min-height: 100vh; min-height: 100svh; padding-bottom: 80px; }
+  #story { padding: 50px 20px; }
+  .story-line { margin-bottom: 30px; }
+}
+
 @media (max-width: 900px) {
   .process-progress { display: none; }
   .grain { opacity: .04; }
