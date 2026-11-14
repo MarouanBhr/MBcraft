@@ -402,6 +402,19 @@ nav ul li a:hover { opacity: 1; }
   border-top: 1px solid rgba(245,240,232,.06);
 }
 
+.price-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 18px; }
+.price-card {
+  border: 1px solid rgba(245,240,232,.1); background: rgba(245,240,232,.03);
+  padding: 40px 32px; display: flex; flex-direction: column;
+}
+.price-card.featured { border-color: var(--or); background: rgba(201,168,76,.07); }
+.price-name { font-size: .75rem; letter-spacing: .2em; text-transform: uppercase; color: var(--or); margin-bottom: 14px; }
+.price-amount { font-family: 'Playfair Display', serif; font-size: 2.8rem; font-weight: 900; line-height: 1; margin-bottom: 18px; }
+.price-amount span { font-family: 'DM Sans', sans-serif; font-size: .9rem; font-weight: 400; color: var(--gris); margin-right: 4px; }
+.price-desc { font-size: .9rem; line-height: 1.7; color: rgba(245,240,232,.6); flex: 1; margin-bottom: 26px; }
+.price-btn { text-align: center; }
+.price-note { font-size: .82rem; color: var(--gris); margin-bottom: 60px; }
+
 /* ── CONTACT ── */
 #contact { padding: 120px 60px; }
 .contact-wrap {
@@ -557,6 +570,8 @@ footer p { font-size: .78rem; color: rgba(245,240,232,.3); letter-spacing: .05em
     padding-left: 20px; padding-right: 20px;
   }
   #stats { grid-template-columns: repeat(2, 1fr); }
+  .price-grid { grid-template-columns: 1fr; }
+  .price-card { padding: 30px 24px; }
   .services-grid { grid-template-columns: 1fr; }
   .service-card { padding: 30px 24px; }
   .service-name { font-size: 1.25rem; }

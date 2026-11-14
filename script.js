@@ -35,7 +35,12 @@ const translations = {
     'pf1-type': 'Site vitrine · 3D', 'pf2-type': 'Prochain projet', 'pf2-name': 'Votre site ici ?<br>Devis gratuit →',
     'section-tag-pricing': 'Combien ça coûte ?',
     'section-title-pricing': 'Devis gratuit<br><em style="color:var(--or);font-style:italic;">& sans engagement</em>',
-    'section-sub-pricing': 'Chaque projet est unique. Je préfère vous faire une proposition adaptée à votre situation réelle.',
+    'section-sub-pricing': 'Des prix clairs, sans surprise.',
+    'pr-from': 'dès', 'pr-btn': 'Demander un devis',
+    'pr1-name': 'Essentiel', 'pr1-desc': 'Une page complète : accueil, services, contact et Google Maps. Adaptée au mobile, avec formulaire de contact.',
+    'pr2-name': 'Vitrine', 'pr2-desc': 'Jusqu\'à 5 pages, design sur-mesure, référencement Google de base et formation pour modifier vos textes.',
+    'pr3-name': 'Boutique', 'pr3-desc': 'Boutique en ligne WooCommerce, jusqu\'à 20 produits, paiement en ligne sécurisé.',
+    'pr-note': 'Maintenance en option : 15 €/mois. Nom de domaine et hébergement non inclus.',
     'pricing-banner-title': 'Un simple échange suffit',
     'pricing-banner-desc': 'Décrivez-moi votre projet par message ou par téléphone. Je vous réponds sous 24h avec une estimation claire, honnête et gratuite. Aucune obligation de suite.',
     'pricing-banner-btn': 'Demander mon devis →',
@@ -96,7 +101,12 @@ const translations = {
     'pf1-type': 'Showcase site · 3D', 'pf2-type': 'Next project', 'pf2-name': 'Your site here?<br>Free quote →',
     'section-tag-pricing': 'How much does it cost?',
     'section-title-pricing': 'Free quote<br><em style="color:var(--or);font-style:italic;">& no commitment</em>',
-    'section-sub-pricing': 'Every project is unique. I prefer to give you a proposal tailored to your real situation.',
+    'section-sub-pricing': 'Clear prices, no surprises.',
+    'pr-from': 'from', 'pr-btn': 'Request a quote',
+    'pr1-name': 'Essential', 'pr1-desc': 'One complete page: home, services, contact and Google Maps. Mobile-friendly, with a contact form.',
+    'pr2-name': 'Showcase', 'pr2-desc': 'Up to 5 pages, custom design, basic Google SEO and training to edit your texts.',
+    'pr3-name': 'Shop', 'pr3-desc': 'WooCommerce online shop, up to 20 products, secure online payment.',
+    'pr-note': 'Optional maintenance: €15/month. Domain name and hosting not included.',
     'pricing-banner-title': 'A simple conversation is enough',
     'pricing-banner-desc': 'Tell me about your project by message or phone. I\'ll get back to you within 24h with a clear, honest and free estimate. No obligation.',
     'pricing-banner-btn': 'Get my free quote →',
@@ -156,7 +166,12 @@ const translations = {
     'pf1-type': 'Visitekaartjesite · 3D', 'pf2-type': 'Volgend project', 'pf2-name': 'Uw site hier?<br>Gratis offerte →',
     'section-tag-pricing': 'Hoeveel kost het?',
     'section-title-pricing': 'Gratis offerte<br><em style="color:var(--or);font-style:italic;">& vrijblijvend</em>',
-    'section-sub-pricing': 'Elk project is uniek. Ik geef u liever een voorstel op maat van uw situatie.',
+    'section-sub-pricing': 'Duidelijke prijzen, zonder verrassingen.',
+    'pr-from': 'vanaf', 'pr-btn': 'Offerte aanvragen',
+    'pr1-name': 'Essentieel', 'pr1-desc': 'Eén volledige pagina: home, diensten, contact en Google Maps. Mobielvriendelijk, met contactformulier.',
+    'pr2-name': 'Vitrine', 'pr2-desc': 'Tot 5 pagina\'s, design op maat, basis-SEO voor Google en opleiding om uw teksten aan te passen.',
+    'pr3-name': 'Webshop', 'pr3-desc': 'WooCommerce-webshop, tot 20 producten, veilige online betaling.',
+    'pr-note': 'Onderhoud optioneel: €15/maand. Domeinnaam en hosting niet inbegrepen.',
     'pricing-banner-title': 'Een eenvoudig gesprek volstaat',
     'pricing-banner-desc': 'Beschrijf uw project per bericht of telefoon. Ik antwoord binnen 24u met een duidelijke, eerlijke en gratis schatting. Geen verplichtingen.',
     'pricing-banner-btn': 'Mijn gratis offerte →',
@@ -193,8 +208,7 @@ const translations = {
 function setLang(lang) {
   const t = translations[lang];
   const set = (key, html) => {
-    const el = document.querySelector(`[data-i18n="${key}"]`);
-    if (el) el.innerHTML = html;
+    document.querySelectorAll(`[data-i18n="${key}"]`).forEach(el => { el.innerHTML = html; });
   };
   const setPlaceholder = (key, val) => {
     const el = document.querySelector(`[data-i18n-placeholder="${key}"]`);
