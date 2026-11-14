@@ -151,30 +151,20 @@ html.cine-loading body { overflow: hidden; }
     calc(var(--split) * 1px) 0 rgba(70, 200, 255, .55);
 }
 
-/* ── INDICATEUR DE SCROLL ── */
+/* ── LIEN « DÉCOUVRIR » ── */
 .scroll-hint {
   position: absolute;
   left: 50%; bottom: 40px;
-  width: 34px; height: 34px;
-  margin-left: -17px;
-  border: 1px solid rgba(245,240,232,.5);
-  border-radius: 50%;
+  transform: translateX(-50%);
   z-index: 2;
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+  font-size: .72rem; letter-spacing: .25em; text-transform: uppercase;
+  color: rgba(245,240,232,.7); text-decoration: none;
+  transition: color .2s;
 }
-.scroll-hint span {
-  position: absolute;
-  left: 50%; top: 8px;
-  width: 4px; height: 7px;
-  margin-left: -2px;
-  border-radius: 2px;
-  background: var(--or);
-  animation: scrollHint 1.8s ease-in-out infinite;
-}
-@keyframes scrollHint {
-  0%   { opacity: 0; transform: translateY(0); }
-  30%  { opacity: 1; }
-  100% { opacity: 0; transform: translateY(12px); }
-}
+.scroll-hint:hover { color: var(--or); }
+.scroll-hint .arrow { color: var(--or); font-size: 1.1rem; animation: hintBounce 1.8s ease-in-out infinite; }
+@keyframes hintBounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(6px); } }
 
 /* ── SÉQUENCE DE PHRASES ── */
 #story {
