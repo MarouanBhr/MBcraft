@@ -11,11 +11,6 @@ const translations = {
     'hero-desc': 'Je crée des sites web sur-mesure — vitrines, boutiques en ligne, portfolios — pensés pour convertir vos visiteurs en clients.',
     'hero-btn1': 'Démarrer un projet',
     'hero-btn2': 'Voir mes réalisations',
-    'stat1-label': 'Sites livrés',
-    'stat2-label': 'Ans d\'expérience',
-    'stat3-label': 'Clients satisfaits',
-    'stat4-label': 'Délai moyen',
-    'stat4-num': '30j',
     'section-tag-services': 'Ce que je propose',
     'section-title-services': 'Mes<br>services',
     'section-sub-services': 'Des solutions adaptées à chaque besoin, livrées clé en main.',
@@ -35,7 +30,8 @@ const translations = {
     'step5-title': 'Mise en ligne', 'step5-desc': 'Déploiement, formation et 30 jours de support inclus.',
     'section-tag-portfolio': 'Mes réalisations',
     'section-title-portfolio': 'Portfolio',
-    'section-sub-portfolio': 'Quelques projets réalisés récemment pour des clients variés.',
+    'section-sub-portfolio': 'Mes réalisations — et bientôt la vôtre.',
+    'pf1-type': 'Site vitrine · 3D', 'pf2-type': 'Prochain projet', 'pf2-name': 'Votre site ici ?<br>Devis gratuit →',
     'section-tag-pricing': 'Combien ça coûte ?',
     'section-title-pricing': 'Devis gratuit<br><em style="color:var(--or);font-style:italic;">& sans engagement</em>',
     'section-sub-pricing': 'Chaque projet est unique. Je préfère vous faire une proposition adaptée à votre situation réelle.',
@@ -78,8 +74,6 @@ const translations = {
     'hero-title': 'Websites that<br><em>work</em><br>for you.',
     'hero-desc': 'I create custom websites — showcase sites, online stores, portfolios — designed to turn your visitors into clients.',
     'hero-btn1': 'Start a project', 'hero-btn2': 'View my work',
-    'stat1-label': 'Sites delivered', 'stat2-label': 'Years experience',
-    'stat3-label': 'Satisfied clients', 'stat4-label': 'Average delivery', 'stat4-num': '30d',
     'section-tag-services': 'What I offer', 'section-title-services': 'My<br>services',
     'section-sub-services': 'Tailored solutions for every need, delivered turnkey.',
     's1-name': 'Showcase Website', 's1-desc': 'Present your business with elegance. A polished, fast site optimised for search engines.',
@@ -96,7 +90,8 @@ const translations = {
     'step4-title': 'Development', 'step4-desc': 'Integration, testing and access to a preview link.',
     'step5-title': 'Go Live', 'step5-desc': 'Deployment, training and 30 days of support included.',
     'section-tag-portfolio': 'My work', 'section-title-portfolio': 'Portfolio',
-    'section-sub-portfolio': 'A selection of recent projects for various clients.',
+    'section-sub-portfolio': 'My work — and soon yours.',
+    'pf1-type': 'Showcase site · 3D', 'pf2-type': 'Next project', 'pf2-name': 'Your site here?<br>Free quote →',
     'section-tag-pricing': 'How much does it cost?',
     'section-title-pricing': 'Free quote<br><em style="color:var(--or);font-style:italic;">& no commitment</em>',
     'section-sub-pricing': 'Every project is unique. I prefer to give you a proposal tailored to your real situation.',
@@ -138,8 +133,6 @@ const translations = {
     'hero-title': 'Websites die<br><em>werken</em><br>voor u.',
     'hero-desc': 'Ik maak websites op maat — visitekaartjes, webshops, portfolio\'s — ontworpen om bezoekers in klanten te omzetten.',
     'hero-btn1': 'Project starten', 'hero-btn2': 'Mijn werk bekijken',
-    'stat1-label': 'Geleverde sites', 'stat2-label': 'Jaar ervaring',
-    'stat3-label': 'Tevreden klanten', 'stat4-label': 'Gemiddelde levering', 'stat4-num': '30d',
     'section-tag-services': 'Wat ik aanbied', 'section-title-services': 'Mijn<br>diensten',
     'section-sub-services': 'Oplossingen op maat voor elke behoefte, sleutelklaar geleverd.',
     's1-name': 'Visitekaartjesite', 's1-desc': 'Presenteer uw bedrijf met stijl. Een verzorgde, snelle site geoptimaliseerd voor zoekmachines.',
@@ -156,7 +149,8 @@ const translations = {
     'step4-title': 'Ontwikkeling', 'step4-desc': 'Integratie, testen en toegang tot een voorbeeldlink.',
     'step5-title': 'Online zetten', 'step5-desc': 'Lancering, opleiding en 30 dagen support inbegrepen.',
     'section-tag-portfolio': 'Mijn werk', 'section-title-portfolio': 'Portfolio',
-    'section-sub-portfolio': 'Een selectie van recente projecten voor uiteenlopende klanten.',
+    'section-sub-portfolio': 'Mijn realisaties — en binnenkort de uwe.',
+    'pf1-type': 'Visitekaartjesite · 3D', 'pf2-type': 'Volgend project', 'pf2-name': 'Uw site hier?<br>Gratis offerte →',
     'section-tag-pricing': 'Hoeveel kost het?',
     'section-title-pricing': 'Gratis offerte<br><em style="color:var(--or);font-style:italic;">& vrijblijvend</em>',
     'section-sub-pricing': 'Elk project is uniek. Ik geef u liever een voorstel op maat van uw situatie.',
@@ -262,34 +256,6 @@ if (!window.gsap) {
   });
 }
 
-/* ── COMPTEURS STATS ── */
-function animateCounter(el, target, prefix = '', suffix = '') {
-  let start = null;
-  const duration = 1500;
-  const step = timestamp => {
-    if (!start) start = timestamp;
-    const progress = Math.min((timestamp - start) / duration, 1);
-    el.textContent = prefix + Math.floor(progress * target) + suffix;
-    if (progress < 1) requestAnimationFrame(step);
-    else el.textContent = prefix + target + suffix;
-  };
-  requestAnimationFrame(step);
-}
-
-const statsObserver = new IntersectionObserver((entries) => {
-  entries.forEach(e => {
-    if (!e.isIntersecting) return;
-    const nums = e.target.querySelectorAll('.stat-num');
-    if (nums[0]) animateCounter(nums[0], 40, '+');
-    if (nums[1]) animateCounter(nums[1], 3);
-    if (nums[2]) animateCounter(nums[2], 100, '', '%');
-    if (nums[3]) { nums[3].textContent = '30j'; } // pas numérique
-    statsObserver.unobserve(e.target);
-  });
-}, { threshold: 0.3 });
-
-const statsSection = document.getElementById('stats');
-if (statsSection) statsObserver.observe(statsSection);
 
 /* ── FORMULAIRE DE CONTACT (Web3Forms) ── */
 const contactForm = document.getElementById('contact-form');

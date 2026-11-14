@@ -330,7 +330,7 @@
     gsap.set(state, frames[0]);
     const tl = gsap.timeline({
       defaults: { ease: 'sine.inOut', duration: 1 },
-      scrollTrigger: { trigger: '#stats', start: 'top bottom', end: 'max', scrub: 1.4 },
+      scrollTrigger: { trigger: '#services', start: 'top bottom', end: 'max', scrub: 1.4 },
     });
     frames.slice(1).forEach(f => tl.to(state, f));
     return () => tl.kill();
@@ -390,22 +390,12 @@
       { clipPath: 'inset(100% 0% 0% 0%)', opacity: 1 },
       { clipPath: 'inset(0% 0% 0% 0%)', duration: 1.4, ease: 'expo.inOut', delay: (i % 2) * 0.12,
         scrollTrigger: { trigger: item, start: 'top 88%' } });
-    const visual = item.firstElementChild;
-    if (visual && !visual.classList.contains('portfolio-overlay')) {
-      gsap.fromTo(visual, { yPercent: -12, scale: 1.25 }, {
-        yPercent: 12, scale: 1.05, ease: 'none',
-        scrollTrigger: { trigger: item, start: 'top bottom', end: 'bottom top', scrub: true },
-      });
-    }
   });
 
   ['.contact-info', '.contact-form'].forEach((sel, i) => {
     gsap.from(sel, { opacity: 0, y: 60, duration: 1.2, ease: 'expo.out', delay: i * 0.15,
       scrollTrigger: { trigger: '.contact-wrap', start: 'top 80%' } });
   });
-
-  gsap.from('#stats .stat', { opacity: 0, y: 40, duration: 1, stagger: 0.1, ease: 'power3.out',
-    scrollTrigger: { trigger: '#stats', start: 'top 90%' } });
 
   window.addEventListener('load', () => ScrollTrigger.refresh());
 })();
