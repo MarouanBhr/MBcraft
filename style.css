@@ -9,6 +9,7 @@
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 html { scroll-behavior: smooth; }
+section { scroll-margin-top: 80px; }
 
 body {
   background: var(--noir);
@@ -62,29 +63,6 @@ nav ul li.lang-switcher .lang.active {
 .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
 .hamburger.open span:nth-child(2) { opacity: 0; }
 .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-
-/* ── CURSEUR ── */
-* { cursor: none !important; }
-#cursor {
-  width: 12px; height: 12px;
-  background: #c9a84c;
-  border-radius: 50%;
-  position: fixed;
-  top: -50px; left: -50px;
-  pointer-events: none;
-  z-index: 99999;
-  transition: transform .12s ease;
-}
-#cursor-ring {
-  width: 40px; height: 40px;
-  border: 1.5px solid #c9a84c;
-  border-radius: 50%;
-  position: fixed;
-  top: -50px; left: -50px;
-  pointer-events: none;
-  z-index: 99998;
-  opacity: .6;
-}
 
 /* ── NAV ── */
 nav {
@@ -468,6 +446,18 @@ nav ul li a:hover { opacity: 1; }
 .form-group textarea { resize: vertical; min-height: 120px; }
 .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
 
+.form-honeypot { display: none; }
+.form-status {
+  margin-top: 18px;
+  font-size: .85rem;
+  line-height: 1.6;
+  color: rgba(245,240,232,.6);
+  min-height: 1.6em;
+}
+.form-status.is-success { color: var(--or); }
+.form-status.is-error { color: #e07a6a; }
+.contact-form button[disabled] { opacity: .6; pointer-events: none; }
+
 /* ── FOOTER ── */
 footer {
   padding: 50px 60px;
@@ -554,26 +544,24 @@ footer p { font-size: .78rem; color: rgba(245,240,232,.3); letter-spacing: .05em
     padding-left: 20px; padding-right: 20px;
   }
   #stats { grid-template-columns: repeat(2, 1fr); }
-  .services-grid { grid-template-columns: repeat(3, 1fr); }
-  .service-card { padding: 20px 14px; }
-  .service-name { font-size: .9rem; }
-  .service-desc { font-size: .72rem; }
-  .service-icon { font-size: 1.4rem; margin-bottom: 12px; }
-  .service-tags { display: none; }
+  .services-grid { grid-template-columns: 1fr; }
+  .service-card { padding: 30px 24px; }
+  .service-name { font-size: 1.25rem; }
+  .service-desc { font-size: .92rem; margin-bottom: 18px; }
+  .service-icon { font-size: 1.8rem; margin-bottom: 16px; }
   .process-grid { grid-template-columns: repeat(2, 1fr); gap: 30px; }
   .process-grid::before { display: none; }
-  .portfolio-grid { grid-template-columns: repeat(3, 1fr); }
-  .portfolio-item { height: 120px; }
-  .portfolio-item.large { grid-row: span 1; height: 120px; }
-  .portfolio-name { font-size: .8rem; }
-  .portfolio-type { font-size: .55rem; }
-  .portfolio-overlay { padding: 10px; }
+  .portfolio-grid { grid-template-columns: 1fr 1fr; }
+  .portfolio-item { height: 170px; }
+  .portfolio-item.large { grid-row: span 1; height: 170px; }
+  .portfolio-name { font-size: 1rem; }
+  .portfolio-type { font-size: .62rem; }
+  .portfolio-overlay { padding: 14px; transform: none; }
   .contact-wrap { grid-template-columns: 1fr; gap: 60px; }
   .section-header { flex-direction: column; align-items: flex-start; gap: 16px; }
   .section-sub { text-align: left; }
   footer { flex-direction: column; gap: 20px; text-align: center; }
   body { cursor: auto; }
-  #cursor, #cursor-ring { display: none; }
   #hero { padding-top: 80px; padding-bottom: 40px; min-height: auto; }
   #stats, #services, #process, #portfolio, #tarifs, #contact { padding-top: 50px; padding-bottom: 50px; }
   .hero-title { margin-bottom: 16px; }
@@ -583,29 +571,10 @@ footer p { font-size: .78rem; color: rgba(245,240,232,.3); letter-spacing: .05em
   .process-grid { margin-top: 30px; }
   .contact-wrap { margin-top: 30px; }
 
-  /* Fix grilles inline-style en 3 colonnes */
+  /* Grille « ce qui influence le prix » : 1 colonne lisible */
   [style*="repeat(3,1fr)"],
   [style*="repeat(3, 1fr)"] {
-    display: grid !important;
-    grid-template-columns: repeat(3, 1fr) !important;
-  }
-  [style*="repeat(3,1fr)"] .service-card,
-  [style*="repeat(3, 1fr)"] .service-card {
-    padding: 14px 10px !important;
-  }
-  [style*="repeat(3,1fr)"] .service-name,
-  [style*="repeat(3, 1fr)"] .service-name {
-    font-size: .75rem !important;
-  }
-  [style*="repeat(3,1fr)"] .service-desc,
-  [style*="repeat(3, 1fr)"] .service-desc {
-    font-size: .65rem !important;
-    line-height: 1.4 !important;
-  }
-  [style*="repeat(3,1fr)"] .service-icon,
-  [style*="repeat(3, 1fr)"] .service-icon {
-    font-size: 1.2rem !important;
-    margin-bottom: 8px !important;
+    grid-template-columns: 1fr !important;
   }
 
   /* Bannière tarifs */

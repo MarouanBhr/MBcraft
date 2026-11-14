@@ -11,9 +11,6 @@ const translations = {
     'hero-desc': 'Je crée des sites web sur-mesure — vitrines, boutiques en ligne, portfolios — pensés pour convertir vos visiteurs en clients.',
     'hero-btn1': 'Démarrer un projet',
     'hero-btn2': 'Voir mes réalisations',
-    'story1': 'Votre site est votre<br><em>première impression.</em>',
-    'story2': 'Chaque détail compte.<br><em>Chaque seconde aussi.</em>',
-    'story3': 'Je crée des expériences qui<br><em>transforment vos visiteurs en clients.</em>',
     'stat1-label': 'Sites livrés',
     'stat2-label': 'Ans d\'expérience',
     'stat3-label': 'Clients satisfaits',
@@ -62,6 +59,10 @@ const translations = {
     'placeholder-firstname': 'Jean', 'placeholder-lastname': 'Dupont', 'placeholder-email': 'jean@exemple.be',
     'placeholder-message': 'Parlez-moi de votre activité, de vos besoins, de votre délai...',
     'btn-send': 'Envoyer ma demande →',
+    'form-sending': 'Envoi en cours…',
+    'form-fallback': 'Le formulaire est en maintenance. Appelez-moi ou envoyez un SMS au +32 4 95 94 17 06.',
+    'form-success': 'Merci ! Votre demande est bien envoyée. Je vous réponds sous 24h.',
+    'form-error': 'Oups, l\'envoi n\'a pas fonctionné. Réessayez dans un instant.',
     'opt-select': 'Sélectionner...', 'opt-vitrine': 'Site vitrine', 'opt-ecom': 'Boutique e-commerce',
     'opt-portfolio': 'Portfolio / Blog', 'opt-landing': 'Landing page', 'opt-refonte': 'Refonte de site existant',
     'opt-seo': 'Maintenance / SEO', 'opt-other': 'Autre',
@@ -77,9 +78,6 @@ const translations = {
     'hero-title': 'Websites that<br><em>work</em><br>for you.',
     'hero-desc': 'I create custom websites — showcase sites, online stores, portfolios — designed to turn your visitors into clients.',
     'hero-btn1': 'Start a project', 'hero-btn2': 'View my work',
-    'story1': 'Your website is your<br><em>first impression.</em>',
-    'story2': 'Every detail matters.<br><em>Every second too.</em>',
-    'story3': 'I build experiences that<br><em>turn your visitors into clients.</em>',
     'stat1-label': 'Sites delivered', 'stat2-label': 'Years experience',
     'stat3-label': 'Satisfied clients', 'stat4-label': 'Average delivery', 'stat4-num': '30d',
     'section-tag-services': 'What I offer', 'section-title-services': 'My<br>services',
@@ -121,6 +119,10 @@ const translations = {
     'placeholder-firstname': 'John', 'placeholder-lastname': 'Smith', 'placeholder-email': 'john@example.com',
     'placeholder-message': 'Tell me about your business, your needs, your timeline...',
     'btn-send': 'Send my request →',
+    'form-sending': 'Sending…',
+    'form-fallback': 'The form is under maintenance. Call or text me at +32 4 95 94 17 06.',
+    'form-success': 'Thank you! Your request has been sent. I\'ll get back to you within 24h.',
+    'form-error': 'Oops, sending failed. Please try again in a moment.',
     'opt-select': 'Select...', 'opt-vitrine': 'Showcase website', 'opt-ecom': 'E-commerce store',
     'opt-portfolio': 'Portfolio / Blog', 'opt-landing': 'Landing page', 'opt-refonte': 'Website redesign',
     'opt-seo': 'Maintenance / SEO', 'opt-other': 'Other',
@@ -136,9 +138,6 @@ const translations = {
     'hero-title': 'Websites die<br><em>werken</em><br>voor u.',
     'hero-desc': 'Ik maak websites op maat — visitekaartjes, webshops, portfolio\'s — ontworpen om bezoekers in klanten te omzetten.',
     'hero-btn1': 'Project starten', 'hero-btn2': 'Mijn werk bekijken',
-    'story1': 'Uw website is uw<br><em>eerste indruk.</em>',
-    'story2': 'Elk detail telt.<br><em>Elke seconde ook.</em>',
-    'story3': 'Ik creëer ervaringen die<br><em>uw bezoekers in klanten omzetten.</em>',
     'stat1-label': 'Geleverde sites', 'stat2-label': 'Jaar ervaring',
     'stat3-label': 'Tevreden klanten', 'stat4-label': 'Gemiddelde levering', 'stat4-num': '30d',
     'section-tag-services': 'Wat ik aanbied', 'section-title-services': 'Mijn<br>diensten',
@@ -180,6 +179,10 @@ const translations = {
     'placeholder-firstname': 'Jan', 'placeholder-lastname': 'Janssen', 'placeholder-email': 'jan@voorbeeld.be',
     'placeholder-message': 'Vertel me over uw bedrijf, uw behoeften, uw deadline...',
     'btn-send': 'Mijn aanvraag versturen →',
+    'form-sending': 'Bezig met verzenden…',
+    'form-fallback': 'Het formulier is in onderhoud. Bel of sms me op +32 4 95 94 17 06.',
+    'form-success': 'Bedankt! Uw aanvraag is verzonden. Ik antwoord binnen 24u.',
+    'form-error': 'Oeps, het verzenden is mislukt. Probeer het zo meteen opnieuw.',
     'opt-select': 'Selecteer...', 'opt-vitrine': 'Visitekaartjesite', 'opt-ecom': 'Webshop',
     'opt-portfolio': 'Portfolio / Blog', 'opt-landing': 'Landingspagina', 'opt-refonte': 'Redesign bestaande site',
     'opt-seo': 'Onderhoud / SEO', 'opt-other': 'Andere',
@@ -239,38 +242,6 @@ if (hamburger && navMenu) {
   });
 }
 
-const cursor = document.getElementById('cursor');
-const ring   = document.getElementById('cursor-ring');
-let mx = 0, my = 0, rx = 0, ry = 0, started = false;
-
-document.addEventListener('mousemove', e => {
-  mx = e.clientX; my = e.clientY;
-  cursor.style.left = (mx - 6) + 'px';
-  cursor.style.top  = (my - 6) + 'px';
-  if (!started) { started = true; rx = mx; ry = my; }
-});
-
-(function loop() {
-  rx += (mx - rx) * .13;
-  ry += (my - ry) * .13;
-  ring.style.left = (rx - 20) + 'px';
-  ring.style.top  = (ry - 20) + 'px';
-  requestAnimationFrame(loop);
-})();
-
-document.querySelectorAll('a, button, .service-card, .portfolio-item, .process-step').forEach(el => {
-  el.addEventListener('mouseenter', () => {
-    cursor.style.transform = 'scale(2.2)';
-    ring.style.transform   = 'scale(1.4)';
-    ring.style.opacity     = '.9';
-  });
-  el.addEventListener('mouseleave', () => {
-    cursor.style.transform = 'scale(1)';
-    ring.style.transform   = 'scale(1)';
-    ring.style.opacity     = '.6';
-  });
-});
-
 /* ── SCROLL REVEAL ── */
 const revealObserver = new IntersectionObserver((entries) => {
   entries.forEach(e => {
@@ -319,5 +290,49 @@ const statsObserver = new IntersectionObserver((entries) => {
 
 const statsSection = document.getElementById('stats');
 if (statsSection) statsObserver.observe(statsSection);
+
+/* ── FORMULAIRE DE CONTACT (Web3Forms) ── */
+const contactForm = document.getElementById('contact-form');
+if (contactForm) {
+  const status = contactForm.querySelector('.form-status');
+  const submitBtn = contactForm.querySelector('button[type="submit"]');
+  const msg = key => translations[localStorage.getItem('lang') || 'fr'][key];
+
+  contactForm.addEventListener('submit', async e => {
+    e.preventDefault();
+    if (!contactForm.reportValidity()) return;
+    const data = Object.fromEntries(new FormData(contactForm));
+    if (data.access_key === 'WEB3FORMS_ACCESS_KEY') {
+      // Formulaire pas encore branché : on oriente vers le téléphone
+      status.className = 'form-status is-error';
+      status.textContent = msg('form-fallback');
+      return;
+    }
+    contactForm.querySelectorAll('select').forEach(sel => {
+      data[sel.name] = sel.selectedIndex > 0 ? sel.options[sel.selectedIndex].text : '—';
+    });
+
+    submitBtn.disabled = true;
+    status.className = 'form-status';
+    status.textContent = msg('form-sending');
+    try {
+      const res = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify(data),
+      });
+      const json = await res.json();
+      if (!json.success) throw new Error(json.message);
+      status.classList.add('is-success');
+      status.textContent = msg('form-success');
+      contactForm.reset();
+    } catch (err) {
+      status.classList.add('is-error');
+      status.textContent = msg('form-error');
+    } finally {
+      submitBtn.disabled = false;
+    }
+  });
+}
 
 }); // fin DOMContentLoaded
