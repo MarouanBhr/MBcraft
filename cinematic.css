@@ -220,6 +220,7 @@ html.cine .story-count {
 
 @media (max-width: 900px) {
   .scroll-hint { bottom: 20px; }
+  nav ul.open { background: var(--noir); }
   html.cine #hero { min-height: 100vh; min-height: 100svh; padding-bottom: 80px; }
   #story { padding: 50px 20px; }
   .story-line { margin-bottom: 30px; }

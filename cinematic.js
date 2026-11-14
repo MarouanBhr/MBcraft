@@ -368,7 +368,7 @@
   intro
     .to(state, { intro: 1, camZ: 6, duration: 2.6, ease: 'expo.out' }, 'hero')
     .to('.hero-number', { opacity: 1, scale: 1, duration: 2.2, ease: 'expo.out' }, 'hero')
-    .to('nav', { opacity: 1, y: 0, duration: 1, ease: 'power3.out' }, 'hero+=0.3')
+    .to('nav', { opacity: 1, y: 0, duration: 1, ease: 'power3.out', clearProps: 'transform' }, 'hero+=0.3')
     .to('.hero-badge', { opacity: 1, y: 0, duration: 1, ease: 'power3.out' }, 'hero+=0.2')
     .to('.hero-title', { opacity: 1, y: 0, rotationX: 0, duration: 1.4, ease: 'expo.out' }, 'hero+=0.35')
     .to('.hero-desc', { opacity: 1, y: 0, duration: 1.1, ease: 'power3.out' }, 'hero+=0.6')
