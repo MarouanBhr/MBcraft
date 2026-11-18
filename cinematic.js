@@ -319,9 +319,20 @@
   gsap.to(state, { travel: 1, ease: 'none', scrollTrigger: { start: 0, end: 'max', scrub: 1.2 } });
 
   /* ══════════ HERO : DISPARITION DOUCE AU SCROLL (sans bloquer) ══════════ */
-  gsap.to(['.hero-content', '.scroll-hint'], {
-    opacity: 0, y: -60, ease: 'none',
-    scrollTrigger: { trigger: '#hero', start: 'top top', end: 'bottom top', scrub: true },
+  // Calcul direct depuis la position réelle du scroll (pas de ScrollTrigger) :
+  // en haut de page, le texte est toujours visible, même si ScrollTrigger se désynchronise.
+  const heroEl = document.getElementById('hero');
+  const heroFade = document.querySelectorAll('.hero-content, .scroll-hint');
+  let lastFade = -1;
+  gsap.ticker.add(() => {
+    const h = heroEl.offsetHeight || window.innerHeight;
+    const p = Math.min(1, Math.max(0, window.scrollY / h));
+    if (p === lastFade) return;
+    lastFade = p;
+    heroFade.forEach(el => {
+      el.style.opacity = 1 - p;
+      el.style.translate = `0 ${-60 * p}px`;
+    });
   });
 
   /* ══════════ PARCOURS DE LA SPHÈRE DANS LA PAGE ══════════ */
