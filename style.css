@@ -611,3 +611,63 @@ footer p { font-size: .78rem; color: rgba(245,240,232,.3); letter-spacing: .05em
     flex-direction: column;
   }
 }
+/* ══════════════════════════════════════════
+   SECTIONS CLAIRES (alternance sombre / clair)
+   ══════════════════════════════════════════ */
+:root {
+  --encre: #1c1813;          /* texte sur fond clair */
+  --encre-doux: #5c554a;     /* texte secondaire sur fond clair */
+  --or-fonce: #9a7a2c;       /* or lisible sur fond clair */
+  --sable: #f5f0e8;
+  --ivoire: #fbf8f3;
+}
+
+/* Barre de navigation lisible au-dessus des sections claires */
+nav {
+  background: rgba(10,10,10,.82);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  padding-top: 20px; padding-bottom: 20px;
+  border-bottom: 1px solid rgba(201,168,76,.12);
+}
+
+#services, #portfolio { background: var(--sable); color: var(--encre); }
+#tarifs { background: var(--ivoire); color: var(--encre); border-top: none; }
+
+:is(#services, #portfolio, #tarifs) .section-header { border-bottom-color: rgba(28,24,19,.12); }
+:is(#services, #portfolio, #tarifs) .section-tag,
+:is(#services, #portfolio, #tarifs) .tag,
+:is(#services, #portfolio, #tarifs) .price-name { color: var(--or-fonce); }
+:is(#services, #portfolio, #tarifs) .section-title em { color: var(--or-fonce) !important; }
+:is(#services, #portfolio, #tarifs) .section-sub,
+:is(#services, #portfolio, #tarifs) .service-desc,
+:is(#services, #portfolio, #tarifs) .price-desc { color: var(--encre-doux); }
+:is(#services, #portfolio, #tarifs) .price-note,
+:is(#services, #portfolio, #tarifs) .price-amount span { color: #7a7266; }
+
+/* Cartes sur fond clair */
+:is(#services, #tarifs) .service-card {
+  background: #fff;
+  border-color: rgba(28,24,19,.08);
+  box-shadow: 0 1px 2px rgba(28,24,19,.04);
+}
+:is(#services, #tarifs) .service-card:hover { background: #fffdf8; border-color: rgba(154,122,44,.35); }
+:is(#services, #tarifs) .service-num { color: rgba(154,122,44,.12); }
+:is(#services, #tarifs) .tag { border-color: rgba(154,122,44,.4); }
+
+#tarifs .price-card { background: #fff; border-color: rgba(28,24,19,.1); }
+#tarifs .price-card.featured { background: #1c1813; border-color: var(--or); color: var(--sable); }
+#tarifs .price-card.featured .price-name { color: var(--or); }
+#tarifs .price-card.featured .price-desc { color: rgba(245,240,232,.7); }
+#tarifs .price-card.featured .price-amount span { color: var(--gris); }
+#tarifs .btn-outline { border-color: rgba(28,24,19,.3); color: var(--encre); }
+#tarifs .btn-outline:hover { border-color: var(--or-fonce); color: var(--or-fonce); }
+#tarifs [style*="padding:40px 50px"] { background: #fff !important; border-color: rgba(154,122,44,.35) !important; }
+#tarifs [style*="padding:40px 50px"] p { color: var(--encre-doux) !important; }
+
+/* Portfolio : les images gardent leur dégradé sombre, texte clair */
+#portfolio .portfolio-item { border-color: rgba(28,24,19,.1); color: var(--sable); }
+#portfolio .portfolio-cta { background: radial-gradient(ellipse at 50% 40%, rgba(154,122,44,.12), transparent 70%); border-color: rgba(154,122,44,.5); color: var(--encre); }
+#portfolio .portfolio-cta .portfolio-overlay { background: none; }
+#portfolio .portfolio-cta .portfolio-type,
+#portfolio .portfolio-cta .portfolio-plus { color: var(--or-fonce); }
