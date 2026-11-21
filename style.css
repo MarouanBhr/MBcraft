@@ -618,8 +618,8 @@ footer p { font-size: .78rem; color: rgba(245,240,232,.3); letter-spacing: .05em
   --encre: #1c1813;          /* texte sur fond clair */
   --encre-doux: #5c554a;     /* texte secondaire sur fond clair */
   --or-fonce: #9a7a2c;       /* or lisible sur fond clair */
-  --sable: #f5f0e8;
-  --ivoire: #fbf8f3;
+  --sable: #e6dccb;
+  --ivoire: #ece4d6;
 }
 
 /* Barre de navigation lisible au-dessus des sections claires */
@@ -647,22 +647,22 @@ nav {
 
 /* Cartes sur fond clair */
 :is(#services, #tarifs) .service-card {
-  background: #fff;
+  background: #f3ede2;
   border-color: rgba(28,24,19,.08);
   box-shadow: 0 1px 2px rgba(28,24,19,.04);
 }
-:is(#services, #tarifs) .service-card:hover { background: #fffdf8; border-color: rgba(154,122,44,.35); }
+:is(#services, #tarifs) .service-card:hover { background: #f7f2e9; border-color: rgba(154,122,44,.35); }
 :is(#services, #tarifs) .service-num { color: rgba(154,122,44,.12); }
 :is(#services, #tarifs) .tag { border-color: rgba(154,122,44,.4); }
 
-#tarifs .price-card { background: #fff; border-color: rgba(28,24,19,.1); }
+#tarifs .price-card { background: #f3ede2; border-color: rgba(28,24,19,.1); }
 #tarifs .price-card.featured { background: #1c1813; border-color: var(--or); color: var(--sable); }
 #tarifs .price-card.featured .price-name { color: var(--or); }
 #tarifs .price-card.featured .price-desc { color: rgba(245,240,232,.7); }
 #tarifs .price-card.featured .price-amount span { color: var(--gris); }
 #tarifs .btn-outline { border-color: rgba(28,24,19,.3); color: var(--encre); }
 #tarifs .btn-outline:hover { border-color: var(--or-fonce); color: var(--or-fonce); }
-#tarifs [style*="padding:40px 50px"] { background: #fff !important; border-color: rgba(154,122,44,.35) !important; }
+#tarifs [style*="padding:40px 50px"] { background: #f3ede2 !important; border-color: rgba(154,122,44,.35) !important; }
 #tarifs [style*="padding:40px 50px"] p { color: var(--encre-doux) !important; }
 
 /* Portfolio : les images gardent leur dégradé sombre, texte clair */
