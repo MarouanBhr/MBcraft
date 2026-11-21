@@ -615,16 +615,16 @@ footer p { font-size: .78rem; color: rgba(245,240,232,.3); letter-spacing: .05em
    FOND ARDOISE + TEXTES LISIBLES
    ══════════════════════════════════════════ */
 :root {
-  --fond: #1f2126;        /* sections principales */
-  --fond-2: #2a2d33;      /* sections alternées */
-  --carte: #343841;       /* cartes */
+  --fond: #2c3038;        /* sections principales */
+  --fond-2: #393e47;      /* sections alternées */
+  --carte: #464c57;       /* cartes */
   --texte-2: rgba(245,240,232,.82);  /* texte secondaire bien lisible */
 }
 body { background: var(--fond); }
 
 /* Barre de navigation */
 nav {
-  background: rgba(31,33,38,.88);
+  background: rgba(44,48,56,.9);
   -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
   padding-top: 20px; padding-bottom: 20px;
@@ -651,10 +651,10 @@ nav ul li a { opacity: .9; }
   background: var(--carte);
   border-color: rgba(245,240,232,.08);
 }
-.service-card:hover { background: #3a3e48; border-color: rgba(201,168,76,.35); }
+.service-card:hover { background: #4e5561; border-color: rgba(201,168,76,.35); }
 .service-num { color: rgba(201,168,76,.14); }
 .service-icon { filter: none; }
-.price-card.featured { background: #1a1b1f; border-color: var(--or); }
+.price-card.featured { background: #23262c; border-color: var(--or); }
 .step-circle { background: var(--fond); }
 
 /* Formulaire */
@@ -663,3 +663,7 @@ nav ul li a { opacity: .9; }
   border-color: rgba(245,240,232,.18);
 }
 .form-group select option { background: var(--fond-2); }
+@media (max-width: 900px) {
+  #hero { padding-top: 110px !important; }
+  #hero .scroll-hint { display: none; }
+}
