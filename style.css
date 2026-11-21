@@ -667,3 +667,41 @@ nav ul li a { opacity: .9; }
   #hero { padding-top: 110px !important; }
   #hero .scroll-hint { display: none; }
 }
+
+/* ── MOBILE : cartes côte à côte ── */
+@media (max-width: 900px) {
+  /* Services : 2 colonnes compactes */
+  .services-grid { grid-template-columns: 1fr 1fr !important; gap: 8px; }
+  .services-grid .service-card { padding: 18px 14px; }
+  .services-grid .service-icon { font-size: 1.5rem; margin-bottom: 10px; }
+  .services-grid .service-num { font-size: 2rem; top: 14px; right: 12px; }
+  .services-grid .service-name { font-size: 1.02rem; margin-bottom: 8px; }
+  .services-grid .service-desc { font-size: .8rem; line-height: 1.55; margin-bottom: 10px; }
+  .services-grid .service-tags { gap: 4px; }
+  .services-grid .tag { font-size: .56rem; padding: 3px 6px; letter-spacing: .06em; }
+
+  /* « Ce qui influence le prix » : 2 colonnes */
+  #tarifs [style*="repeat(3,1fr)"] { grid-template-columns: 1fr 1fr !important; gap: 8px !important; }
+  #tarifs [style*="repeat(3,1fr)"] .service-card { padding: 16px 14px !important; }
+  #tarifs [style*="repeat(3,1fr)"] .service-icon { font-size: 1.4rem; margin-bottom: 8px; }
+  #tarifs [style*="repeat(3,1fr)"] .service-name { font-size: .95rem !important; margin-bottom: 6px; }
+  #tarifs [style*="repeat(3,1fr)"] .service-desc { font-size: .78rem; margin-bottom: 0; }
+
+  /* Formules de prix : défilement horizontal (on glisse avec le doigt) */
+  .price-grid {
+    display: flex !important;
+    gap: 12px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    margin: 0 -20px 18px;
+    padding: 4px 20px 14px;
+    -webkit-overflow-scrolling: touch;
+  }
+  .price-grid .price-card { flex: 0 0 78%; scroll-snap-align: center; padding: 26px 20px; }
+  .price-grid .price-amount { font-size: 2.3rem; }
+
+  /* Méthode : 2 colonnes, le 5e centré */
+  .process-grid { grid-template-columns: 1fr 1fr !important; gap: 24px 12px; }
+  .process-step { padding: 0 6px; }
+  .process-step:last-child { grid-column: 1 / -1; }
+}
