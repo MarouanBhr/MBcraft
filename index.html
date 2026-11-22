@@ -16,7 +16,7 @@
 <meta property="og:locale" content="fr_BE">
 <meta name="twitter:card" content="summary_large_image">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500&family=Cairo:wght@400;600;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=19">
+<link rel="stylesheet" href="style.css?v=20">
 <link rel="stylesheet" href="cinematic.css?v=10">
 <script>
 (function(){var d=document.documentElement;if(!matchMedia('(prefers-reduced-motion: reduce)').matches){d.classList.add('cine');}})();
@@ -89,6 +89,15 @@
       <h2 class="section-title" data-i18n="section-title-process">Notre<br>méthode</h2>
     </div>
     <p class="section-sub" data-i18n="section-sub-process">Un processus clair et transparent.</p>
+  </div>
+  <div class="az-video reveal">
+    <video id="az-video" muted loop playsinline preload="none" poster="video/de-a-a-z.jpg"
+      data-desk="video/de-a-a-z.mp4" data-mob="video/de-a-a-z-mobile.mp4" data-poster-mob="video/de-a-a-z-mobile.jpg"
+      aria-label="Vidéo : la création de votre site, de A à Z"></video>
+    <button class="az-sound" id="az-sound" type="button">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5z"/><path class="w1" d="M15.5 8.5a5 5 0 0 1 0 7"/><path class="w2" d="M19 5a10 10 0 0 1 0 14"/><path class="mute" d="m16 9 6 6m0-6-6 6"/></svg>
+      <span data-i18n="video-sound">Activer le son</span>
+    </button>
   </div>
   <div class="process-grid">
     <div class="process-step"><div class="step-circle">1</div><h4 class="step-title" data-i18n="step1-title">Découverte</h4><p class="step-desc" data-i18n="step1-desc">Appel gratuit pour comprendre vos objectifs.</p></div>
@@ -239,7 +248,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-<script src="script.js?v=13"></script>
+<script src="script.js?v=14"></script>
 <script src="cinematic.js?v=11"></script>
 <script data-goatcounter="https://mbcraft.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>

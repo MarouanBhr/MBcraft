@@ -22,6 +22,7 @@ const translations = {
     's5-name': 'Refonte & Maintenance', 's5-desc': 'Votre site est vieillissant ? Nous le modernisons, l\'accélérons et assurons son bon fonctionnement dans la durée.',
     's6-name': 'SEO & Analytics', 's6-desc': 'Apparaissez sur Google. Audit, optimisation technique et mise en place du suivi de vos performances.',
     's7-name': 'Logo & identité visuelle', 's7-desc': 'Pas encore de logo ? Nous créons le vôtre : un logo unique, vos couleurs et vos polices, prêts pour votre site, vos réseaux sociaux et vos cartes de visite.', 'opt-logo': 'Logo / identité visuelle',
+    'video-sound': 'Activer le son', 'video-mute': 'Couper le son',
     'section-tag-process': 'Comment ça marche',
     'section-title-process': 'Notre<br>méthode',
     'section-sub-process': 'Un processus clair et transparent de la première idée à la mise en ligne.',
@@ -91,6 +92,7 @@ const translations = {
     's5-name': 'Redesign & Maintenance', 's5-desc': 'Is your site outdated? We modernise it, speed it up and keep it running smoothly.',
     's6-name': 'SEO & Analytics', 's6-desc': 'Rank on Google. Technical audit, optimisation and performance tracking setup.',
     's7-name': 'Logo & Visual Identity', 's7-desc': 'No logo yet? We design yours: a unique logo, your colours and fonts, ready for your website, social media and business cards.', 'opt-logo': 'Logo / visual identity',
+    'video-sound': 'Turn sound on', 'video-mute': 'Mute',
     'section-tag-process': 'How it works', 'section-title-process': 'Our<br>method',
     'section-sub-process': 'A clear and transparent process from first idea to launch.',
     'step1-title': 'Discovery', 'step1-desc': 'Free call to understand your goals, target audience and budget.',
@@ -157,6 +159,7 @@ const translations = {
     's5-name': 'Redesign & Onderhoud', 's5-desc': 'Is uw site verouderd? Wij moderniseren, versnellen en zorgen voor een soepele werking.',
     's6-name': 'SEO & Analytics', 's6-desc': 'Scoor op Google. Technische audit, optimalisatie en opzet van prestatietracking.',
     's7-name': 'Logo & huisstijl', 's7-desc': 'Nog geen logo? Wij ontwerpen het voor u: een uniek logo, uw kleuren en lettertypes, klaar voor uw website, sociale media en visitekaartjes.', 'opt-logo': 'Logo / huisstijl',
+    'video-sound': 'Geluid aan', 'video-mute': 'Geluid uit',
     'section-tag-process': 'Hoe het werkt', 'section-title-process': 'Onze<br>methode',
     'section-sub-process': 'Een helder en transparant proces van eerste idee tot lancering.',
     'step1-title': 'Ontdekking', 'step1-desc': 'Gratis gesprek om uw doelen, doelgroep en budget te begrijpen.',
@@ -223,6 +226,7 @@ const translations = {
     's5-name': 'تجديد وصيانة', 's5-desc': 'موقعك أصبح قديماً؟ نجدّده ونسرّعه ونضمن عمله بشكل جيد على المدى الطويل.',
     's6-name': 'الظهور على Google', 's6-desc': 'اظهر على Google. تدقيق وتحسين تقني ومتابعة أداء موقعك.',
     's7-name': 'الشعار والهوية البصرية', 's7-desc': 'ليس لديك شعار بعد؟ نصمّم لك شعاراً فريداً مع ألوانك وخطوطك، جاهزاً لموقعك وشبكات التواصل وبطاقات العمل.', 'opt-logo': 'شعار / هوية بصرية',
+    'video-sound': 'تشغيل الصوت', 'video-mute': 'كتم الصوت',
     'section-tag-process': 'كيف نعمل', 'section-title-process': 'طريقتنا',
     'section-sub-process': 'مراحل واضحة وشفّافة من الفكرة الأولى إلى إطلاق الموقع.',
     'step1-title': 'التعارف', 'step1-desc': 'مكالمة مجانية لفهم أهدافك وجمهورك وميزانيتك.',
@@ -393,3 +397,28 @@ if (contactForm) {
 }
 
 }); // fin DOMContentLoaded
+
+/* ── Vidéo « de A à Z » : bonne version selon l'écran, lecture quand elle est visible ── */
+(function () {
+  const v = document.getElementById('az-video'), btn = document.getElementById('az-sound');
+  if (!v) return;
+  const mob = window.matchMedia('(max-width: 700px)').matches;
+  if (mob) v.poster = v.dataset.posterMob;
+  let loaded = false;
+  const load = () => { if (!loaded) { v.src = mob ? v.dataset.mob : v.dataset.desk; loaded = true; } };
+  const io = new IntersectionObserver(es => es.forEach(e => {
+    if (e.isIntersecting) { load(); v.play().catch(() => {}); } else v.pause();
+  }), { threshold: .35 });
+  io.observe(v);
+  const label = () => {
+    const lang = localStorage.getItem('lang') || 'fr';
+    btn.querySelector('span').textContent = translations[lang][v.muted ? 'video-sound' : 'video-mute'];
+    btn.classList.toggle('on', !v.muted);
+  };
+  btn.addEventListener('click', () => {
+    load(); v.muted = !v.muted;
+    if (!v.muted) { v.currentTime = 0; v.play().catch(() => {}); }
+    label();
+  });
+  document.querySelectorAll('.lang').forEach(el => el.addEventListener('click', () => setTimeout(label, 0)));
+})();

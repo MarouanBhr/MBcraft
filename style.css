@@ -756,3 +756,22 @@ html.lang-ar .price-name { direction: rtl; text-align: right; }
   .service-card.service-wide { grid-template-columns: 1fr; gap: 10px; }
   .service-wide .service-tags { margin-top: 4px; }
 }
+
+/* ── Vidéo « de A à Z » ── */
+.az-video { position: relative; margin: 0 0 80px; border-radius: 14px; overflow: hidden;
+  border: 1px solid rgba(201,168,76,.25); box-shadow: 0 30px 70px rgba(0,0,0,.35); background: #2c3038; }
+.az-video video { display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: cover; }
+.az-sound { position: absolute; left: 18px; top: 18px; display: flex; align-items: center; gap: 10px;
+  background: rgba(20,22,26,.78); color: var(--creme); border: 1px solid rgba(201,168,76,.5); border-radius: 40px;
+  padding: 10px 18px; font: 500 .8rem 'DM Sans', sans-serif; letter-spacing: .08em; cursor: pointer;
+  -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); transition: background .2s; }
+.az-sound:hover { background: rgba(201,168,76,.25); }
+.az-sound svg { width: 18px; height: 18px; fill: none; stroke: var(--or); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.az-sound .w1, .az-sound .w2 { display: none; }
+.az-sound.on .w1, .az-sound.on .w2 { display: inline; }
+.az-sound.on .mute { display: none; }
+@media (max-width: 700px) {
+  .az-video { margin: 0 0 40px; border-radius: 12px; }
+  .az-video video { aspect-ratio: 9 / 16; }
+  .az-sound { left: 12px; top: 12px; padding: 8px 14px; font-size: .72rem; }
+}
