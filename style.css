@@ -726,3 +726,23 @@ html.lang-ar [data-i18n^="section-title"], html.lang-ar [data-i18n="hero-title"]
 html.lang-ar .lang { font-family: 'DM Sans', sans-serif; }
 html.lang-ar .price-amount span { display: block; margin: 0 0 8px; text-align: right; font-size: 1rem; }
 html.lang-ar .price-name { direction: rtl; text-align: right; }
+
+/* ── Icônes au trait doré (remplacent les emojis) ── */
+.service-icon {
+  display: block !important; font-size: 0; line-height: 0;
+  filter: none !important;
+}
+.service-icon svg {
+  width: 38px; height: 38px; fill: none; stroke: var(--or);
+  stroke-width: 1.3; stroke-linecap: round; stroke-linejoin: round;
+  transition: transform .3s;
+}
+.service-card:hover .service-icon svg { transform: translateY(-3px); }
+.service-num {
+  font-family: 'DM Sans', sans-serif !important; font-size: 1rem !important; font-weight: 500 !important;
+  letter-spacing: .2em; color: var(--or) !important; opacity: .7 !important; top: 34px !important;
+}
+@media (max-width: 900px) {
+  .service-icon svg { width: 30px; height: 30px; }
+  .service-num { font-size: .8rem !important; top: 22px !important; }
+}
