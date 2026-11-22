@@ -1,0 +1,422 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gonza'z — Cocktails, Coffee & Tapas · Gent</title>
+<meta name="description" content="Gonza'z — cocktails, speciality coffee & tapas, geïnspireerd door Latin Jazz. Donkersteeg, Gent.">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Limelight&family=Righteous&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --night:#0b1633; --night-2:#12224a; --blue:#2147b8; --red:#c8312b;
+  --gold:#d9a84e; --cream:#f3e6cb; --neon:#ff7b2e; --ink:#0b1633;
+  --text:#f3e6cb; --muted:#c9bc9f;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--night);color:var(--text);font-family:"DM Sans",system-ui,sans-serif;line-height:1.6;overflow-x:hidden}
+a{color:inherit}
+img{display:block;max-width:100%}
+.wrap{width:min(1120px,100% - 32px);margin-inline:auto}
+
+.demo{background:var(--gold);color:var(--ink);font-size:.82rem;text-align:center;padding:6px 16px;font-weight:500}
+.demo a{font-weight:700}
+.annonce{background:var(--red);color:#fff;text-align:center;font-weight:600;padding:10px 16px;font-size:.92rem}
+
+/* Nav */
+header{position:sticky;top:0;z-index:50;background:rgba(11,22,51,.9);backdrop-filter:blur(10px);border-bottom:1px solid rgba(217,168,78,.25)}
+.nav{display:flex;align-items:center;justify-content:space-between;height:64px;gap:16px}
+.logo{font-family:"Righteous",cursive;font-size:1.6rem;color:var(--neon);text-decoration:none;letter-spacing:.04em;text-shadow:0 0 6px rgba(255,123,46,.7),0 0 18px rgba(255,123,46,.45)}
+.links{display:flex;gap:24px;list-style:none}
+.links a{text-decoration:none;font-size:.95rem;color:var(--muted);transition:color .2s}
+.links a:hover{color:var(--gold)}
+.right{display:flex;align-items:center;gap:10px}
+.lang{display:flex;border:1px solid rgba(217,168,78,.4);border-radius:999px;overflow:hidden}
+.lang button{background:none;border:0;color:var(--muted);font:600 .75rem "DM Sans";padding:6px 10px;cursor:pointer}
+.lang button.on{background:var(--gold);color:var(--ink)}
+.burger{display:none;background:none;border:0;color:var(--cream);font-size:1.6rem;cursor:pointer;width:40px;height:40px}
+
+/* Hero */
+.hero{position:relative;overflow:hidden;padding:70px 0 90px}
+.sunburst{position:absolute;inset:-60%;background:repeating-conic-gradient(from 0deg at 30% 50%,rgba(33,71,184,.3) 0deg 6deg,transparent 6deg 12deg);animation:spin 140s linear infinite}
+.hero::after{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 30% 50%,transparent 0 20%,var(--night) 75%);pointer-events:none}
+@keyframes spin{to{transform:rotate(360deg)}}
+.hero-grid{position:relative;z-index:2;display:grid;grid-template-columns:1.1fr .9fr;gap:50px;align-items:center}
+.kicker{font-size:.8rem;letter-spacing:.35em;text-transform:uppercase;color:var(--gold)}
+.neon{font-family:"Righteous",cursive;font-size:clamp(3.6rem,11vw,7.5rem);line-height:1;color:#ffd9c0;margin:14px 0 10px;
+  text-shadow:0 0 4px #fff,0 0 12px var(--neon),0 0 28px var(--neon),0 0 60px var(--neon),0 0 110px rgba(255,123,46,.6);animation:flicker 6s infinite}
+@keyframes flicker{0%,18%,22%,60%,64%,100%{opacity:1}20%,62%{opacity:.55}}
+.tag{font-family:"Limelight",serif;font-size:clamp(1.2rem,3vw,1.7rem);color:var(--cream)}
+.tag span{color:var(--red)}
+.sub{max-width:480px;margin:14px 0 30px;color:var(--muted)}
+.btns{display:flex;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;padding:13px 26px;border-radius:999px;text-decoration:none;font-weight:700;font-size:.95rem;transition:transform .2s,box-shadow .2s}
+.btn:hover{transform:translateY(-2px)}
+.btn.gold{background:var(--gold);color:var(--ink);box-shadow:0 8px 24px rgba(217,168,78,.3)}
+.btn.line{border:1.5px solid var(--cream);color:var(--cream)}
+.arch{position:relative;border-radius:999px 999px 22px 22px;overflow:hidden;border:5px solid var(--gold);box-shadow:0 30px 80px rgba(0,0,0,.55),0 0 0 12px rgba(217,168,78,.12)}
+.arch img{width:100%;height:100%;object-fit:cover}
+.hero .arch{aspect-ratio:4/5;max-width:420px;margin-left:auto}
+.hero .arch::after{content:"";position:absolute;inset:0;box-shadow:inset 0 0 60px rgba(255,123,46,.35)}
+
+/* Sections */
+section{padding:100px 0}
+.eyebrow{font-size:.78rem;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+h2{font-family:"Limelight",serif;font-weight:400;font-size:clamp(2rem,5vw,3.2rem);line-height:1.1;margin-bottom:18px}
+.deco{width:120px;height:14px;margin:0 0 26px;background:
+  linear-gradient(var(--gold),var(--gold)) center/100% 1px no-repeat,
+  radial-gradient(circle,var(--gold) 0 4px,transparent 5px) center/14px 14px no-repeat}
+.center{text-align:center}.center .deco{margin-inline:auto}
+
+/* About */
+.about{display:grid;grid-template-columns:.9fr 1.1fr;gap:70px;align-items:center}
+.about p{color:var(--muted);margin-bottom:14px}
+.about-pics{position:relative;max-width:420px;width:100%;margin-inline:auto}
+.about-pics .arch{aspect-ratio:4/5}
+.inset{position:absolute;right:-30px;bottom:-30px;width:44%;aspect-ratio:1;border-radius:50%;overflow:hidden;border:5px solid var(--cream);box-shadow:0 20px 50px rgba(0,0,0,.5)}
+.inset img{width:100%;height:100%;object-fit:cover}
+.quote{font-family:"Limelight",serif;font-size:1.25rem;color:var(--cream)!important;border-left:3px solid var(--red);padding-left:16px;margin:22px 0}
+.pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:26px}
+.pillar{border:1px solid rgba(217,168,78,.3);border-radius:14px;padding:16px;text-align:center;font-size:.85rem}
+.pillar b{display:block;font-size:1.5rem;margin-bottom:4px}
+
+/* Menu */
+#menu{background:var(--cream);color:var(--ink)}
+#menu .eyebrow{color:var(--red)}
+#menu .deco{filter:brightness(.7)}
+.tabs{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:40px}
+.tab{background:none;border:1.5px solid var(--ink);color:var(--ink);border-radius:999px;padding:9px 18px;font:600 .9rem "DM Sans";cursor:pointer;transition:.2s}
+.tab.on,.tab:hover{background:var(--ink);color:var(--cream)}
+.menu-grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:50px;align-items:start;max-width:1000px;margin-inline:auto}
+.menu-pic{aspect-ratio:4/5;border-radius:22px;overflow:hidden;box-shadow:0 25px 60px rgba(11,22,51,.25);position:sticky;top:90px}
+.menu-pic img{width:100%;height:100%;object-fit:cover;animation:fade .5s both}
+@keyframes fade{from{opacity:0;transform:scale(1.04)}}
+.item{display:grid;grid-template-columns:1fr auto;gap:2px 12px;padding:16px 0;border-bottom:1px dashed rgba(11,22,51,.25);animation:in .4s both}
+.item h3{font-family:"DM Sans";font-size:1.05rem}
+.item .p{font-weight:700;color:var(--red)}
+.item p{grid-column:1/-1;font-size:.88rem;color:#4a5068}
+@keyframes in{from{opacity:0;transform:translateY(8px)}}
+.note{font-size:.8rem;color:#6b6f80;margin-top:22px;font-style:italic}
+
+/* Events */
+.ev-grid{display:grid;grid-template-columns:.85fr 1.15fr;gap:50px;align-items:start}
+.poster{border-radius:18px;overflow:hidden;border:1px solid rgba(217,168,78,.35);box-shadow:0 30px 70px rgba(0,0,0,.5);cursor:zoom-in;transition:transform .3s}
+.poster:hover{transform:rotate(-1deg) scale(1.01)}
+.ev-text p{color:var(--muted)}
+.free{display:inline-block;background:var(--neon);color:var(--ink);font-weight:700;font-size:.8rem;letter-spacing:.15em;text-transform:uppercase;padding:6px 14px;border-radius:999px;margin-bottom:16px}
+.lineup{list-style:none;margin:24px 0}
+.lineup li{display:flex;gap:16px;align-items:baseline;padding:12px 0;border-bottom:1px solid rgba(243,230,203,.1)}
+.lineup b{font-family:"Limelight";font-weight:400;font-size:1.25rem;color:var(--cream);min-width:170px}
+.lineup span{font-size:.9rem;color:var(--muted)}
+.stage{border-radius:18px;overflow:hidden;margin-top:26px;aspect-ratio:16/10}
+.stage img{width:100%;height:100%;object-fit:cover;object-position:center 35%}
+
+/* Gallery */
+.gal{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:220px;gap:12px}
+.g{border-radius:14px;overflow:hidden;cursor:zoom-in;position:relative;background:var(--night-2)}
+.g img{width:100%;height:100%;object-fit:cover;transition:transform .6s}
+.g:hover img{transform:scale(1.07)}
+.g.big{grid-column:span 2;grid-row:span 2}
+
+/* Visit */
+#visit{background:var(--night-2)}
+.visit{display:grid;grid-template-columns:1fr 1.2fr;gap:40px;align-items:stretch}
+.card{background:var(--night);border:1px solid rgba(217,168,78,.3);border-radius:18px;padding:30px}
+.card h3{font-family:"Limelight";font-weight:400;font-size:1.3rem;color:var(--gold);margin:18px 0 8px}
+.hours{list-style:none}
+.hours li{display:flex;justify-content:space-between;border-bottom:1px solid rgba(243,230,203,.08);padding:6px 0;font-size:.95rem}
+.small{font-size:.78rem;color:var(--muted);font-style:italic;margin-top:8px}
+.map{border-radius:18px;overflow:hidden;min-height:380px;border:1px solid rgba(217,168,78,.3)}
+.map iframe{width:100%;height:100%;min-height:380px;border:0;filter:grayscale(.3) contrast(1.05)}
+
+footer{padding:40px 0;text-align:center;font-size:.85rem;color:var(--muted);border-top:1px solid rgba(217,168,78,.2)}
+footer .logo{font-size:2rem;display:inline-block;margin-bottom:8px}
+footer .made{margin-top:14px;font-size:.78rem;opacity:.7}
+
+/* Lightbox */
+.lb{position:fixed;inset:0;z-index:100;background:rgba(5,10,25,.92);display:none;place-items:center;padding:20px;cursor:zoom-out}
+.lb.open{display:grid}
+.lb img{max-height:90vh;max-width:100%;border-radius:12px;box-shadow:0 30px 80px rgba(0,0,0,.6)}
+
+.reveal{opacity:0;transform:translateY(30px);transition:opacity .8s,transform .8s}
+.reveal.vis{opacity:1;transform:none}
+
+@media (max-width:900px){
+  .links{position:fixed;inset:96px 0 auto 0;flex-direction:column;background:var(--night);padding:24px 16px;gap:18px;border-bottom:1px solid rgba(217,168,78,.3);transform:translateY(-140%);visibility:hidden;transition:transform .3s,visibility .3s;z-index:-1}
+  .links.open{transform:none;visibility:visible}
+  .burger{display:block}
+  .hero{padding:40px 0 60px}
+  .hero-grid,.about,.visit,.ev-grid,.menu-grid{grid-template-columns:1fr}
+  .hero .arch{margin:10px auto 0;max-width:320px}
+  .about-pics{max-width:320px}
+  .inset{right:-10px;bottom:-20px}
+  .menu-pic{position:static;aspect-ratio:16/10}
+  .lineup b{min-width:130px;font-size:1.1rem}
+  .gal{grid-template-columns:1fr 1fr;grid-auto-rows:150px}
+  section{padding:70px 0}
+}
+@media (max-width:380px){.lang button{padding:6px 8px}.logo{font-size:1.4rem}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+
+<div class="demo"><span data-t="demo"></span> · <a href="admin.html" data-t="admin_link"></a></div>
+<div class="annonce" id="annonce" hidden></div>
+
+<header>
+  <nav class="wrap nav">
+    <a class="logo" href="#top">Gonza'z</a>
+    <ul class="links" id="links">
+      <li><a href="#about" data-t="nav_about"></a></li>
+      <li><a href="#menu" data-t="nav_menu"></a></li>
+      <li><a href="#events" data-t="nav_events"></a></li>
+      <li><a href="#amigos" data-t="nav_gal"></a></li>
+      <li><a href="#visit" data-t="nav_visit"></a></li>
+    </ul>
+    <div class="right">
+      <div class="lang" id="lang" role="group" aria-label="Taal / Language / Langue">
+        <button data-l="nl">NL</button><button data-l="en">EN</button><button data-l="fr">FR</button>
+      </div>
+      <button class="burger" id="burger" aria-label="Menu">☰</button>
+    </div>
+  </nav>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="sunburst"></div>
+    <div class="wrap hero-grid">
+      <div>
+        <p class="kicker" data-t="kicker"></p>
+        <h1 class="neon">Gonza'z</h1>
+        <p class="tag">Cocktails <span>·</span> Coffee <span>·</span> Tapas</p>
+        <p class="sub" id="slogan"></p>
+        <div class="btns">
+          <a class="btn gold" href="#menu" data-t="cta_menu"></a>
+          <a class="btn line" href="https://maps.app.goo.gl/R9ELbGFu2HUcXCtk8" target="_blank" rel="noopener" data-t="cta_route"></a>
+        </div>
+      </div>
+      <div class="arch"><img src="img/neon-bar.jpg" alt="Gonza'z neon"></div>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="wrap about">
+      <div class="about-pics reveal">
+        <div class="arch"><img src="img/coin-saxo.jpg" alt="" loading="lazy"></div>
+        <div class="inset"><img src="img/saxo-neon.jpg" alt="" loading="lazy"></div>
+      </div>
+      <div class="reveal">
+        <p class="eyebrow" data-t="about_eye"></p>
+        <h2 data-t="about_t"></h2>
+        <div class="deco"></div>
+        <p id="histoire1"></p>
+        <p id="histoire2"></p>
+        <p class="quote" id="citation"></p>
+        <div class="pillars">
+          <div class="pillar"><b>🍸</b><span data-t="p1"></span></div>
+          <div class="pillar"><b>☕</b><span data-t="p2"></span></div>
+          <div class="pillar"><b>🎷</b><span data-t="p3"></span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="menu">
+    <div class="wrap">
+      <div class="center reveal">
+        <p class="eyebrow" data-t="menu_eye"></p>
+        <h2 data-t="menu_t"></h2>
+        <div class="deco"></div>
+      </div>
+      <div class="tabs" id="tabs"></div>
+      <div class="menu-grid">
+        <div class="menu-pic" id="menu-pic"></div>
+        <div>
+          <div id="items"></div>
+          <p class="note" data-t="menu_note"></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="events">
+    <div class="wrap ev-grid">
+      <img class="poster reveal zoom" id="affiche" alt="Live music Gonza'z" loading="lazy">
+      <div class="ev-text reveal">
+        <p class="eyebrow">Live music</p>
+        <h2 data-t="ev_t"></h2>
+        <div class="deco"></div>
+        <span class="free" data-t="free"></span>
+        <p data-t="ev_intro"></p>
+        <ul class="lineup" id="lineup"></ul>
+        <div class="stage"><img src="img/scene.jpg" alt="" loading="lazy"></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="amigos">
+    <div class="wrap">
+      <div class="center reveal">
+        <p class="eyebrow">Amigos 🤗</p>
+        <h2 data-t="gal_t"></h2>
+        <div class="deco"></div>
+      </div>
+      <div class="gal reveal" id="galerie"></div>
+      <p class="center" style="margin-top:28px"><a class="btn line insta" href="https://www.instagram.com/gonzaz_bar/" target="_blank" rel="noopener" data-t="follow"></a></p>
+    </div>
+  </section>
+
+  <section id="visit">
+    <div class="wrap visit">
+      <div class="card reveal">
+        <p class="eyebrow" data-t="visit_eye"></p>
+        <h2 style="font-size:2.2rem" data-t="visit_t"></h2>
+        <h3 data-t="addr"></h3>
+        <p id="adresse" style="white-space:pre-line"></p>
+        <h3 data-t="hours"></h3>
+        <ul class="hours" id="hours"></ul>
+        <p class="small" data-t="hours_note"></p>
+        <p style="margin-top:22px"><a class="btn gold" href="https://maps.app.goo.gl/R9ELbGFu2HUcXCtk8" target="_blank" rel="noopener" data-t="cta_route"></a></p>
+      </div>
+      <div class="map reveal">
+        <iframe title="Map" loading="lazy" src="https://www.google.com/maps?q=Donkersteeg,+9000+Gent&z=17&output=embed"></iframe>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <a class="logo" href="#top">Gonza'z</a>
+    <p>Cocktails · Coffee · Tapas — Donkersteeg, Gent</p>
+    <p><a class="insta" href="https://www.instagram.com/gonzaz_bar/" target="_blank" rel="noopener">Instagram</a></p>
+    <p class="made" data-t="made"></p>
+  </div>
+</footer>
+
+<div class="lb" id="lb"><img alt=""></div>
+
+<script src="data.js"></script>
+<script>
+// Textes fixes de l'interface, dans les 3 langues
+const UI = {
+  nl: {
+    demo: "Conceptwebsite — een voorstel van MBCraft Studio. Foto's van jullie Instagram; prijzen en openingsuren zijn voorbeelden.",
+    admin_link: 'Probeer het beheerpaneel →',
+    nav_about: 'Ons verhaal', nav_menu: 'Menu', nav_events: 'Live muziek', nav_gal: 'Galerij', nav_visit: 'Bezoek ons',
+    kicker: 'Donkersteeg · Gent', cta_menu: 'Bekijk het menu', cta_route: 'Route',
+    about_eye: 'Ons verhaal', about_t: 'Een stukje Caraïben in hartje Gent',
+    p1: 'Cocktails', p2: 'Speciality coffee', p3: 'Live muziek',
+    menu_eye: 'Van ontbijt tot laat', menu_t: 'Ons menu', menu_note: 'Voorbeeldmenu — de echte kaart en prijzen worden toegevoegd.',
+    ev_t: 'Muziek, dans & amigos', free: 'Gratis toegang',
+    ev_intro: 'Cubaanse muziek, flamenco, bossa nova, boleros… Meerdere avonden per maand gaat het kleine podium van Gonza\'z aan. Ze speelden al bij ons:',
+    gal_t: 'De sfeer bij Gonza\'z', follow: 'Volg ons op Instagram',
+    visit_eye: 'Kom langs', visit_t: 'Bezoek ons', addr: 'Adres', hours: 'Openingsuren', hours_note: 'Voorbeelduren, nog te bevestigen.',
+    closed: 'Gesloten', made: 'Conceptontwerp door MBCraft Studio · mbcraft.be'
+  },
+  en: {
+    demo: 'Concept website — a proposal by MBCraft Studio. Photos from your Instagram; prices and opening hours are examples.',
+    admin_link: 'Try the admin panel →',
+    nav_about: 'Our story', nav_menu: 'Menu', nav_events: 'Live music', nav_gal: 'Gallery', nav_visit: 'Visit us',
+    kicker: 'Donkersteeg · Ghent', cta_menu: 'See the menu', cta_route: 'Directions',
+    about_eye: 'Our story', about_t: 'A taste of the Caribbean in the heart of Ghent',
+    p1: 'Cocktails', p2: 'Speciality coffee', p3: 'Live music',
+    menu_eye: 'From breakfast till late', menu_t: 'Our menu', menu_note: 'Sample menu — the real menu and prices will be added.',
+    ev_t: 'Music, dance & amigos', free: 'Free entry',
+    ev_intro: 'Cuban music, flamenco, bossa nova, boleros… Several nights a month, the little Gonza\'z stage lights up. Artists who already played here:',
+    gal_t: 'The Gonza\'z vibe', follow: 'Follow us on Instagram',
+    visit_eye: 'Come by', visit_t: 'Visit us', addr: 'Address', hours: 'Opening hours', hours_note: 'Sample hours, to be confirmed.',
+    closed: 'Closed', made: 'Concept design by MBCraft Studio · mbcraft.be'
+  },
+  fr: {
+    demo: 'Site concept — une proposition de MBCraft Studio. Photos issues de votre Instagram ; prix et horaires sont des exemples.',
+    admin_link: 'Essayer le panel admin →',
+    nav_about: 'Notre histoire', nav_menu: 'La carte', nav_events: 'Live music', nav_gal: 'Galerie', nav_visit: 'Nous trouver',
+    kicker: 'Donkersteeg · Gand', cta_menu: 'Voir la carte', cta_route: 'Itinéraire',
+    about_eye: 'Notre histoire', about_t: 'Un air des Caraïbes au cœur de Gand',
+    p1: 'Cocktails', p2: 'Café de spécialité', p3: 'Live music',
+    menu_eye: 'Du petit-déj jusqu\'à tard', menu_t: 'La carte', menu_note: 'Carte d\'exemple — la vraie carte et les prix seront ajoutés.',
+    ev_t: 'Musique, danse & amigos', free: 'Entrée gratuite',
+    ev_intro: 'Musique cubaine, flamenco, bossa nova, boleros… Plusieurs soirs par mois, la petite scène de Gonza\'z s\'allume. Ils sont déjà passés chez nous :',
+    gal_t: 'L\'ambiance Gonza\'z', follow: 'Suivez-nous sur Instagram',
+    visit_eye: 'Passez nous voir', visit_t: 'Nous trouver', addr: 'Adresse', hours: 'Horaires', hours_note: 'Horaires d\'exemple, à confirmer.',
+    closed: 'Fermé', made: 'Design concept par MBCraft Studio · mbcraft.be'
+  }
+};
+
+const D = GZ_load(), esc = GZ_esc, $ = id => document.getElementById(id);
+let lang = 'nl', cat = 0;
+try { const s = localStorage.getItem('gz_lang'); if (UI[s]) lang = s; } catch (e) {}
+const tr = v => GZ_tr(v, lang);
+
+function renderMenu(){
+  if (!D.carte.length) { $('items').innerHTML = $('menu-pic').innerHTML = $('tabs').innerHTML = ''; return; }
+  if (cat >= D.carte.length) cat = 0;
+  const m = D.carte[cat];
+  $('tabs').innerHTML = D.carte.map((c,i) =>
+    `<button class="tab${i===cat?' on':''}" data-c="${i}">${esc(tr(c.nom))}</button>`).join('');
+  $('menu-pic').innerHTML = m.photo ? `<img src="${esc(m.photo)}" alt="${esc(tr(m.nom))}">` : '';
+  $('items').innerHTML = m.plats.map((x,i) =>
+    `<div class="item" style="animation-delay:${i*60}ms"><h3>${esc(tr(x.n))}</h3><span class="p">€ ${esc(x.p)}</span><p>${esc(tr(x.d))}</p></div>`).join('');
+}
+
+function render(){
+  const t = UI[lang];
+  document.documentElement.lang = lang;
+  document.querySelectorAll('[data-t]').forEach(el => { el.textContent = t[el.dataset.t]; });
+  document.querySelectorAll('#lang button').forEach(b => b.classList.toggle('on', b.dataset.l === lang));
+
+  const ann = tr(D.annonce).trim();
+  $('annonce').hidden = !ann; $('annonce').textContent = ann;
+  $('slogan').textContent = tr(D.slogan);
+  $('histoire1').textContent = tr(D.histoire1);
+  $('histoire2').textContent = tr(D.histoire2);
+  const c = tr(D.citation); $('citation').textContent = c ? '« ' + c + ' »' : '';
+  $('adresse').textContent = D.adresse;
+  document.querySelectorAll('.insta').forEach(a => a.href = D.instagram);
+
+  $('hours').innerHTML = D.horaires.map((h,i) =>
+    `<li><span>${GZ_DAYS[lang][i]}</span><span>${h.ouvert ? esc(h.de) + ' – ' + esc(h.a) : t.closed}</span></li>`).join('');
+  $('lineup').innerHTML = D.events.map(e => `<li><b>${esc(tr(e.n))}</b><span>${esc(tr(e.d))}</span></li>`).join('');
+  renderMenu();
+}
+
+// Éléments qui ne dépendent pas de la langue
+$('affiche').src = D.affiche;
+$('galerie').innerHTML = D.galerie.map((src,i) =>
+  `<div class="g${i===0?' big':''}"><img src="${esc(src)}" alt="Gonza'z" loading="lazy"></div>`).join('');
+D.carte.forEach(m => { if (m.photo) new Image().src = m.photo; });
+
+$('lang').addEventListener('click', e => {
+  const l = e.target.dataset.l; if (!l) return;
+  lang = l; try { localStorage.setItem('gz_lang', l); } catch (err) {}
+  render();
+});
+$('tabs').addEventListener('click', e => {
+  const c = e.target.dataset.c; if (c === undefined) return; cat = +c; renderMenu();
+});
+
+const links = $('links');
+$('burger').addEventListener('click', () => links.classList.toggle('open'));
+links.addEventListener('click', e => { if (e.target.tagName === 'A') links.classList.remove('open'); });
+
+// Lightbox
+const lb = $('lb'), lbImg = lb.querySelector('img');
+document.querySelectorAll('.g img, .zoom').forEach(img => img.addEventListener('click', () => {
+  lbImg.src = img.src; lb.classList.add('open');
+}));
+lb.addEventListener('click', () => lb.classList.remove('open'));
+document.addEventListener('keydown', e => { if (e.key === 'Escape') lb.classList.remove('open'); });
+
+const io = new IntersectionObserver(es => es.forEach(en => { if (en.isIntersecting) { en.target.classList.add('vis'); io.unobserve(en.target); } }), {threshold:.12});
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+render();
+</script>
+</body>
+</html>
