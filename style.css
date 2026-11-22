@@ -705,3 +705,12 @@ nav ul li a { opacity: .9; }
   .process-step { padding: 0 6px; }
   .process-step:last-child { grid-column: 1 / -1; }
 }
+
+/* Menu mobile : le flou de la barre empêchait le menu de couvrir l'écran */
+@media (max-width: 900px) {
+  nav { -webkit-backdrop-filter: none; backdrop-filter: none; background: rgba(44,48,56,.97); }
+  nav ul.open { background: #202329 !important; overflow-y: auto; }
+  .hamburger.open span:nth-child(1) { transform: translateY(9px) rotate(45deg); }
+  .hamburger.open span:nth-child(3) { transform: translateY(-9px) rotate(-45deg); }
+  body.menu-open { overflow: hidden; }
+}
