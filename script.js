@@ -398,21 +398,28 @@ if (contactForm) {
 
 }); // fin DOMContentLoaded
 
-/* ── Vidéo « de A à Z » : bonne version selon l'écran, lecture quand elle est visible ── */
+/* ── Vidéo « de A à Z » : bonne version selon l'écran et la langue, lecture quand elle est visible ── */
 (function () {
   const v = document.getElementById('az-video'), btn = document.getElementById('az-sound');
   if (!v) return;
   const mob = window.matchMedia('(max-width: 700px)').matches;
-  if (mob) v.poster = v.dataset.posterMob;
-  let loaded = false;
-  const load = () => { if (!loaded) { v.src = mob ? v.dataset.mob : v.dataset.desk; loaded = true; } };
+  const curLang = () => localStorage.getItem('lang') || 'fr';
+  const file = (ext, lang) => 'video/de-a-a-z' + (mob ? '-mobile' : '') + (lang === 'fr' ? '' : '-' + lang) + '.' + ext;
+  let loaded = null, visible = false;
+  const setPoster = () => { v.poster = file('jpg', curLang()); };
+  const load = () => {
+    const lang = curLang(); if (loaded === lang) return;
+    v.src = file('mp4', lang); loaded = lang;
+    if (visible) v.play().catch(() => {});
+  };
+  setPoster();
   const io = new IntersectionObserver(es => es.forEach(e => {
-    if (e.isIntersecting) { load(); v.play().catch(() => {}); } else v.pause();
+    visible = e.isIntersecting;
+    if (visible) { load(); v.play().catch(() => {}); } else v.pause();
   }), { threshold: .35 });
   io.observe(v);
   const label = () => {
-    const lang = localStorage.getItem('lang') || 'fr';
-    btn.querySelector('span').textContent = translations[lang][v.muted ? 'video-sound' : 'video-mute'];
+    btn.querySelector('span').textContent = translations[curLang()][v.muted ? 'video-sound' : 'video-mute'];
     btn.classList.toggle('on', !v.muted);
   };
   btn.addEventListener('click', () => {
@@ -420,5 +427,7 @@ if (contactForm) {
     if (!v.muted) { v.currentTime = 0; v.play().catch(() => {}); }
     label();
   });
-  document.querySelectorAll('.lang').forEach(el => el.addEventListener('click', () => setTimeout(label, 0)));
+  document.querySelectorAll('.lang').forEach(el => el.addEventListener('click', () => setTimeout(() => {
+    label(); setPoster(); if (loaded) load();
+  }, 0)));
 })();
