@@ -250,9 +250,7 @@ footer{border-top:1px solid var(--line);padding:34px 0 110px;font-size:.84rem;co
   .gal figure:first-child{grid-row:auto;grid-column:span 2;aspect-ratio:4/3}
   .kids{grid-template-columns:1fr;gap:36px}
   .infos{grid-template-columns:1fr}
-  .tst-grid.swipe{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:12px;margin:0 -16px;padding:0 16px 6px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
-  .tst-grid.swipe::-webkit-scrollbar{display:none}
-  .tst-grid.swipe .tc{flex:0 0 84%;scroll-snap-align:center;animation:none}
+
   .rv-card{grid-template-columns:1fr;padding:34px 22px;text-align:center}
   .mbar{display:grid;grid-template-columns:.8fr .9fr 1.9fr;gap:8px;position:fixed;left:0;right:0;bottom:0;z-index:60;padding:10px 12px calc(10px + env(safe-area-inset-bottom));background:rgba(13,10,8,.95);backdrop-filter:blur(10px);border-top:1px solid var(--line)}
   .mbar a{display:flex;flex-direction:column;align-items:center;gap:3px;text-decoration:none;font-size:.72rem;font-weight:600;padding:8px;border-radius:12px;background:var(--card)}
@@ -263,9 +261,21 @@ footer{border-top:1px solid var(--line);padding:34px 0 110px;font-size:.84rem;co
   .ticker{padding:9px 0;margin-top:4px}
   .ticker div{font-size:.72rem;gap:16px;animation-duration:14s}
   .list{grid-template-columns:1fr}
-  .best{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:12px;margin:0 -16px;padding:0 16px 6px;scrollbar-width:none}
-  .best::-webkit-scrollbar{display:none}
-  .best .bs{flex:0 0 78%;scroll-snap-align:center}
+  /* best-sellers : 3 + 3 petites cartes */
+  .best{grid-template-columns:repeat(3,1fr);gap:8px}
+  .bs{padding:12px 10px 14px;border-radius:14px}
+  .bs .tagline{font-size:.5rem;padding:3px 6px;letter-spacing:.08em}
+  .bs h3{font-size:.78rem;margin:10px 0 4px;line-height:1.15}
+  .bs p{display:none}
+  .bs .cat{font-size:2.2rem;bottom:-8px}
+  /* avis : 3 petites cartes côte à côte */
+  .tst-grid{grid-template-columns:repeat(3,1fr);gap:8px}
+  .tc{padding:12px 10px;border-radius:14px;gap:8px}
+  .tc .st{gap:1px}
+  .tc .st svg{width:10px;height:10px}
+  .tc blockquote{flex:none;font-size:.7rem;line-height:1.45;display:-webkit-box;-webkit-line-clamp:9;-webkit-box-orient:vertical;overflow:hidden}
+  .tc footer{margin-top:auto;flex-direction:column;align-items:flex-start;gap:6px;font-size:.6rem;line-height:1.3}
+  .tc .av{width:24px;height:24px;font-size:.7rem}
   .hero-pics{height:380px}
   .sticker{width:96px;height:96px;font-size:.7rem}
   .carte-side{grid-template-columns:1fr}
@@ -675,73 +685,32 @@ const REVIEWS = [
     fr:"Des burgers au top. Je suis un client fidèle !" }}
 ];
 let tstPage = 0;
-const tstMq = matchMedia('(max-width:600px)');          // téléphone : avis côte à côte, à faire glisser
 const tstGrid = document.getElementById('tstGrid');
-const tstCard = r => `
-    <article class="tc">
-      <div class="st">${'<svg><use href="#i-star"/></svg>'.repeat(r.note)}</div>
-      <blockquote>« ${r.texte[lang]} »</blockquote>
-      <footer><span class="av">${r.nom.charAt(0)}</span><span><b>${r.nom}</b>${r.quand[lang]} · Google${lang !== r.orig ? ' · ' + T[lang].t_trad : ''}</span></footer>
-    </article>`;
-function tstPages(){ return tstMq.matches ? REVIEWS.length : Math.ceil(REVIEWS.length / 3); }
-function tstDots(){
-  document.getElementById('tstDots').innerHTML = Array.from({length: tstPages()}, (_, i) =>
-    `<i class="${i === tstPage ? 'on' : ''}" data-p="${i}"></i>`).join('');
-}
 function renderReviews(){
   const sec = document.getElementById('reviews');
   sec.hidden = REVIEWS.length === 0;
   if (!REVIEWS.length) return;
-  const pages = tstPages();
+  const pages = Math.ceil(REVIEWS.length / 3);
   tstPage = (tstPage + pages) % pages;
-  if (tstMq.matches) {
-    tstGrid.classList.add('swipe');
-    tstGrid.innerHTML = REVIEWS.map(tstCard).join('');
-    tstGo(tstPage, false);
-  } else {
-    tstGrid.classList.remove('swipe');
-    tstGrid.innerHTML = REVIEWS.slice(tstPage * 3, tstPage * 3 + 3).map(tstCard).join('');
-    [...tstGrid.children].forEach((c, i) => c.style.animationDelay = (i * 80) + 'ms');
-  }
+  tstGrid.innerHTML = REVIEWS.slice(tstPage * 3, tstPage * 3 + 3).map((r, i) => `
+    <article class="tc" style="animation-delay:${i * 80}ms">
+      <div class="st">${'<svg><use href="#i-star"/></svg>'.repeat(r.note)}</div>
+      <blockquote>« ${r.texte[lang]} »</blockquote>
+      <footer><span class="av">${r.nom.charAt(0)}</span><span><b>${r.nom}</b>${r.quand[lang]} · Google${lang !== r.orig ? ' · ' + T[lang].t_trad : ''}</span></footer>
+    </article>`).join('');
   document.getElementById('tstNav').style.display = pages > 1 ? '' : 'none';
-  tstDots();
+  document.getElementById('tstDots').innerHTML = Array.from({length: pages}, (_, i) =>
+    `<i class="${i === tstPage ? 'on' : ''}" data-p="${i}"></i>`).join('');
 }
-function tstGo(i, smooth = true){
-  const c = tstGrid.children[i]; if (!c) return;
-  tstGrid.scrollTo({left: c.offsetLeft - tstGrid.offsetLeft - (tstGrid.clientWidth - c.offsetWidth) / 2, behavior: smooth ? 'smooth' : 'auto'});
-}
-function tstNext(){
-  tstPage = (tstPage + 1) % tstPages();
-  if (tstMq.matches) { tstGo(tstPage); tstDots(); } else renderReviews();
-}
-/* Défilement automatique toutes les 5 s (pause au survol / quand on touche) */
-let tstTimer = null, tstHover = false, tstTouch = 0;
+/* Défilement automatique : 3 avis, puis les 3 suivants, toutes les 5 s (pause au survol) */
+let tstTimer = null, tstHover = false;
 function tstAuto(){
   clearInterval(tstTimer);
-  if (tstPages() > 1) tstTimer = setInterval(() => {
-    if (!tstHover && !document.hidden && Date.now() - tstTouch > 6000) tstNext();
-  }, 5000);
+  if (REVIEWS.length > 3) tstTimer = setInterval(() => { if (!tstHover && !document.hidden) { tstPage++; renderReviews(); } }, 5000);
 }
 tstGrid.addEventListener('mouseenter', () => tstHover = true);
 tstGrid.addEventListener('mouseleave', () => tstHover = false);
-tstGrid.addEventListener('touchstart', () => tstTouch = Date.now(), {passive:true});
-let tstScrollT;
-tstGrid.addEventListener('scroll', () => {          // met à jour les points quand on glisse au doigt
-  if (!tstMq.matches) return;
-  clearTimeout(tstScrollT);
-  tstScrollT = setTimeout(() => {
-    const w = tstGrid.children[0] ? tstGrid.children[0].offsetWidth + 12 : 1;
-    const i = Math.round(tstGrid.scrollLeft / w);
-    if (i !== tstPage) { tstPage = Math.min(i, REVIEWS.length - 1); tstDots(); }
-  }, 80);
-}, {passive:true});
-document.getElementById('tstDots').onclick = e => {
-  if (!e.target.dataset.p) return;
-  tstPage = +e.target.dataset.p;
-  if (tstMq.matches) { tstGo(tstPage); tstDots(); } else renderReviews();
-  tstAuto();
-};
-tstMq.addEventListener('change', () => { tstPage = 0; renderReviews(); tstAuto(); });
+document.getElementById('tstDots').onclick = e => { if (e.target.dataset.p) { tstPage = +e.target.dataset.p; renderReviews(); tstAuto(); } };
 tstAuto();
 /* Lien d'avis Google (ouvre directement « Écrire un avis » sur la fiche Abdijstraat 196) */
 const REVIEW_URL = 'https://search.google.com/local/writereview?placeid=ChIJD6f5flb3w0cROM55awdE1Jo';
