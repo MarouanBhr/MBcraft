@@ -82,3 +82,9 @@ html.t2 #tarifs [style*="repeat(3,1fr)"] .service-card .service-icon svg { strok
 @media (max-width: 900px) {
   html.t2 .services-grid, html.t2 .process-grid, html.t2 #tarifs [style*="repeat(3,1fr)"] { gap: 10px !important; }
 }
+
+/* ═══ Perle & Or : cartes services foncées, texte blanc ═══ */
+html.t1 .services-grid .service-card { background: #1f2329 !important; border-color: rgba(201,168,76,.15) !important;
+  --creme: #f5f0e8; --texte-2: rgba(245,240,232,.75); --or: #c9a84c; --acc: #c9a84c; color: #f5f0e8; }
+html.t1 .services-grid .service-card:hover { background: #262a31 !important; border-color: #c9a84c !important; }
+html.t1 .services-grid .service-card :is(.service-name, h3) { color: #fff !important; }

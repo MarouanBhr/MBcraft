@@ -20,7 +20,7 @@
 <link rel="stylesheet" href="../../style.css?v=20">
 <link rel="stylesheet" href="../../cinematic.css?v=10">
 <link rel="stylesheet" href="themes.css">
-<script>(function(){var t=(location.search.match(/t=(\d)/)||[])[1]||"2";if(t!=="0")document.documentElement.classList.add("t"+t);})();</script>
+<script>(function(){var t=(location.search.match(/t=(\d)/)||[])[1]||"1";if(t!=="0")document.documentElement.classList.add("t"+t);})();</script>
 <script>
 (function(){var d=document.documentElement;if(!matchMedia('(prefers-reduced-motion: reduce)').matches){d.classList.add('cine');}})();
 </script>
@@ -256,7 +256,7 @@
   <button data-t="0">Actuel</button><button data-t="1">Perle &amp; Or</button><button data-t="2">Glacier</button><button data-t="3">Sauge</button>
 </div>
 <script>
-(function(){const h=document.documentElement;let T=(location.search.match(/t=(\d)/)||[])[1]||'2';
+(function(){const h=document.documentElement;let T=(location.search.match(/t=(\d)/)||[])[1]||'1';
  const bs=document.querySelectorAll('#theme-switch button');const upd=()=>bs.forEach(b=>b.classList.toggle('on',b.dataset.t===T));
  bs.forEach(b=>b.onclick=()=>{T=b.dataset.t;h.classList.remove('t1','t2','t3');if(T!=='0')h.classList.add('t'+T);upd();history.replaceState(null,'','?t='+T+location.hash)});upd();})();
 </script>
