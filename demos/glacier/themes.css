@@ -103,3 +103,7 @@ html.t1 .form-group :is(input, select, textarea):focus { border-color: #c9a84c !
 html.t1 .form-group :is(input, textarea)::placeholder { color: rgba(245,240,232,.45) !important; }
 html.t1 .form-group select option { background: #1f2329 !important; color: #f5f0e8 !important; }
 html.t1 .form-group select { color-scheme: dark; }
+/* Icônes au trait à la place des emojis */
+.contact-detail-icon { color: var(--or, #c9a84c); display: inline-flex; align-items: center; justify-content: center; }
+html.t1 #contact .contact-detail-icon { color: #a8832a; }
+.chat-icon { color: #c9a84c; display: flex; justify-content: center; }
