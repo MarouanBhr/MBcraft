@@ -91,3 +91,9 @@ html.t1 .services-grid .service-card :is(.service-name, h3) { color: #fff !impor
 /* Perle & Or : cercles de la méthode foncés, chiffres clairs */
 html.t1 .step-circle { background: #1f2329 !important; border-color: #c9a84c !important; color: #f5f0e8 !important; }
 html.t1 .step-circle * { color: #f5f0e8 !important; }
+/* Perle & Or : cartes « Ce qui influence le prix » foncées */
+html.t1 #tarifs [style*="repeat(3,1fr)"] .service-card { background: #1f2329 !important; border-color: rgba(201,168,76,.15) !important;
+  --creme: #f5f0e8; --texte-2: rgba(245,240,232,.75); --or: #c9a84c; --acc: #c9a84c; color: #f5f0e8; }
+html.t1 #tarifs [style*="repeat(3,1fr)"] .service-card:hover { background: #262a31 !important; border-color: #c9a84c !important; }
+html.t1 #tarifs [style*="repeat(3,1fr)"] .service-card :is(.service-name, h3) { color: #fff !important; }
+html.t1 #tarifs [style*="repeat(3,1fr)"] .service-card p { color: rgba(245,240,232,.75) !important; }
