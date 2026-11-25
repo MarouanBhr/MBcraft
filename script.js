@@ -309,7 +309,8 @@ document.querySelectorAll('.lang').forEach(el => {
 });
 
 // Langue par défaut
-setLang(localStorage.getItem('lang') || 'fr');
+if (!['fr', 'en', 'nl'].includes(localStorage.getItem('lang'))) localStorage.setItem('lang', 'fr');
+setLang(localStorage.getItem('lang'));
 
 document.addEventListener('DOMContentLoaded', () => {
 
