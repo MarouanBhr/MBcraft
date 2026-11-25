@@ -97,13 +97,21 @@ html.t1 #tarifs [style*="repeat(3,1fr)"] .service-card { background: #1f2329 !im
 html.t1 #tarifs [style*="repeat(3,1fr)"] .service-card:hover { background: #262a31 !important; border-color: #c9a84c !important; }
 html.t1 #tarifs [style*="repeat(3,1fr)"] .service-card :is(.service-name, h3) { color: #fff !important; }
 html.t1 #tarifs [style*="repeat(3,1fr)"] .service-card p { color: rgba(245,240,232,.75) !important; }
-/* Perle & Or : champs du formulaire foncés, texte clair */
-html.t1 .form-group :is(input, select, textarea) { background: #1f2329 !important; border-color: rgba(201,168,76,.25) !important; color: #f5f0e8 !important; }
-html.t1 .form-group :is(input, select, textarea):focus { border-color: #c9a84c !important; outline: none; }
-html.t1 .form-group :is(input, textarea)::placeholder { color: rgba(245,240,232,.45) !important; }
-html.t1 .form-group select option { background: #1f2329 !important; color: #f5f0e8 !important; }
-html.t1 .form-group select { color-scheme: dark; }
+/* Perle & Or : formulaire en panneau foncé bordé d'or, champs clairs */
+html.t1 #contact-form { background: #1f2329; border: 1px solid #c9a84c; padding: 40px; box-shadow: 0 0 0 6px rgba(201,168,76,.08), 0 20px 50px rgba(0,0,0,.18); }
+html.t1 #contact .form-group label { color: #c9a84c !important; }
+html.t1 .form-group :is(input, select, textarea) { background: #f5f0e8 !important; border: 1px solid rgba(201,168,76,.55) !important; color: #1d2229 !important; }
+html.t1 .form-group :is(input, select, textarea):focus { border-color: #c9a84c !important; outline: none; box-shadow: 0 0 0 3px rgba(201,168,76,.3); }
+html.t1 .form-group :is(input, textarea)::placeholder { color: rgba(29,34,41,.45) !important; }
+html.t1 .form-group select option { background: #f5f0e8 !important; color: #1d2229 !important; }
+html.t1 .form-group select { color-scheme: light; }
+html.t1 #contact-form button[type="submit"] { border: 1px solid #c9a84c !important; }
+@media (max-width: 600px) { html.t1 #contact-form { padding: 24px 18px; } }
 /* Icônes au trait à la place des emojis */
 .contact-detail-icon { color: var(--or, #c9a84c); display: inline-flex; align-items: center; justify-content: center; }
 html.t1 #contact .contact-detail-icon { color: #a8832a; }
 .chat-icon { color: #c9a84c; display: flex; justify-content: center; }
+
+/* Perle & Or : icône bulle de l'encadré « Un simple échange suffit » sur fond foncé */
+html.t1 .chat-icon { background: #1f2329; border: 1px solid #c9a84c; color: #c9a84c; width: 86px; height: 86px; border-radius: 50%; align-items: center; flex: none; }
+html.t1 .chat-icon svg { width: 40px; height: 40px; }
