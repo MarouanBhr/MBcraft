@@ -1,0 +1,782 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BFC — Burgers & Fried Chicken</title>
+<meta name="description" content="BFC — Burgers & Fried Chicken. Burgers, poulet croustillant, sides. Sur place ou à emporter : commande par téléphone, à récupérer au magasin.">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Archivo+Black&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0d0a08; --bg-2:#17110d; --card:#1e1712; --line:rgba(245,166,35,.18);
+  --yellow:#f5a623; --yellow-2:#ffc94d; --red:#e0262b; --wine:#8c1d2a;
+  --cream:#fff4e2; --muted:#b9a993;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--cream);font-family:Inter,system-ui,sans-serif;line-height:1.6;overflow-x:hidden}
+a{color:inherit}
+img{display:block;max-width:100%}
+.wrap{width:min(1160px,100% - 32px);margin-inline:auto}
+.h{font-family:"Archivo Black",sans-serif;text-transform:uppercase;letter-spacing:.02em;line-height:1.05}
+.marker{font-family:"Permanent Marker",cursive}
+.kicker{font-size:.78rem;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:var(--yellow)}
+svg.i{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
+
+/* bandeau démo */
+.demo{background:var(--yellow);color:#1a1108;font-size:.8rem;text-align:center;padding:6px 16px;font-weight:600}
+
+/* damier façon écrans menu */
+.checker{height:14px;background:
+  linear-gradient(90deg,var(--yellow) 50%,transparent 0) 0 0/28px 7px repeat-x,
+  linear-gradient(90deg,transparent 50%,var(--yellow) 0) 0 7px/28px 7px repeat-x;opacity:.9}
+
+/* nav */
+header{position:sticky;top:0;z-index:50;background:rgba(13,10,8,.88);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.nav{display:flex;align-items:center;justify-content:space-between;height:66px;gap:16px}
+.logo{display:flex;align-items:baseline;gap:10px;text-decoration:none}
+.logo b{font-family:"Permanent Marker",cursive;font-size:2rem;color:var(--yellow);font-weight:400;line-height:1}
+.logo span{font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+.links{display:flex;gap:26px;list-style:none}
+.links a{text-decoration:none;font-size:.92rem;font-weight:500;color:var(--muted);transition:color .2s}
+.links a:hover{color:var(--yellow)}
+.right{display:flex;align-items:center;gap:10px}
+.lang{display:flex;border:1px solid var(--line);border-radius:999px;overflow:hidden}
+.lang button{background:none;border:0;color:var(--muted);font:700 .74rem Inter;padding:7px 11px;cursor:pointer}
+.lang button.on{background:var(--yellow);color:#1a1108}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:13px 24px;border-radius:999px;text-decoration:none;font-weight:700;font-size:.95rem;border:0;cursor:pointer;transition:transform .2s,box-shadow .2s,background .2s}
+.btn:hover{transform:translateY(-2px)}
+.btn.y{background:var(--yellow);color:#1a1108;box-shadow:0 10px 30px rgba(245,166,35,.28)}
+.btn.y:hover{background:var(--yellow-2)}
+.btn.o{border:1.5px solid rgba(255,244,226,.5);color:var(--cream)}
+.btn.o:hover{border-color:var(--yellow);color:var(--yellow)}
+.btn.sm{padding:9px 18px;font-size:.85rem}
+.menu-btn{display:none;background:none;border:0;color:var(--cream);width:42px;height:42px;cursor:pointer}
+.menu-btn svg{width:26px;height:26px}
+
+/* hero */
+.hero{position:relative;padding:70px 0 80px;overflow:hidden}
+.hero::before{content:"";position:absolute;width:700px;height:700px;left:-200px;top:-200px;background:radial-gradient(circle,rgba(245,166,35,.16),transparent 65%);pointer-events:none}
+.hero-grid{position:relative;display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center}
+.hero h1{margin:16px 0 6px}
+.hero h1 .marker{display:block;font-size:clamp(5rem,14vw,9.5rem);color:var(--yellow);line-height:.9;text-shadow:0 0 30px rgba(245,166,35,.35)}
+.hero h1 .h{display:block;font-size:clamp(1.5rem,3.6vw,2.4rem);margin-top:14px}
+.hero h1 .h em{font-style:normal;color:var(--red)}
+.hero p.sub{color:var(--muted);max-width:470px;margin:16px 0 28px;font-size:1.05rem}
+.btns{display:flex;gap:12px;flex-wrap:wrap}
+.modes{display:flex;gap:18px;flex-wrap:wrap;margin-top:30px;font-size:.88rem;color:var(--muted)}
+.modes span{display:flex;align-items:center;gap:7px}
+.modes svg{color:var(--yellow)}
+.hero-pics{position:relative;height:560px}
+.hero-pics figure{position:absolute;overflow:hidden;border-radius:22px;box-shadow:0 30px 80px rgba(0,0,0,.6)}
+.hero-pics img{width:100%;height:100%;object-fit:cover}
+.hero-pics .p1{inset:0 22% 0 0;border:3px solid var(--yellow)}
+.hero-pics .p2{width:44%;height:52%;right:0;bottom:-20px;border:3px solid var(--red);transform:rotate(3deg)}
+.sticker{position:absolute;top:24px;right:4%;z-index:3;background:var(--red);color:#fff;width:118px;height:118px;border-radius:50%;display:grid;place-items:center;text-align:center;font-family:"Archivo Black";font-size:.82rem;line-height:1.15;text-transform:uppercase;transform:rotate(12deg);box-shadow:0 10px 30px rgba(224,38,43,.45);padding:12px}
+
+/* bande défilante */
+.ticker{background:var(--yellow);color:#1a1108;overflow:hidden;white-space:nowrap;padding:14px 0;transform:rotate(-1.2deg);margin:10px -10px 0}
+.ticker div{display:inline-flex;gap:38px;animation:slide 30s linear infinite;font-family:"Archivo Black";text-transform:uppercase;font-size:1.05rem}
+.ticker i{font-style:normal;color:var(--wine)}
+@keyframes slide{to{transform:translateX(-50%)}}
+
+section{padding:96px 0}
+.head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;margin-bottom:40px}
+.head h2{font-size:clamp(2rem,5vw,3.2rem);margin-top:10px}
+.head h2 .marker{color:var(--yellow);font-weight:400;text-transform:none}
+.head p{color:var(--muted);max-width:420px}
+
+/* best-sellers */
+.best{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.bs{position:relative;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:26px 24px;overflow:hidden;transition:transform .25s,border-color .25s}
+.bs:hover{transform:translateY(-4px);border-color:var(--yellow)}
+.bs .tagline{display:inline-block;font-size:.68rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;background:var(--red);color:#fff;padding:4px 10px;border-radius:6px;transform:rotate(-3deg)}
+.bs h3{font-size:1.5rem;margin:16px 0 6px}
+.bs p{color:var(--muted);font-size:.92rem}
+.bs .cat{position:absolute;right:-6px;bottom:-14px;font-family:"Permanent Marker";font-size:4.2rem;color:rgba(245,166,35,.07);line-height:1}
+
+/* carte */
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:28px}
+.tabs button{background:var(--card);border:1px solid var(--line);color:var(--muted);font:600 .9rem Inter;padding:10px 18px;border-radius:999px;cursor:pointer;transition:.2s}
+.tabs button:hover{color:var(--cream)}
+.tabs button.on{background:var(--yellow);color:#1a1108;border-color:var(--yellow)}
+.carte{display:grid;grid-template-columns:1fr 380px;gap:36px;align-items:start}
+.list{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.item{display:flex;justify-content:space-between;align-items:center;gap:12px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 20px;animation:pop .35s ease both}
+@keyframes pop{from{opacity:0;transform:translateY(8px)}}
+.item.full{grid-column:1/-1}
+.item b{font-family:"Archivo Black";font-weight:400;text-transform:uppercase;font-size:1rem;letter-spacing:.02em}
+.item small{display:block;color:var(--muted);font-size:.8rem;margin-top:2px}
+.badge{font-size:.64rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:4px 8px;border-radius:6px;white-space:nowrap}
+.badge.r{background:var(--red);color:#fff}
+.badge.y{background:rgba(245,166,35,.15);color:var(--yellow)}
+.carte-side{position:sticky;top:90px}
+.screen{border-radius:18px;overflow:hidden;border:3px solid var(--yellow);box-shadow:0 20px 60px rgba(0,0,0,.5)}
+.screen{background:#000}
+.screen img{width:100%;height:auto}
+.duo{margin-top:16px;background:var(--yellow);color:#1a1108;border-radius:18px;padding:22px}
+.duo .h{font-size:1.6rem}
+.duo p{font-size:.9rem;margin-top:6px;font-weight:500}
+.note{color:var(--muted);font-size:.82rem;margin-top:18px}
+
+/* ambiance */
+.amb{background:var(--bg-2);position:relative}
+.gal{display:grid;grid-template-columns:1.2fr 1fr 1fr;grid-template-rows:280px auto;gap:14px}
+.gal figure{position:relative;overflow:hidden;border-radius:18px;background:#000}
+.gal figure:first-child{grid-row:span 2}
+.gal figure.wide{grid-column:span 2;aspect-ratio:1196/669}
+.gal img{width:100%;height:100%;object-fit:cover;transition:transform .6s}
+.gal figure:hover img{transform:scale(1.05)}
+.gal figcaption{position:absolute;left:14px;bottom:14px;background:rgba(13,10,8,.75);backdrop-filter:blur(6px);font-size:.8rem;font-weight:600;padding:6px 12px;border-radius:999px}
+
+/* kids */
+.kids{display:grid;grid-template-columns:.9fr 1.1fr;gap:60px;align-items:center}
+.kids-img{border-radius:24px;overflow:hidden;border:3px solid #7b5cff;box-shadow:0 0 0 10px rgba(123,92,255,.12)}
+.kids-img img{width:100%;aspect-ratio:4/5;object-fit:cover}
+.kids h2{font-size:clamp(2rem,5vw,3.2rem);margin:10px 0 16px}
+.kids h2 span{color:#ff5fa8}
+.kids p{color:var(--muted);margin-bottom:22px}
+.points{list-style:none;display:grid;gap:12px;margin-bottom:28px}
+.points li{display:flex;gap:12px;align-items:center}
+.points svg{color:var(--yellow)}
+
+/* infos */
+.infos{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.box{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:28px}
+.box .ic{width:46px;height:46px;border-radius:12px;background:rgba(245,166,35,.12);color:var(--yellow);display:grid;place-items:center;margin-bottom:16px}
+.box h3{font-size:1.15rem;margin-bottom:12px}
+.box p,.box li{color:var(--muted);font-size:.93rem}
+.hours{list-style:none}
+.hours li{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px dashed var(--line)}
+.hours li:last-child{border:0}
+.hours li.today{color:var(--yellow);font-weight:600}
+.open{display:inline-flex;align-items:center;gap:8px;font-size:.8rem;font-weight:600;margin-bottom:12px}
+.open i{width:8px;height:8px;border-radius:50%;background:#3ddc84;box-shadow:0 0 10px #3ddc84}
+.box .btn{margin-top:18px}
+
+/* final */
+.cta{text-align:center;padding:100px 0;position:relative;overflow:hidden;background:radial-gradient(ellipse at center,rgba(224,38,43,.22),transparent 60%)}
+.cta .marker{font-size:clamp(3rem,10vw,6rem);color:var(--red);text-shadow:0 0 8px #ff4b4b,0 0 30px rgba(224,38,43,.8),0 0 70px rgba(224,38,43,.5);line-height:1}
+.cta p{color:var(--muted);margin:16px auto 28px;max-width:440px}
+
+footer{border-top:1px solid var(--line);padding:34px 0 110px;font-size:.84rem;color:var(--muted)}
+.foot{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;align-items:center}
+.foot .logo b{font-size:1.5rem}
+.soc{display:flex;gap:10px}
+.soc a{width:40px;height:40px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;transition:.2s}
+.soc a:hover{border-color:var(--yellow);color:var(--yellow)}
+.made{margin-top:18px;font-size:.76rem;opacity:.7}
+
+.steps{list-style:none;display:grid;gap:10px;margin:18px 0}
+.steps li{display:flex;gap:12px;align-items:center;font-size:.92rem;color:var(--cream)}
+.steps b{width:26px;height:26px;border-radius:50%;background:var(--yellow);color:#1a1108;display:grid;place-items:center;font-size:.8rem;flex:none}
+.tel-big{display:flex;align-items:center;justify-content:center;gap:10px;background:var(--yellow);color:#1a1108;text-decoration:none;font-family:"Archivo Black";font-size:1.35rem;padding:14px;border-radius:14px;transition:background .2s}
+.tel-big:hover{background:var(--yellow-2)}
+.pickup{display:flex;gap:8px;align-items:center;margin-top:12px;font-size:.84rem!important;color:var(--yellow)!important;font-weight:600}
+.or{display:flex;align-items:center;gap:12px;margin:12px 0;font-size:.78rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--muted)}
+.or::before,.or::after{content:"";flex:1;height:1px;background:var(--line)}
+.ta-big{display:flex;align-items:center;justify-content:center;gap:10px;border:1.5px solid var(--yellow);color:var(--yellow);text-decoration:none;font-weight:700;padding:13px;border-radius:14px;transition:.2s}
+.ta-big:hover{background:var(--yellow);color:#1a1108}
+.hint{margin-top:12px;font-size:.84rem;color:var(--yellow);font-weight:600}
+
+/* visionneuse photos */
+.zoomable{cursor:zoom-in}
+.lb{position:fixed;inset:0;z-index:100;background:rgba(5,4,3,.97);display:none;align-items:center;justify-content:center;padding:60px 70px;}
+.lb.open{display:flex;animation:lbIn .25s ease}
+@keyframes lbIn{from{opacity:0}}
+.lb img{max-width:100%;max-height:100%;object-fit:contain;border-radius:12px;box-shadow:0 30px 80px rgba(0,0,0,.6)}
+.lb button{position:absolute;background:rgba(255,244,226,.1);border:1px solid rgba(255,244,226,.2);color:var(--cream);width:48px;height:48px;border-radius:50%;display:grid;place-items:center;cursor:pointer;transition:background .2s}
+.lb button:hover{background:var(--yellow);color:#1a1108}
+.lb .x{top:16px;right:16px}
+@media (max-width:600px){.lb{padding:70px 10px}}
+
+/* avis */
+.review{padding:70px 0 0}
+.rv-card{position:relative;overflow:hidden;background:linear-gradient(135deg,var(--card),#2a1d12);border:1px solid var(--line);border-radius:26px;padding:48px 40px;display:grid;grid-template-columns:1.2fr 1fr;gap:40px;align-items:center}
+.rv-card::after{content:"★";position:absolute;right:-30px;top:-70px;font-size:16rem;color:rgba(245,166,35,.05);line-height:1;pointer-events:none}
+.rv-card h2{font-size:clamp(1.8rem,4.5vw,2.8rem);margin:10px 0 14px}
+.rv-card p{color:var(--muted)}
+.rv-side{text-align:center;position:relative;z-index:1}
+.stars{display:inline-flex;gap:6px;margin-bottom:10px}
+.stars a{color:var(--yellow);transition:color .15s,transform .15s;display:block}
+.stars svg{width:44px;height:44px;fill:currentColor;stroke:none}
+.stars a:hover ~ a{color:rgba(245,166,35,.3)}
+.stars a:hover{transform:scale(1.15)}
+.rv-hint{display:block;font-size:.82rem;color:var(--muted);margin-bottom:22px}
+.g-note{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:14px;font-size:.8rem;color:var(--muted)}
+
+/* avis clients */
+.tst{padding:90px 0 0}
+.tst-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.tc{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:26px;display:flex;flex-direction:column;gap:14px;animation:pop .4s ease both}
+.tc .st{display:flex;gap:3px;color:var(--yellow)}
+.tc .st svg{width:18px;height:18px;fill:currentColor;stroke:none}
+.tc blockquote{color:var(--cream);font-size:.96rem;line-height:1.65;flex:1}
+.tc footer{display:flex;align-items:center;gap:12px;padding:0;border:0;font-size:.85rem;color:var(--muted)}
+.tc .av{width:40px;height:40px;border-radius:50%;background:var(--yellow);color:#1a1108;display:grid;place-items:center;font-weight:700;flex:none}
+.tc b{display:block;color:var(--cream);font-weight:600}
+.tst-nav{display:flex;align-items:center;justify-content:center;gap:14px;margin-top:26px}
+.tst-nav button{display:none;width:42px;height:42px;border-radius:50%;background:var(--card);border:1px solid var(--line);color:var(--cream);display:grid;place-items:center;cursor:pointer;transition:.2s}
+.tst-nav button:hover{background:var(--yellow);color:#1a1108}
+.tst-nav .pv svg{transform:scaleX(-1)}
+.dots{display:flex;gap:8px}
+.dots i{width:9px;height:9px;border-radius:50%;background:var(--line);cursor:pointer;transition:.2s}
+.dots i.on{background:var(--yellow);width:24px;border-radius:5px}
+.src{text-align:center;font-size:.78rem;color:var(--muted);margin-top:14px}
+
+/* barre mobile */
+.mbar{display:none}
+
+.rv{opacity:0;transform:translateY(24px);transition:opacity .7s,transform .7s}
+.rv.in{opacity:1;transform:none}
+
+@media (max-width:960px){
+  .links{display:none}
+  .links.show{display:flex;flex-direction:column;position:absolute;top:66px;left:0;right:0;background:var(--bg);padding:20px 16px;border-bottom:1px solid var(--line);gap:16px}
+  .menu-btn{display:grid;place-items:center}
+  .right .btn{display:none}
+  .hero{padding:40px 0 60px}
+  .hero-grid{grid-template-columns:1fr;gap:40px}
+  .hero-pics{height:440px}
+  .best{grid-template-columns:1fr 1fr}
+  .carte{grid-template-columns:1fr}
+  .carte-side{position:static;display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .duo{margin:0}
+  .gal{grid-template-columns:1fr 1fr;grid-template-rows:auto}
+  .gal figure{aspect-ratio:3/4}
+  .gal figure:first-child{grid-row:auto;grid-column:span 2;aspect-ratio:4/3}
+  .kids{grid-template-columns:1fr;gap:36px}
+  .infos{grid-template-columns:1fr}
+  .tst-grid{grid-template-columns:1fr}
+  .rv-card{grid-template-columns:1fr;padding:34px 22px;text-align:center}
+  .mbar{display:grid;grid-template-columns:.8fr .9fr 1.9fr;gap:8px;position:fixed;left:0;right:0;bottom:0;z-index:60;padding:10px 12px calc(10px + env(safe-area-inset-bottom));background:rgba(13,10,8,.95);backdrop-filter:blur(10px);border-top:1px solid var(--line)}
+  .mbar a{display:flex;flex-direction:column;align-items:center;gap:3px;text-decoration:none;font-size:.72rem;font-weight:600;padding:8px;border-radius:12px;background:var(--card)}
+  .mbar a.go{background:var(--yellow);color:#1a1108;flex-direction:row;justify-content:center;font-size:.9rem}
+}
+@media (max-width:600px){
+  section{padding:70px 0}
+  .ticker{padding:9px 0;margin-top:4px}
+  .ticker div{font-size:.72rem;gap:16px;animation-duration:14s}
+  .best,.list{grid-template-columns:1fr}
+  .hero-pics{height:380px}
+  .sticker{width:96px;height:96px;font-size:.7rem}
+  .carte-side{grid-template-columns:1fr}
+  .logo span{display:none}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+
+<!-- Icônes au trait -->
+<svg width="0" height="0" style="position:absolute">
+  <symbol id="i-bag" viewBox="0 0 24 24"><path d="M6 7h12l1 13H5L6 7z"/><path d="M9 7a3 3 0 0 1 6 0"/></symbol>
+  <symbol id="i-seat" viewBox="0 0 24 24"><path d="M3 10h18M5 10v10M19 10v10M8 10V5h8v5"/></symbol>
+  <symbol id="i-phone" viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s-7-6.2-7-12a7 7 0 0 1 14 0c0 5.8-7 12-7 12z"/><circle cx="12" cy="9" r="2.5"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></symbol>
+  <symbol id="i-insta" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".6"/></symbol>
+  <symbol id="i-fb" viewBox="0 0 24 24"><path d="M14 8h3V4h-3a4 4 0 0 0-4 4v3H7v4h3v6h4v-6h3l1-4h-4V8z"/></symbol>
+  <symbol id="i-tiktok" viewBox="0 0 24 24"><path d="M14 3v11a4 4 0 1 1-4-4M14 3c.5 3 2.5 5 6 5"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+  <symbol id="i-star" viewBox="0 0 24 24"><path d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.4l-5.9 3.1 1.2-6.5L2.5 9.4l6.6-.9z"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+</svg>
+
+<div class="demo" data-t="demo"></div>
+
+<header>
+  <div class="wrap nav">
+    <a class="logo" href="#top"><b>BFC</b><span>Burgers & Fried Chicken</span></a>
+    <ul class="links" id="links">
+      <li><a href="#best" data-t="n_best"></a></li>
+      <li><a href="#carte" data-t="n_carte"></a></li>
+      <li><a href="#ambiance" data-t="n_amb"></a></li>
+      <li><a href="#kids" data-t="n_kids"></a></li>
+      <li><a href="#infos" data-t="n_infos"></a></li>
+    </ul>
+    <div class="right">
+      <div class="lang"><button data-l="nl" class="on">NL</button><button data-l="fr">FR</button></div>
+      <a class="btn o sm" data-takeaway><svg class="i"><use href="#i-bag"/></svg><span>Takeaway</span></a>
+      <a class="btn y sm" data-tel><svg class="i"><use href="#i-phone"/></svg><span data-t="order"></span></a>
+      <button class="menu-btn" id="mb" aria-label="Menu"><svg class="i"><use href="#i-menu"/></svg></button>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+  <!-- HERO -->
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div class="rv">
+        <div class="kicker" data-t="h_kick"></div>
+        <h1>
+          <span class="marker">BFC</span>
+          <span class="h">Burgers <em>&</em> Fried Chicken</span>
+        </h1>
+        <p class="sub" data-t="h_sub"></p>
+        <div class="btns">
+          <a class="btn y" data-tel><svg class="i"><use href="#i-phone"/></svg><span data-t="order_now"></span></a>
+          <a class="btn o" data-takeaway><svg class="i"><use href="#i-bag"/></svg><span data-t="ta_btn"></span></a>
+          <a class="btn o" href="#carte"><span data-t="see_menu"></span><svg class="i"><use href="#i-arrow"/></svg></a>
+        </div>
+        <p class="hint" data-t="hint"></p>
+        <div class="modes">
+          <span><svg class="i"><use href="#i-seat"/></svg><span data-t="m1"></span></span>
+          <span><svg class="i"><use href="#i-bag"/></svg><span data-t="m2"></span></span>
+          <span><svg class="i"><use href="#i-phone"/></svg><span data-t="m3"></span></span>
+        </div>
+      </div>
+      <div class="hero-pics rv">
+        <div class="sticker" data-t="sticker"></div>
+        <figure class="p1"><img src="img/burger-bar-table.jpg" alt="Le Burger Bar de BFC"></figure>
+        <figure class="p2"><img src="img/neon-hungry.jpg" alt="Néon Hungry"></figure>
+      </div>
+    </div>
+  </section>
+
+  <div class="ticker" aria-hidden="true"><div id="tk"></div></div>
+
+  <!-- BEST-SELLERS -->
+  <section id="best">
+    <div class="wrap">
+      <div class="head rv">
+        <div><div class="kicker" data-t="b_kick"></div><h2 class="h" data-t="b_title"></h2></div>
+        <p data-t="b_txt"></p>
+      </div>
+      <div class="best" id="bestList"></div>
+    </div>
+  </section>
+
+  <div class="checker"></div>
+
+  <!-- CARTE -->
+  <section id="carte">
+    <div class="wrap">
+      <div class="head rv">
+        <div><div class="kicker" data-t="c_kick"></div><h2 class="h" data-t="c_title"></h2></div>
+        <p data-t="c_txt"></p>
+      </div>
+      <div class="tabs" id="tabs"></div>
+      <div class="carte">
+        <div>
+          <div class="list" id="list"></div>
+          <p class="note" data-t="c_note"></p>
+        </div>
+        <aside class="carte-side">
+          <div class="screen"><img id="screenImg" src="img/menu-chicken.jpg" alt="Écran menu en magasin"></div>
+          <div class="duo">
+            <div class="h" data-t="duo_t"></div>
+            <p data-t="duo_p"></p>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- AMBIANCE -->
+  <section id="ambiance" class="amb">
+    <div class="wrap">
+      <div class="head rv">
+        <div><div class="kicker" data-t="a_kick"></div><h2 class="h" data-t="a_title"></h2></div>
+        <p data-t="a_txt"></p>
+      </div>
+      <div class="gal rv">
+        <figure><img src="img/burger-bar.jpg" alt="Le Burger Bar"><figcaption data-t="g1"></figcaption></figure>
+        <figure><img src="img/neon-hungry-2.jpg" alt="Néon Hungry"><figcaption data-t="g2"></figcaption></figure>
+        <figure><img src="img/burger-bar-enseigne.jpg" alt="Enseigne Burger Bar"><figcaption data-t="g3"></figcaption></figure>
+        <figure class="wide"><img src="img/menu-ecrans.jpg" alt="Menuschermen"><figcaption data-t="g4"></figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- KIDS -->
+  <section id="kids">
+    <div class="wrap kids">
+      <div class="kids-img rv"><img src="img/kids-club.jpg" alt="Espace Kids Club"></div>
+      <div class="rv">
+        <div class="kicker" data-t="k_kick"></div>
+        <h2 class="h"><span>Kids Club</span><br><span style="color:var(--cream)" data-t="k_title"></span></h2>
+        <p data-t="k_txt"></p>
+        <ul class="points">
+          <li><svg class="i"><use href="#i-check"/></svg><span data-t="k1"></span></li>
+          <li><svg class="i"><use href="#i-check"/></svg><span data-t="k2"></span></li>
+          <li><svg class="i"><use href="#i-check"/></svg><span data-t="k3"></span></li>
+          <li><svg class="i"><use href="#i-check"/></svg><span data-t="k4"></span></li>
+        </ul>
+        <a class="btn y" href="#infos"><span data-t="k_btn"></span><svg class="i"><use href="#i-arrow"/></svg></a>
+      </div>
+    </div>
+  </section>
+
+  <div class="checker"></div>
+
+  <!-- INFOS -->
+  <section id="infos">
+    <div class="wrap">
+      <div class="head rv">
+        <div><div class="kicker" data-t="i_kick"></div><h2 class="h" data-t="i_title"></h2></div>
+      </div>
+      <div class="infos">
+        <div class="box rv">
+          <div class="ic"><svg class="i"><use href="#i-clock"/></svg></div>
+          <h3 class="h" data-t="i_hours"></h3>
+          <div class="open"><i></i><span data-t="open_now"></span></div>
+          <ul class="hours" id="hours"></ul>
+        </div>
+        <div class="box rv">
+          <div class="ic"><svg class="i"><use href="#i-pin"/></svg></div>
+          <h3 class="h" data-t="i_addr"></h3>
+          <p data-t="addr"></p>
+          <a class="btn o sm" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Burgers+%26+Fried+Chicken+Abdijstraat+196+Antwerpen&query_place_id=ChIJD6f5flb3w0cROM55awdE1Jo"><svg class="i"><use href="#i-pin"/></svg><span data-t="route"></span></a>
+        </div>
+        <div class="box rv" id="commander">
+          <div class="ic"><svg class="i"><use href="#i-bag"/></svg></div>
+          <h3 class="h" data-t="i_order"></h3>
+          <p data-t="order_txt"></p>
+          <ol class="steps">
+            <li><b>1</b><span data-t="s1"></span></li>
+            <li><b>2</b><span data-t="s2"></span></li>
+            <li><b>3</b><span data-t="s3"></span></li>
+          </ol>
+          <a class="tel-big" data-tel><svg class="i"><use href="#i-phone"/></svg><span class="tel-num"></span></a>
+          <div class="or" data-t="or"></div>
+          <a class="ta-big" data-takeaway><svg class="i"><use href="#i-bag"/></svg><span data-t="ta_btn"></span></a>
+          <p class="pickup"><svg class="i"><use href="#i-pin"/></svg><span data-t="pickup"></span></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="tst" id="reviews" hidden>
+    <div class="wrap">
+      <div class="head rv">
+        <div><div class="kicker" data-t="t_kick"></div><h2 class="h" data-t="t_title"></h2></div>
+        <p data-t="t_txt"></p>
+      </div>
+      <div class="tst-grid" id="tstGrid"></div>
+      <div class="tst-nav" id="tstNav">
+        <div class="dots" id="tstDots"></div>
+      </div>
+      <p class="src" data-t="t_src"></p>
+    </div>
+  </section>
+
+  <section class="review" id="avis">
+    <div class="wrap">
+      <div class="rv-card rv">
+        <div>
+          <div class="kicker" data-t="r_kick"></div>
+          <h2 class="h" data-t="r_title"></h2>
+          <p data-t="r_txt"></p>
+        </div>
+        <div class="rv-side">
+          <div class="stars">
+            <a data-review aria-label="1"><svg><use href="#i-star"/></svg></a><a data-review aria-label="2"><svg><use href="#i-star"/></svg></a><a data-review aria-label="3"><svg><use href="#i-star"/></svg></a><a data-review aria-label="4"><svg><use href="#i-star"/></svg></a><a data-review aria-label="5"><svg><use href="#i-star"/></svg></a>
+          </div>
+          <span class="rv-hint" data-t="r_hint"></span>
+          <a class="btn y" data-review><svg class="i"><use href="#i-star"/></svg><span data-t="r_btn"></span></a>
+          <div class="g-note"><span data-t="r_note"></span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta">
+    <div class="wrap rv">
+      <div class="marker">Hungry?</div>
+      <p data-t="cta_txt"></p>
+      <div class="btns" style="justify-content:center">
+        <a class="btn y" data-tel><svg class="i"><use href="#i-phone"/></svg><span data-t="order_now"></span></a>
+        <a class="btn o" data-takeaway><svg class="i"><use href="#i-bag"/></svg><span data-t="ta_btn"></span></a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      <a class="logo" href="#top"><b>BFC</b><span>Burgers & Fried Chicken</span></a>
+      <span data-t="slogan"></span>
+      <div class="soc">
+        <a href="#" aria-label="Instagram"><svg class="i"><use href="#i-insta"/></svg></a>
+        <a href="#" aria-label="Facebook"><svg class="i"><use href="#i-fb"/></svg></a>
+        <a href="#" aria-label="TikTok"><svg class="i"><use href="#i-tiktok"/></svg></a>
+      </div>
+    </div>
+    <div class="made" data-t="made"></div>
+  </div>
+</footer>
+
+<div class="lb" id="lb" aria-hidden="true">
+  <img id="lbImg" alt="">
+  <button class="x" id="lbX" aria-label="Fermer"><svg class="i" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+</div>
+
+<nav class="mbar">
+  <a href="https://www.google.com/maps/search/?api=1&query=Burgers+%26+Fried+Chicken+Abdijstraat+196+Antwerpen&query_place_id=ChIJD6f5flb3w0cROM55awdE1Jo" target="_blank" rel="noopener"><svg class="i"><use href="#i-pin"/></svg><span data-t="route_s"></span></a>
+  <a data-takeaway><svg class="i"><use href="#i-bag"/></svg><span>Takeaway</span></a>
+  <a class="go" data-tel><svg class="i"><use href="#i-phone"/></svg><span data-t="order_call"></span></a>
+</nav>
+
+<script>
+/* ---------- Carte relevée sur les écrans du magasin ---------- */
+const CARTE = [
+  { id:'chicken', fr:'Chicken Tonight', nl:'Chicken Tonight', img:'img/menu-chicken.jpg', items:[
+    {n:'Tasty Chicken', bs:1}, {n:'Le Formidable', bs:1}, {n:'Rio Chicken'},
+    {n:'El Magnifique'}, {n:'Chicken Pepper', hot:1}, {n:'Chicken Burger'} ]},
+  { id:'meat', fr:'Meat Lovers', nl:'Meat Lovers', img:'img/menu-meat.jpg', items:[
+    {n:'Marrakech More', bs:1}, {n:'The Big Ben', bs:1}, {n:'Big Pepper', hot:1},
+    {n:'Royal Cheese'}, {n:'Big Sweet Chilly', hot:1}, {n:'Classic Bacon'} ]},
+  { id:'double', fr:'Double Up', nl:'Double Up', img:'img/menu-meat.jpg', items:[
+    {n:'The Tower', bs:1}, {n:'Double Decker', bs:1}, {n:'Royal Double Cheese'}, {n:'Royal Fish'} ]},
+  { id:'snelle', fr:'Snelle Hap', nl:'Snelle Hap', img:'img/menu-chicken.jpg', items:[
+    {n:'Beef Burger'}, {n:'Cheese Burger'}, {n:'Double Cheese'}, {n:'Fresh Fish'} ]},
+  { id:'sides', fr:'Snacks', nl:'Snacks', img:'img/menu-sides.jpg', items:[
+    {n:'Chicken Nuggets', d:{fr:'4 ou 6 pièces', nl:'4 of 6 stuks'}},
+    {n:'Chicken Wings', d:{fr:'3 ou 5 pièces', nl:'3 of 5 stuks'}},
+    {n:'Hot Wings', hot:1, d:{fr:'3 ou 5 pièces', nl:'3 of 5 stuks'}},
+    {n:'Crispy Chicken Tenders', d:{fr:'2 ou 4 pièces', nl:'2 of 4 stuks'}},
+    {n:'Chicken Tenders Hot & Spicy', hot:1, d:{fr:'2 ou 4 pièces', nl:'2 of 4 stuks'}},
+    {n:'Chicken Bites', d:{fr:'4 pièces', nl:'4 stuks'}},
+    {n:'Cheese Bites'}, {n:'Chilli Cheese Bites', hot:1},
+    {n:'Mozzarella Sticks'}, {n:'Onion Rings'} ]},
+  { id:'fries', fr:'Frites', nl:'Frieten', img:'img/menu-sides.jpg', items:[
+    {n:'Frieten', d:{fr:'Medium', nl:'Medium'}}, {n:'Potatoes'},
+    {n:'Cheddar Fries'}, {n:'Cheddar / Bacon Fries'}, {n:'Sweet Potato Fries'},
+    {n:'Sausje erbij?', d:{fr:'Une sauce avec tes frites', nl:'Een sausje bij je frieten'}} ]},
+  { id:'kids', fr:'Kids Meal', nl:'Kids Meal', img:'img/kids-club.jpg', items:[
+    {n:'Kids Meal', kid:1, d:{
+      fr:'Hamburger, cheeseburger, 4 chicken nuggets ou 2 chicken tenders + frites, Capri-Sun et un jouet',
+      nl:'Hamburger, cheeseburger, 4 chicken nuggets of 2 chicken tenders + frietjes, Capri-Sun en speelgoed'}} ]},
+  { id:'drinks', fr:'Boissons & shakes', nl:'Dranken & shakes', items:[
+    {n:'Frisdranken', d:{fr:'Softs', nl:'Frisdranken'}}, {n:'Red Bull'},
+    {n:'Milkshake', d:{fr:'Vanille, fraise, chocolat ou banane', nl:'Vanille, aardbei, chocolade of banaan'}} ]},
+  { id:'desserts', fr:'Desserts', nl:'Desserten', items:[
+    {n:'Sundae ijs', d:{fr:'Nature, chocolat, caramel ou fraise', nl:'Natuur, chocolade, karamel of aardbei'}},
+    {n:'Flurry', d:{fr:"M&M's ou Oreo", nl:"M&M's of Oreo"}},
+    {n:'Parfait Chocolade', d:{fr:'Nature, chocolat, caramel ou fraise', nl:'Natuur, chocolade, karamel of aardbei'}} ]}
+];
+const BEST = [
+  {n:'Tasty Chicken', c:'chicken'}, {n:'Le Formidable', c:'chicken'}, {n:'Marrakech More', c:'meat'},
+  {n:'The Big Ben', c:'meat'}, {n:'The Tower', c:'double'}, {n:'Double Decker', c:'double'}
+];
+
+/* ---------- Textes FR / NL ---------- */
+const T = {
+  fr:{
+    demo:"Démo — proposition de site par MBCraft Studio (mbcraft.be). Photos prises en magasin ; horaires et téléphone sont à compléter.",
+    n_best:'Best-sellers', n_carte:'La carte', n_amb:'Ambiance', n_kids:'Kids Club', n_infos:'Infos',
+    order:'Commander', order_now:'Appeler pour commander', order_call:'Appeler pour commander', hint:'Par téléphone ou sur Takeaway · à récupérer au magasin', ta_btn:'Commander sur Takeaway', or:'ou', see_menu:'Voir la carte',
+    h_kick:'Burgers · Poulet croustillant · Sides',
+    h_sub:"Des burgers généreux, du poulet bien croustillant et des frites comme on les aime. Installe-toi au Burger Bar ou commande par téléphone et passe la récupérer au magasin.",
+    m1:'Sur place', m2:'À emporter', m3:'Téléphone ou Takeaway',
+    sticker:'Juicy bites, happy nights',
+    tk:['Tasty Chicken','Marrakech More','The Tower','Wings','Le Formidable','Onion Rings','Double Decker','Cheddar Bacon Fries'],
+    b_kick:'Les préférés des clients', b_title:'Best-sellers', b_txt:"Les burgers qui partent le plus. Si tu hésites, commence par l'un d'eux.",
+    bs:'Best-seller',
+    cats:{chicken:'Chicken Tonight',meat:'Meat Lovers',double:'Double Up'},
+    bdesc:{chicken:'Poulet croustillant, sauce maison, pain brioché.',meat:'Bœuf juteux, fromage fondant, pain brioché.',double:'Double viande, double plaisir.'},
+    c_kick:'Burgers · Chicken · Sides', c_title:'La carte', c_txt:'Toute la carte des écrans du magasin, lisible sur ton téléphone.',
+    c_note:"Chaque burger existe aussi en menu avec frites + boisson.",
+    hot:'Épicé', kid:'+ jouet',
+    duo_t:'Duo Menu', duo_p:"2 burgers, frites et boissons : la formule à partager.",
+    a_kick:"L'endroit", a_title:'Ambiance', a_txt:"Mur de briques, lettres lumineuses et néon rouge : on vient pour manger, on reste pour l'ambiance.",
+    g1:'Le Burger Bar', g2:'Hungry?', g3:'Lumière & briques', g4:'La carte',
+    k_kick:'En famille', k_title:'Leur table, leur repas',
+    k_txt:"Au Kids Club, les enfants ont leur propre coin pour manger : des petites tables et chaises à leur taille, juste à côté de la table des parents. Et une fois l'assiette finie, les jeux sont là.",
+    k1:'Les enfants mangent à leur table, à leur hauteur', k2:'Juste à côté des parents, toujours sous les yeux', k3:"Déco de l'espace, puzzles et jeux pour après le repas",
+    k4:'Kids Meal : burger ou snack, frites, Capri-Sun et un jouet',
+    k_btn:'Venir en famille',
+    i_kick:'Venir chez BFC', i_title:'Infos pratiques', i_hours:'Horaires', open_now:'Ouvert maintenant',
+    days:['Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi','Dimanche'],
+    i_addr:'Adresse', addr:'Abdijstraat 196, 2020 Anvers', route:'Itinéraire',
+    i_order:'Commander & récupérer', order_txt:'Pas de livraison : commande par téléphone ou en ligne sur Takeaway, et viens la chercher au magasin.', s1:'Appelle le magasin ou commande sur Takeaway', s2:'On la prépare tout de suite, bien chaude', s3:'Tu viens la récupérer au comptoir', pickup:'À récupérer au magasin — pas de livraison',
+    call:'Appeler',
+    cta_txt:"I'm sorry for what I said when I was hungry. Un appel ou une commande sur Takeaway, et tout t'attend au comptoir.",
+    t_kick:'Ils en parlent', t_title:'Avis clients', t_txt:'Ce que nos clients disent de nous sur Google.', t_src:'Avis publiés sur Google par nos clients, rédigés en néerlandais et traduits en français.', t_trad:'traduit du néerlandais',
+    r_kick:'Ton avis compte', r_title:'Tu as aimé ?', r_txt:"Un petit avis sur Google nous aide énormément : ça prend 30 secondes et ça aide d'autres affamés à nous trouver. Merci !", r_hint:'Touche les étoiles pour donner ta note', r_btn:'Laisser un avis Google', r_note:'Ouvre directement notre page Google',
+    slogan:'Juicy bites, happy nights.',
+    made:'Démo réalisée par MBCraft Studio · mbcraft.be',
+    call_s:'Appeler', route_s:'Itinéraire'
+  },
+  nl:{
+    demo:"Demo — websitevoorstel door MBCraft Studio (mbcraft.be). Foto's in de zaak genomen; openingsuren en telefoon nog in te vullen.",
+    n_best:'Best-sellers', n_carte:'De kaart', n_amb:'Sfeer', n_kids:'Kids Club', n_infos:'Info',
+    order:'Bestellen', order_now:'Bel om te bestellen', order_call:'Bel om te bestellen', hint:'Telefonisch of via Takeaway · afhalen in de zaak', ta_btn:'Bestel via Takeaway', or:'of', see_menu:'Bekijk de kaart',
+    h_kick:'Burgers · Krokante kip · Sides',
+    h_sub:"Royale burgers, superkrokante kip en frieten zoals het hoort. Neem plaats aan de Burger Bar, of bestel telefonisch en haal af in de zaak.",
+    m1:'Ter plaatse', m2:'Afhalen', m3:'Telefoon of Takeaway',
+    sticker:'Juicy bites, happy nights',
+    tk:['Tasty Chicken','Marrakech More','The Tower','Wings','Le Formidable','Onion Rings','Double Decker','Cheddar Bacon Fries'],
+    b_kick:'Favorieten van onze klanten', b_title:'Best-sellers', b_txt:'De burgers die het meest besteld worden. Twijfel je? Begin met één van deze.',
+    bs:'Best-seller',
+    cats:{chicken:'Chicken Tonight',meat:'Meat Lovers',double:'Double Up'},
+    bdesc:{chicken:'Krokante kip, huisgemaakte saus, briochebroodje.',meat:'Sappig rundvlees, gesmolten kaas, briochebroodje.',double:'Dubbel vlees, dubbel genieten.'},
+    c_kick:'Burgers · Chicken · Sides', c_title:'De kaart', c_txt:'De volledige kaart van de schermen in de zaak, leesbaar op je gsm.',
+    c_note:'Elke burger bestaat ook als menu met frieten + drankje.',
+    hot:'Pikant', kid:'+ speelgoed',
+    duo_t:'Duo Menu', duo_p:'2 burgers, frieten en drankjes: de formule om te delen.',
+    a_kick:'De zaak', a_title:'Sfeer', a_txt:'Bakstenen muur, lichtletters en rode neon: je komt voor het eten, je blijft voor de sfeer.',
+    g1:'De Burger Bar', g2:'Hungry?', g3:'Licht & baksteen', g4:'De kaart',
+    k_kick:'Met het gezin', k_title:'Hun tafel, hun maaltijd',
+    k_txt:'In de Kids Club hebben kinderen hun eigen hoekje om te eten: tafeltjes en stoeltjes op hun maat, vlak naast de tafel van de ouders. En is het bordje leeg, dan liggen de spelletjes klaar.',
+    k1:'Kinderen eten aan hun eigen tafel, op hun hoogte', k2:'Vlak naast de ouders, altijd in het oog', k3:'Ruimtedecor, puzzels en spelletjes na het eten',
+    k4:'Kids Meal: burger of snack, frietjes, Capri-Sun en speelgoed',
+    k_btn:'Kom met het gezin',
+    i_kick:'Naar BFC', i_title:'Praktische info', i_hours:'Openingsuren', open_now:'Nu open',
+    days:['Maandag','Dinsdag','Woensdag','Donderdag','Vrijdag','Zaterdag','Zondag'],
+    i_addr:'Adres', addr:'Abdijstraat 196, 2020 Antwerpen', route:'Route',
+    i_order:'Bestellen & afhalen', order_txt:'Geen levering: bestel telefonisch of online via Takeaway en haal je bestelling af in de zaak.', s1:'Bel de zaak of bestel via Takeaway', s2:'Wij maken ze meteen vers klaar', s3:'Je haalt ze af aan de toog', pickup:'Afhalen in de zaak — geen levering',
+    call:'Bellen',
+    cta_txt:"I'm sorry for what I said when I was hungry. Bel of bestel via Takeaway, en je bestelling ligt klaar aan de toog.",
+    t_kick:'Zij zeggen het', t_title:'Reviews', t_txt:'Wat onze klanten over ons zeggen op Google.', t_src:'Reviews geplaatst door onze klanten op Google.', t_trad:'vertaald',
+    r_kick:'Jouw mening telt', r_title:'Heeft het gesmaakt?', r_txt:'Een korte review op Google helpt ons enorm: het duurt 30 seconden en zo vinden andere hongerige mensen ons ook. Bedankt!', r_hint:'Tik op de sterren om je score te geven', r_btn:'Laat een Google-review achter', r_note:'Opent meteen onze Google-pagina',
+    slogan:'Juicy bites, happy nights.',
+    made:'Demo gemaakt door MBCraft Studio · mbcraft.be',
+    call_s:'Bellen', route_s:'Route'
+  }
+};
+/* Numéro du magasin : à remplacer par le vrai */
+const TEL = '+3230000000', TEL_AFF = '03 000 00 00';
+const HOURS = ['11:30 – 23:00','11:30 – 23:00','11:30 – 23:00','11:30 – 23:00','11:30 – 00:00','11:30 – 00:00','12:00 – 23:00']; // exemples
+
+/* ---------- Avis clients : copier ici 3 à 6 VRAIS avis de la fiche Google ----------
+   Format : { nom:'Prénom N.', note:5, quand:'il y a 2 mois', texte:'Texte exact de l'avis' },
+   Section cachée tant que la liste est vide. */
+const REVIEWS = [
+  { nom:'Ossama', note:5, quand:{fr:'il y a 7 mois', nl:'7 maanden geleden'}, orig:'nl', texte:{
+    nl:"Amai die tasty chicken burger daar zit sws de nummer 1 burger van België, in mijn etens carieren heb ik veel burgers gegeten maar den deze is zeker wel anders de brood is lekker zacht de kip is crispy en tender smelt in u mond en de huis gemaakte sous wouw wat een combinatie zeker een aanrader.",
+    fr:"Waouh, ce Tasty Chicken Burger est sans conteste le meilleur burger de Belgique ! J'en ai goûté des burgers, mais celui-ci est vraiment à part. Le pain est moelleux à souhait, le poulet est croustillant et tendre, il fond dans la bouche, et la sauce maison… un vrai régal ! Je le recommande chaudement." }},
+  { nom:'Abdouni G.', note:5, quand:{fr:'il y a 6 mois', nl:'6 maanden geleden'}, orig:'nl', texte:{
+    nl:"Heerlijk zoals altijd! Beste zaak die heerlijke burgers verkoopt. Leuk dat de jonge man ook altijd mijn bestelling onthoud. “Marrakech more Zonder ui”.",
+    fr:"Délicieux comme toujours ! Le meilleur endroit pour déguster de délicieux burgers. C'est agréable que le jeune homme se souvienne toujours de ma commande : “Marrakech More Without Onion”." }},
+  { nom:'M. V.', note:5, quand:{fr:'il y a 3 ans', nl:'3 jaar geleden'}, orig:'nl', texte:{
+    nl:"Top van de top! Super lekker! En enorm mooie zaak, eerste propere zaak in abdijstraat! Doe zo verder! Marrakech en tasty zijn echt topp! En gezellig om met de kinderen te gaan met een leuke speelhoek. Een echte aanrader met kwaliteitsproducten!!",
+    fr:"Au top ! Délicieux ! Et une boutique magnifique, la première boutique propre de la rue Abdijstraat ! Continuez comme ça ! Marrakech et Tasty sont vraiment exceptionnels ! C'est aussi un endroit idéal pour une sortie en famille grâce à l'aire de jeux. Je recommande vivement pour la qualité de leurs produits !" }},
+  { nom:'Yasmien B.', note:5, quand:{fr:'il y a 1 an', nl:'1 jaar geleden'}, orig:'nl', texte:{
+    nl:"Echt een toffe plek, het eten is hier super lekker en ze werken echt snel! Ik raad u aan om hier zeker te komen eten, je krijgt hier geen spijt van 1ste en sws niet laatste keer! Ik kom hier vaker eten echt smakelijk! En het personeel is super vriendelijk en lief, LOVE IT!",
+    fr:"Un endroit vraiment génial ! La nourriture y est délicieuse et le service est super rapide ! Je vous recommande vivement d'y manger, vous ne le regretterez pas, ce ne sera ni la première ni la dernière fois ! J'y mange souvent, c'est vraiment délicieux ! Et le personnel est adorable et très sympathique, j'adore !" }},
+  { nom:'Soraya M.', note:5, quand:{fr:'il y a 3 ans', nl:'3 jaar geleden'}, orig:'nl', texte:{
+    nl:"Dé Nummer 1, Ik doe echt mijn best om ook andere Burgerzaken een kans te geven. Maar BFC blijft echt de beste Burgerzaak. […] Ze zijn zoooooooo goed!",
+    fr:"La numéro 1. Je fais vraiment de mon mieux pour donner une chance à d'autres restos de burgers, mais BFC reste vraiment le meilleur. […] Ils sont trooop bons !" }},
+  { nom:'Redouane', note:5, quand:{fr:'il y a 1 mois', nl:'1 maand geleden'}, orig:'nl', texte:{
+    nl:"Topburgers. Ben vaste klant!",
+    fr:"Des burgers au top. Je suis un client fidèle !" }}
+];
+let tstPage = 0;
+function renderReviews(){
+  const sec = document.getElementById('reviews');
+  sec.hidden = REVIEWS.length === 0;
+  if (!REVIEWS.length) return;
+  const pages = Math.ceil(REVIEWS.length / 3);
+  tstPage = (tstPage + pages) % pages;
+  const star = '<svg><use href="#i-star"/></svg>';
+  document.getElementById('tstGrid').innerHTML = REVIEWS.slice(tstPage * 3, tstPage * 3 + 3).map((r, i) => `
+    <article class="tc" style="animation-delay:${i * 80}ms">
+      <div class="st">${star.repeat(r.note)}</div>
+      <blockquote>« ${r.texte[lang]} »</blockquote>
+      <footer><span class="av">${r.nom.charAt(0)}</span><span><b>${r.nom}</b>${r.quand[lang]} · Google${lang !== r.orig ? ' · ' + T[lang].t_trad : ''}</span></footer>
+    </article>`).join('');
+  document.getElementById('tstNav').style.display = pages > 1 ? '' : 'none';
+  document.getElementById('tstDots').innerHTML = Array.from({length: pages}, (_, i) =>
+    `<i class="${i === tstPage ? 'on' : ''}" data-p="${i}"></i>`).join('');
+}
+/* Défilement automatique toutes les 5 s (pause au survol) */
+let tstTimer = null, tstHover = false;
+function tstAuto(){
+  clearInterval(tstTimer);
+  if (REVIEWS.length > 3) tstTimer = setInterval(() => { if (!tstHover && !document.hidden) { tstPage++; renderReviews(); } }, 5000);
+}
+const tstGrid = document.getElementById('tstGrid');
+tstGrid.addEventListener('mouseenter', () => tstHover = true);
+tstGrid.addEventListener('mouseleave', () => tstHover = false);
+document.getElementById('tstDots').onclick = e => { if (e.target.dataset.p) { tstPage = +e.target.dataset.p; renderReviews(); tstAuto(); } };
+tstAuto();
+/* Lien d'avis Google (ouvre directement « Écrire un avis » sur la fiche Abdijstraat 196) */
+const REVIEW_URL = 'https://search.google.com/local/writereview?placeid=ChIJD6f5flb3w0cROM55awdE1Jo';
+document.querySelectorAll('[data-review]').forEach(a => { a.href = REVIEW_URL; a.target = '_blank'; a.rel = 'noopener'; });
+document.querySelectorAll('[data-tel]').forEach(a => a.href = 'tel:' + TEL);
+/* Commande en ligne Takeaway (à emporter) */
+const TAKEAWAY_URL = 'https://www.takeaway.com/be/menu/burgers-fried-chicken-antwerpen-antwerpen-1?serviceType=collection';
+document.querySelectorAll('[data-takeaway]').forEach(a => { a.href = TAKEAWAY_URL; a.target = '_blank'; a.rel = 'noopener'; });
+document.querySelectorAll('.tel-num').forEach(e => e.textContent = TEL_AFF);
+let lang = 'nl', cat = 'chicken';
+try { lang = localStorage.getItem('bfc-lang') || 'nl'; } catch(e){}
+
+function render(){
+  const t = T[lang];
+  document.documentElement.lang = lang;
+  document.querySelectorAll('[data-t]').forEach(el => { if (typeof t[el.dataset.t] === 'string') el.textContent = t[el.dataset.t]; });
+  document.querySelectorAll('.lang button').forEach(b => b.classList.toggle('on', b.dataset.l === lang));
+
+  const tk = t.tk.map(x => `<span>${x}</span><i>★</i>`).join('');
+  document.getElementById('tk').innerHTML = tk + tk;
+
+  document.getElementById('bestList').innerHTML = BEST.map(b => `
+    <article class="bs rv in">
+      <span class="tagline">${t.bs}</span>
+      <h3 class="h">${b.n}</h3>
+      <p>${t.cats[b.c]} — ${t.bdesc[b.c]}</p>
+      <div class="cat">BFC</div>
+    </article>`).join('');
+
+  document.getElementById('tabs').innerHTML = CARTE.map(c =>
+    `<button data-c="${c.id}" class="${c.id === cat ? 'on' : ''}">${c[lang]}</button>`).join('');
+  const c = CARTE.find(x => x.id === cat);
+  document.getElementById('list').innerHTML = c.items.map((it, i) => `
+    <div class="item${it.kid ? ' full' : ''}" style="animation-delay:${i * 40}ms">
+      <div><b>${it.n}</b><small>${it.d ? it.d[lang] : c[lang]}</small></div>
+      ${it.bs ? `<span class="badge r">${t.bs}</span>` : it.hot ? `<span class="badge y">${t.hot}</span>` : it.kid ? `<span class="badge r">${t.kid}</span>` : ''}
+    </div>`).join('');
+  const scr = document.getElementById('screenImg');
+  scr.parentNode.style.display = c.img ? '' : 'none';
+  if (c.img) scr.src = c.img;
+
+  const today = (new Date().getDay() + 6) % 7;
+  document.getElementById('hours').innerHTML = t.days.map((d, i) =>
+    `<li class="${i === today ? 'today' : ''}"><span>${d}</span><span>${HOURS[i]}</span></li>`).join('');
+}
+
+document.querySelectorAll('.lang button').forEach(b => b.onclick = () => {
+  lang = b.dataset.l; try { localStorage.setItem('bfc-lang', lang); } catch(e){}
+  render(); renderReviews();
+});
+document.getElementById('tabs').addEventListener('click', e => {
+  const b = e.target.closest('button'); if (!b) return;
+  cat = b.dataset.c; render();
+});
+const links = document.getElementById('links');
+document.getElementById('mb').onclick = () => links.classList.toggle('show');
+links.addEventListener('click', e => { if (e.target.tagName === 'A') links.classList.remove('show'); });
+
+render(); renderReviews();
+
+/* ---------- Visionneuse : toucher une photo pour l'agrandir ---------- */
+const lb = document.getElementById('lb'), lbImg = document.getElementById('lbImg');
+const SEL = '.hero-pics img, .screen img, .gal img, .kids-img img';
+function lbOpen(img){
+  lbImg.src = img.src; lbImg.alt = img.alt;
+  lb.classList.add('open'); lb.setAttribute('aria-hidden','false');
+  document.body.style.overflow = 'hidden';
+}
+function lbClose(){ lb.classList.remove('open'); lb.setAttribute('aria-hidden','true'); document.body.style.overflow = ''; }
+document.addEventListener('click', e => {
+  const f = e.target.closest('.hero-pics figure, .screen, .gal figure, .kids-img');
+  if (f && !lb.contains(e.target)) lbOpen(f.querySelector('img'));
+});
+document.querySelectorAll(SEL).forEach(el => el.classList.add('zoomable'));
+document.getElementById('lbX').onclick = lbClose;
+lb.addEventListener('click', e => { if (e.target === lb) lbClose(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && lb.classList.contains('open')) lbClose(); });
+
+const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), {threshold:.12});
+document.querySelectorAll('.rv:not(.in)').forEach(el => io.observe(el));
+</script>
+</body>
+</html>
