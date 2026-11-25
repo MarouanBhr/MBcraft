@@ -88,3 +88,6 @@ html.t1 .services-grid .service-card { background: #1f2329 !important; border-co
   --creme: #f5f0e8; --texte-2: rgba(245,240,232,.75); --or: #c9a84c; --acc: #c9a84c; color: #f5f0e8; }
 html.t1 .services-grid .service-card:hover { background: #262a31 !important; border-color: #c9a84c !important; }
 html.t1 .services-grid .service-card :is(.service-name, h3) { color: #fff !important; }
+/* Perle & Or : cercles de la méthode foncés, chiffres clairs */
+html.t1 .step-circle { background: #1f2329 !important; border-color: #c9a84c !important; color: #f5f0e8 !important; }
+html.t1 .step-circle * { color: #f5f0e8 !important; }
