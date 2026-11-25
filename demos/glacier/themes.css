@@ -97,3 +97,9 @@ html.t1 #tarifs [style*="repeat(3,1fr)"] .service-card { background: #1f2329 !im
 html.t1 #tarifs [style*="repeat(3,1fr)"] .service-card:hover { background: #262a31 !important; border-color: #c9a84c !important; }
 html.t1 #tarifs [style*="repeat(3,1fr)"] .service-card :is(.service-name, h3) { color: #fff !important; }
 html.t1 #tarifs [style*="repeat(3,1fr)"] .service-card p { color: rgba(245,240,232,.75) !important; }
+/* Perle & Or : champs du formulaire foncés, texte clair */
+html.t1 .form-group :is(input, select, textarea) { background: #1f2329 !important; border-color: rgba(201,168,76,.25) !important; color: #f5f0e8 !important; }
+html.t1 .form-group :is(input, select, textarea):focus { border-color: #c9a84c !important; outline: none; }
+html.t1 .form-group :is(input, textarea)::placeholder { color: rgba(245,240,232,.45) !important; }
+html.t1 .form-group select option { background: #1f2329 !important; color: #f5f0e8 !important; }
+html.t1 .form-group select { color-scheme: dark; }
