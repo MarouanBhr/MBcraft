@@ -250,7 +250,9 @@ footer{border-top:1px solid var(--line);padding:34px 0 110px;font-size:.84rem;co
   .gal figure:first-child{grid-row:auto;grid-column:span 2;aspect-ratio:4/3}
   .kids{grid-template-columns:1fr;gap:36px}
   .infos{grid-template-columns:1fr}
-  .tst-grid{grid-template-columns:1fr}
+  .tst-grid.swipe{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:12px;margin:0 -16px;padding:0 16px 6px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  .tst-grid.swipe::-webkit-scrollbar{display:none}
+  .tst-grid.swipe .tc{flex:0 0 84%;scroll-snap-align:center;animation:none}
   .rv-card{grid-template-columns:1fr;padding:34px 22px;text-align:center}
   .mbar{display:grid;grid-template-columns:.8fr .9fr 1.9fr;gap:8px;position:fixed;left:0;right:0;bottom:0;z-index:60;padding:10px 12px calc(10px + env(safe-area-inset-bottom));background:rgba(13,10,8,.95);backdrop-filter:blur(10px);border-top:1px solid var(--line)}
   .mbar a{display:flex;flex-direction:column;align-items:center;gap:3px;text-decoration:none;font-size:.72rem;font-weight:600;padding:8px;border-radius:12px;background:var(--card)}
@@ -260,7 +262,10 @@ footer{border-top:1px solid var(--line);padding:34px 0 110px;font-size:.84rem;co
   section{padding:70px 0}
   .ticker{padding:9px 0;margin-top:4px}
   .ticker div{font-size:.72rem;gap:16px;animation-duration:14s}
-  .best,.list{grid-template-columns:1fr}
+  .list{grid-template-columns:1fr}
+  .best{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:12px;margin:0 -16px;padding:0 16px 6px;scrollbar-width:none}
+  .best::-webkit-scrollbar{display:none}
+  .best .bs{flex:0 0 78%;scroll-snap-align:center}
   .hero-pics{height:380px}
   .sticker{width:96px;height:96px;font-size:.7rem}
   .carte-side{grid-template-columns:1fr}
@@ -670,33 +675,73 @@ const REVIEWS = [
     fr:"Des burgers au top. Je suis un client fidèle !" }}
 ];
 let tstPage = 0;
+const tstMq = matchMedia('(max-width:600px)');          // téléphone : avis côte à côte, à faire glisser
+const tstGrid = document.getElementById('tstGrid');
+const tstCard = r => `
+    <article class="tc">
+      <div class="st">${'<svg><use href="#i-star"/></svg>'.repeat(r.note)}</div>
+      <blockquote>« ${r.texte[lang]} »</blockquote>
+      <footer><span class="av">${r.nom.charAt(0)}</span><span><b>${r.nom}</b>${r.quand[lang]} · Google${lang !== r.orig ? ' · ' + T[lang].t_trad : ''}</span></footer>
+    </article>`;
+function tstPages(){ return tstMq.matches ? REVIEWS.length : Math.ceil(REVIEWS.length / 3); }
+function tstDots(){
+  document.getElementById('tstDots').innerHTML = Array.from({length: tstPages()}, (_, i) =>
+    `<i class="${i === tstPage ? 'on' : ''}" data-p="${i}"></i>`).join('');
+}
 function renderReviews(){
   const sec = document.getElementById('reviews');
   sec.hidden = REVIEWS.length === 0;
   if (!REVIEWS.length) return;
-  const pages = Math.ceil(REVIEWS.length / 3);
+  const pages = tstPages();
   tstPage = (tstPage + pages) % pages;
-  const star = '<svg><use href="#i-star"/></svg>';
-  document.getElementById('tstGrid').innerHTML = REVIEWS.slice(tstPage * 3, tstPage * 3 + 3).map((r, i) => `
-    <article class="tc" style="animation-delay:${i * 80}ms">
-      <div class="st">${star.repeat(r.note)}</div>
-      <blockquote>« ${r.texte[lang]} »</blockquote>
-      <footer><span class="av">${r.nom.charAt(0)}</span><span><b>${r.nom}</b>${r.quand[lang]} · Google${lang !== r.orig ? ' · ' + T[lang].t_trad : ''}</span></footer>
-    </article>`).join('');
+  if (tstMq.matches) {
+    tstGrid.classList.add('swipe');
+    tstGrid.innerHTML = REVIEWS.map(tstCard).join('');
+    tstGo(tstPage, false);
+  } else {
+    tstGrid.classList.remove('swipe');
+    tstGrid.innerHTML = REVIEWS.slice(tstPage * 3, tstPage * 3 + 3).map(tstCard).join('');
+    [...tstGrid.children].forEach((c, i) => c.style.animationDelay = (i * 80) + 'ms');
+  }
   document.getElementById('tstNav').style.display = pages > 1 ? '' : 'none';
-  document.getElementById('tstDots').innerHTML = Array.from({length: pages}, (_, i) =>
-    `<i class="${i === tstPage ? 'on' : ''}" data-p="${i}"></i>`).join('');
+  tstDots();
 }
-/* Défilement automatique toutes les 5 s (pause au survol) */
-let tstTimer = null, tstHover = false;
+function tstGo(i, smooth = true){
+  const c = tstGrid.children[i]; if (!c) return;
+  tstGrid.scrollTo({left: c.offsetLeft - tstGrid.offsetLeft - (tstGrid.clientWidth - c.offsetWidth) / 2, behavior: smooth ? 'smooth' : 'auto'});
+}
+function tstNext(){
+  tstPage = (tstPage + 1) % tstPages();
+  if (tstMq.matches) { tstGo(tstPage); tstDots(); } else renderReviews();
+}
+/* Défilement automatique toutes les 5 s (pause au survol / quand on touche) */
+let tstTimer = null, tstHover = false, tstTouch = 0;
 function tstAuto(){
   clearInterval(tstTimer);
-  if (REVIEWS.length > 3) tstTimer = setInterval(() => { if (!tstHover && !document.hidden) { tstPage++; renderReviews(); } }, 5000);
+  if (tstPages() > 1) tstTimer = setInterval(() => {
+    if (!tstHover && !document.hidden && Date.now() - tstTouch > 6000) tstNext();
+  }, 5000);
 }
-const tstGrid = document.getElementById('tstGrid');
 tstGrid.addEventListener('mouseenter', () => tstHover = true);
 tstGrid.addEventListener('mouseleave', () => tstHover = false);
-document.getElementById('tstDots').onclick = e => { if (e.target.dataset.p) { tstPage = +e.target.dataset.p; renderReviews(); tstAuto(); } };
+tstGrid.addEventListener('touchstart', () => tstTouch = Date.now(), {passive:true});
+let tstScrollT;
+tstGrid.addEventListener('scroll', () => {          // met à jour les points quand on glisse au doigt
+  if (!tstMq.matches) return;
+  clearTimeout(tstScrollT);
+  tstScrollT = setTimeout(() => {
+    const w = tstGrid.children[0] ? tstGrid.children[0].offsetWidth + 12 : 1;
+    const i = Math.round(tstGrid.scrollLeft / w);
+    if (i !== tstPage) { tstPage = Math.min(i, REVIEWS.length - 1); tstDots(); }
+  }, 80);
+}, {passive:true});
+document.getElementById('tstDots').onclick = e => {
+  if (!e.target.dataset.p) return;
+  tstPage = +e.target.dataset.p;
+  if (tstMq.matches) { tstGo(tstPage); tstDots(); } else renderReviews();
+  tstAuto();
+};
+tstMq.addEventListener('change', () => { tstPage = 0; renderReviews(); tstAuto(); });
 tstAuto();
 /* Lien d'avis Google (ouvre directement « Écrire un avis » sur la fiche Abdijstraat 196) */
 const REVIEW_URL = 'https://search.google.com/local/writereview?placeid=ChIJD6f5flb3w0cROM55awdE1Jo';
