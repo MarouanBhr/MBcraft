@@ -748,7 +748,7 @@ html.lang-ar .price-name { direction: rtl; text-align: right; }
 }
 
 /* ── Carte « Logo & identité » sur toute la largeur ── */
-.service-card.service-wide { grid-column: 1 / -1; display: grid; grid-template-columns: auto 1fr auto; gap: 34px; align-items: center; }
+.service-card.service-wide { grid-column: 1 / -1; display: grid; grid-template-columns: 1fr auto; gap: 34px; align-items: center; }
 .service-wide .service-icon { margin-bottom: 0 !important; }
 .service-wide .service-desc { margin-bottom: 0; max-width: 720px; }
 .service-wide .service-tags { margin: 0; }
