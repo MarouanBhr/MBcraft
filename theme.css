@@ -1,0 +1,83 @@
+/* ═══ Thème clair « Perle & Or » (html.t1) ═══ */
+html.t1 { --bg:#eceef1; --bg2:#e1e4e9; --card:#ffffff; --ink:#1d2229; --ink2:#4b525d; --acc:#a8832a; --dark:#1f2329; }
+
+html[class*="t"] body { background: var(--bg); }
+
+/* Sections claires */
+html[class*="t"] :is(#services, #process, #portfolio, #tarifs, #contact) {
+  --creme: var(--ink); --texte-2: var(--ink2); --or: var(--acc); --fond: var(--bg); --fond-2: var(--bg2); --carte: var(--card);
+  color: var(--ink);
+}
+html[class*="t"] :is(#services, #portfolio, #tarifs) { background: var(--bg2) !important; }
+html[class*="t"] :is(#process, #contact) { background: var(--bg) !important; }
+html[class*="t"] .section-header { border-bottom-color: rgba(0,0,0,.1) !important; }
+html[class*="t"] :is(#services, #process, #portfolio, #tarifs, #contact) :is(.price-note, .price-amount span, .stat-label, .form-group label) { color: var(--ink2) !important; }
+
+/* Cartes */
+html[class*="t"] :is(.service-card, .price-card) { background: var(--card) !important; border-color: rgba(0,0,0,.07) !important; box-shadow: 0 2px 10px rgba(0,0,0,.04); }
+html[class*="t"] .service-card:hover { background: var(--card) !important; border-color: var(--acc) !important; box-shadow: 0 12px 30px rgba(0,0,0,.08); }
+html[class*="t"] .tag { border-color: color-mix(in srgb, var(--acc) 45%, transparent) !important; color: var(--acc) !important; }
+html[class*="t"] .price-card.featured { background: var(--dark) !important; border-color: var(--acc) !important;
+  --creme: #f5f0e8; --texte-2: rgba(245,240,232,.78); color: #f5f0e8; }
+html[class*="t"] .price-card.featured :is(.price-amount span) { color: rgba(245,240,232,.6) !important; }
+html.t1 .price-card.featured { --or: #c9a84c; }
+html[class*="t"] #tarifs [style*="padding:40px 50px"] { background: var(--card) !important; border-color: color-mix(in srgb, var(--acc) 40%, transparent) !important; }
+
+/* Méthode */
+html[class*="t"] .step-circle { background: var(--card) !important; }
+
+/* Portfolio : les vignettes gardent leur texte clair */
+html[class*="t"] #portfolio .portfolio-item { --creme: #f5f0e8; border-color: rgba(0,0,0,.08); }
+
+/* Formulaire */
+html[class*="t"] .form-group :is(input, select, textarea) { background: var(--card) !important; border-color: rgba(0,0,0,.14) !important; color: var(--ink) !important; }
+html[class*="t"] .form-group select option { background: #fff !important; }
+
+/* Barre de navigation claire */
+html[class*="t"] nav { background: color-mix(in srgb, var(--bg) 92%, transparent) !important; border-bottom-color: rgba(0,0,0,.08) !important;
+  --creme: var(--ink); --or: var(--acc); }
+html[class*="t"] nav .logo, html[class*="t"] nav ul li a { color: var(--ink) !important; }
+html[class*="t"] nav ul li.lang-switcher .lang { color: var(--ink2) !important; }
+html[class*="t"] nav ul li.lang-switcher .lang.active { color: var(--acc) !important; border-color: var(--acc) !important; }
+@media (max-width: 900px) { html[class*="t"] nav ul.open { background: var(--bg) !important; } }
+
+/* Accueil et pied de page : on garde le fond sombre (avec la 3D), teinté selon la palette */
+html.t1 #hero, html.t1 #story { background: #23262c !important; }
+html[class*="t"] footer { background: var(--dark) !important; }
+
+/* ═══ Perle & Or : cartes services foncées, texte blanc ═══ */
+html.t1 .services-grid .service-card { background: #1f2329 !important; border-color: rgba(201,168,76,.15) !important;
+  --creme: #f5f0e8; --texte-2: rgba(245,240,232,.75); --or: #c9a84c; --acc: #c9a84c; color: #f5f0e8; }
+html.t1 .services-grid .service-card:hover { background: #262a31 !important; border-color: #c9a84c !important; }
+html.t1 .services-grid .service-card :is(.service-name, h3) { color: #fff !important; }
+/* Perle & Or : cercles de la méthode foncés, chiffres clairs */
+html.t1 .step-circle { background: #1f2329 !important; border-color: #c9a84c !important; color: #f5f0e8 !important; }
+html.t1 .step-circle * { color: #f5f0e8 !important; }
+/* Perle & Or : cartes « Ce qui influence le prix » foncées */
+html.t1 #tarifs [style*="repeat(3,1fr)"] .service-card { background: #1f2329 !important; border-color: rgba(201,168,76,.15) !important;
+  --creme: #f5f0e8; --texte-2: rgba(245,240,232,.75); --or: #c9a84c; --acc: #c9a84c; color: #f5f0e8; }
+html.t1 #tarifs [style*="repeat(3,1fr)"] .service-card:hover { background: #262a31 !important; border-color: #c9a84c !important; }
+html.t1 #tarifs [style*="repeat(3,1fr)"] .service-card :is(.service-name, h3) { color: #fff !important; }
+html.t1 #tarifs [style*="repeat(3,1fr)"] .service-card p { color: rgba(245,240,232,.75) !important; }
+/* Perle & Or : formulaire en panneau foncé bordé d'or, champs clairs */
+html.t1 #contact-form { background: #1f2329; border: 1px solid #c9a84c; padding: 40px; box-shadow: 0 0 0 6px rgba(201,168,76,.08), 0 20px 50px rgba(0,0,0,.18); }
+html.t1 #contact .form-group label { color: #c9a84c !important; }
+html.t1 .form-group :is(input, select, textarea) { background: #f5f0e8 !important; border: 1px solid rgba(201,168,76,.55) !important; color: #1d2229 !important; }
+html.t1 .form-group :is(input, select, textarea):focus { border-color: #c9a84c !important; outline: none; box-shadow: 0 0 0 3px rgba(201,168,76,.3); }
+html.t1 .form-group :is(input, textarea)::placeholder { color: rgba(29,34,41,.45) !important; }
+html.t1 .form-group select option { background: #f5f0e8 !important; color: #1d2229 !important; }
+html.t1 .form-group select { color-scheme: light; }
+html.t1 #contact-form button[type="submit"] { border: 1px solid #c9a84c !important; }
+@media (max-width: 600px) { html.t1 #contact-form { padding: 24px 18px; } }
+/* Icônes au trait à la place des emojis */
+.contact-detail-icon { color: var(--or, #c9a84c); display: inline-flex; align-items: center; justify-content: center; }
+html.t1 #contact .contact-detail-icon { color: #a8832a; }
+.chat-icon { color: #c9a84c; display: flex; justify-content: center; }
+
+/* Perle & Or : icône bulle de l'encadré « Un simple échange suffit » sur fond foncé */
+html.t1 .chat-icon { background: #1f2329; border: 1px solid #c9a84c; color: #c9a84c; width: 86px; height: 86px; border-radius: 50%; align-items: center; flex: none; }
+html.t1 .chat-icon svg { width: 40px; height: 40px; }
+/* Réseaux sociaux sur fond clair */
+html.t1 #contact .social-title { color: var(--ink2) !important; }
+html.t1 #contact .social-links a { border-color: rgba(168,131,42,.45); }
+html.t1 #contact .social-links a:hover { color: #fff; }
