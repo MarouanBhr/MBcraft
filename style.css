@@ -786,3 +786,8 @@ html.lang-ar .price-name { direction: rtl; text-align: right; }
 .footer-social a { width: 38px; height: 38px; }
 .footer-social svg { width: 17px; height: 17px; }
 @media (max-width: 900px) { footer { flex-direction: column; gap: 22px; text-align: center; } .footer-social { justify-content: center; } }
+
+/* Prix barré « Au lieu de … » au-dessus du prix */
+.price-compare { font-size: .85rem; color: var(--texte-2, rgba(245,240,232,.6)); margin-bottom: 6px; letter-spacing: .02em; }
+.price-compare s { text-decoration: none; position: relative; display: inline-block; font-size: 1.25rem; font-weight: 600; padding: 0 3px; }
+.price-compare s::after { content: ""; position: absolute; left: -2px; right: -2px; top: 55%; height: 1.5px; background: rgba(192,57,43,.9); transform: rotate(-10deg); border-radius: 2px; }
