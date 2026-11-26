@@ -801,3 +801,7 @@ html.lang-ar .price-name { direction: rtl; text-align: right; }
 .review-stars { display: inline-flex; gap: 2px; color: var(--or); }
 .review-btn:hover { background: var(--or); color: #1a1c20; }
 .review-btn:hover .review-stars { color: #1a1c20; }
+
+/* Titre « Ce qui influence le prix » en grand */
+#tarifs .section-tag[data-i18n="pricing-tag"] { font-family: "Playfair Display", serif; font-size: clamp(1.7rem, 3.2vw, 2.4rem); font-weight: 700; letter-spacing: 0; text-transform: none; color: var(--or); margin-bottom: 28px !important; line-height: 1.2; }
+#tarifs .section-tag[data-i18n="pricing-tag"]::before, #tarifs .section-tag[data-i18n="pricing-tag"]::after { display: none; }
