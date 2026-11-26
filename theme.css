@@ -81,3 +81,7 @@ html.t1 .chat-icon svg { width: 40px; height: 40px; }
 html.t1 #contact .social-title { color: var(--ink2) !important; }
 html.t1 #contact .social-links a { border-color: rgba(168,131,42,.45); }
 html.t1 #contact .social-links a:hover { color: #fff; }
+
+/* Portfolio : noms des projets lisibles sur les vignettes */
+html.t1 #portfolio .portfolio-name { color: #f5f0e8 !important; }
+html.t1 #portfolio .portfolio-type { color: #c9a84c !important; }
