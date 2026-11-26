@@ -794,3 +794,10 @@ html.lang-ar .price-name { direction: rtl; text-align: right; }
 
 /* Email + téléphone : l'un sous l'autre sur téléphone */
 @media (max-width: 600px) { .form-row.form-row-contact { grid-template-columns: 1fr !important; display: grid; gap: 0; } }
+
+/* Bouton avis Google */
+.review-btn { display: inline-flex; align-items: center; gap: 12px; margin-top: 22px; padding: 12px 20px; border: 1px solid var(--or);
+  color: var(--creme); text-decoration: none; font-size: .78rem; letter-spacing: .12em; text-transform: uppercase; transition: background .2s, color .2s; }
+.review-stars { display: inline-flex; gap: 2px; color: var(--or); }
+.review-btn:hover { background: var(--or); color: #1a1c20; }
+.review-btn:hover .review-stars { color: #1a1c20; }
