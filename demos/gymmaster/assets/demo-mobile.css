@@ -1,0 +1,29 @@
+/* Mise en page compacte sur téléphone (démo) */
+@media (max-width: 576px) {
+  /* Bandeau démo : une petite ligne */
+  #demo-banner { font-size: 10.5px !important; padding: 6px 12px !important; bottom: 10px !important; white-space: nowrap; }
+  /* Cours : image à gauche, texte à droite */
+  .card .row.g-0 > .col-4 { padding: 12px 0 12px 12px; display: flex; }
+  .card .row.g-0 > .col-4 img { flex: 1; width: 100%; height: auto !important; min-height: 0 !important; object-fit: cover; object-position: center; border-radius: 10px; }
+  .card .row.g-0 > .col-8 .card-body { padding: 12px !important; }
+  .card .row.g-0 > .col-8 h3 { font-size: 1.1rem; }
+  .card .row.g-0 > .col-8 p, .card .row.g-0 > .col-8 small, .card .row.g-0 > .col-8 .small { font-size: .78rem; }
+  .card .row.g-0 > .col-8 .badge { font-size: .65rem !important; padding: 3px 6px !important; }
+  .card .row.g-0 > .col-8 .bg-light { padding: 8px !important; }
+  .card .row.g-0 > .col-8 .btn { font-size: .75rem; padding: 6px 8px; }
+  /* Tarifs : 4 formules côte à côte */
+  .tarifs-row { --bs-gutter-x: 6px; }
+  .tarifs-row .card-header { padding: 8px 2px !important; }
+  .tarifs-row .card-header h5 { font-size: .68rem; }
+  .tarifs-row .card-header small { font-size: .5rem; display: block; line-height: 1.1; }
+  .tarifs-row .card-body { padding: 8px 4px !important; }
+  .tarifs-row .display-5 { font-size: 1rem !important; display: block; }
+  .tarifs-row .card-body .text-muted { font-size: .55rem; }
+  .tarifs-row ul { font-size: .56rem; line-height: 1.25; padding: 0; }
+  .tarifs-row ul li { margin-bottom: 4px !important; }
+  .tarifs-row .card-footer { padding: 0 4px 8px !important; }
+  .tarifs-row .btn { font-size: .62rem; padding: 4px 2px; }
+  /* Contact : champs plus compacts */
+  form .form-label { font-size: .82rem; }
+}
+@media (max-width: 576px) { #demo-banner .db-extra { display: none; } }
