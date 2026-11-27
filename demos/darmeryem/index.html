@@ -365,6 +365,22 @@ section.deco{overflow:hidden}
   .lanterne{animation:none}.reveal{opacity:1;transform:none;transition:none}
 }
 
+/* carte "tous les avis" */
+.avis-tous{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;text-decoration:none;
+  background:linear-gradient(160deg,var(--nuit),#2c3c7a);color:#fff;border-top-color:var(--orange)}
+.avis-tous::before{display:none}
+.avis-tous .score-grand{font:700 4.4rem "Cormorant Garamond",serif;color:#ffd8ad;line-height:1}
+.avis-tous p{color:#e6e9f5;font-style:normal;margin:8px 0 16px}
+.avis-tous .lien{font-weight:600;color:#fff;border-bottom:2px solid var(--orange);padding-bottom:2px}
+
+/* avis côte à côte, à faire glisser sur petit écran */
+@media (max-width:960px){
+  .avis-grid{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;margin:0 -16px;padding:4px 16px 22px;scrollbar-width:none}
+  .avis-grid::-webkit-scrollbar{display:none}
+  .avis-grid .avis{flex:0 0 min(80%,340px);scroll-snap-align:center}
+  .avis-hint{display:block!important}
+}
+
 /* =========== MOBILE SOIGNÉ (prioritaire) =========== */
 .galerie-grid{grid-auto-flow:dense}
 .barre-mobile,.swipe-hint{display:none}
@@ -458,7 +474,7 @@ section.deco{overflow:hidden}
       <li><a href="#avis">Avis</a></li>
       <li><a href="#infos">Infos</a></li>
     </ul>
-    <a href="tel:+32000000000" class="btn resa">Réserver</a>
+    <a href="tel:+32468590986" class="btn resa">Réserver</a>
     <button class="burger" id="burger" aria-label="Ouvrir le menu"><span></span><span></span><span></span></button>
   </div>
 </header>
@@ -603,26 +619,27 @@ section.deco{overflow:hidden}
       <h2>Ce que disent nos clients</h2>
     </div>
     <div class="avis-grid">
-      <!-- DÉMO : remplacer par de vrais avis Google copiés avec l'accord du restaurant -->
+      <!-- Vrais avis Google, recopiés tels quels -->
       <div class="avis carte3d reveal">
         <span class="etoiles">★★★★★</span>
-        <p>Dès qu'on passe la porte, on se croirait à Marrakech. Le salon est magnifique et le tajine aux pruneaux fond dans la bouche.</p>
-        <div class="qui"><span class="av">S</span><span><b>Sarah</b><small>Avis Google</small></span></div>
+        <p>Une véritable pépite ! Le couscous et les tajines sont absolument magnifiques — savoureux, généreux et parfumés comme au Maroc. L'accueil est chaleureux et les plats sont préparés avec amour. Une adresse incontournable pour les amateurs de cuisine marocaine authentique !</p>
+        <div class="qui"><span class="av">A</span><span><b>Anouar R.</b><small>Local Guide · Avis Google</small></span></div>
       </div>
       <div class="avis carte3d reveal">
         <span class="etoiles">★★★★★</span>
-        <p>Une harira comme chez ma grand-mère et un couscous très généreux. Accueil chaleureux, on reviendra en famille.</p>
-        <div class="qui"><span class="av" style="background:var(--terre)">Y</span><span><b>Youssef</b><small>Avis Google</small></span></div>
+        <p>La nourriture était délicieuse, avec des plats bien garnis, préparés avec des produits frais et plein de saveurs authentiques. Le service était irréprochable du début à la fin, et le personnel vraiment gentil et attentionné.</p>
+        <div class="qui"><span class="av" style="background:var(--terre)">N</span><span><b>Nada A.</b><small>Local Guide · Déjeuner · Avis Google</small></span></div>
       </div>
-      <div class="avis carte3d reveal">
+      <a class="avis avis-tous carte3d reveal" href="https://www.google.com/maps/search/?api=1&query=Dar+Meryem+Chauss%C3%A9e+de+Helmet+294+Schaerbeek" target="_blank" rel="noopener">
+        <span class="score-grand">4,8</span>
         <span class="etoiles">★★★★★</span>
-        <p>Le décor est superbe, les banquettes sont confortables et le thé à la menthe est parfait. Une vraie pépite à Schaerbeek.</p>
-        <div class="qui"><span class="av" style="background:var(--or)">L</span><span><b>Laura</b><small>Avis Google</small></span></div>
-      </div>
+        <p>Note moyenne sur <b>459 avis</b> Google</p>
+        <span class="lien">Lire tous les avis →</span>
+      </a>
     </div>
+    <p class="swipe-hint avis-hint">Glissez pour lire les avis</p>
     <div class="google-note reveal">
-      <span class="score">4,8</span>
-      <span><span class="etoiles" style="color:var(--or);letter-spacing:2px">★★★★★</span><br>459 avis sur Google</span>
+      <span>Vous êtes venu chez nous ?</span>
       <a class="btn or" href="https://www.google.com/maps/search/?api=1&query=Dar+Meryem+Chauss%C3%A9e+de+Helmet+294+Schaerbeek" target="_blank" rel="noopener">Laisser un avis Google</a>
     </div>
   </div>
@@ -654,7 +671,7 @@ section.deco{overflow:hidden}
         <h3>Contact</h3>
         <div class="services"><span>🍽️ Sur place</span><span>🛍️ À emporter</span><span>🛵 Livraison</span><span>✅ Halal</span></div>
         <div class="contact-ligne"><span class="ico">📍</span><span>Chaussée de Helmet 294<br>1030 Schaerbeek, Bruxelles</span></div>
-        <div class="contact-ligne"><span class="ico">📞</span><a href="tel:+32000000000">Numéro du restaurant</a></div>
+        <div class="contact-ligne"><span class="ico">📞</span><a href="tel:+32468590986">+32 468 59 09 86</a></div>
         <div class="carte"><iframe loading="lazy" title="Carte Dar Meryem" src="https://maps.google.com/maps?q=Chauss%C3%A9e%20de%20Helmet%20294%2C%201030%20Schaerbeek&z=15&output=embed"></iframe></div>
       </div>
     </div>
@@ -671,7 +688,7 @@ section.deco{overflow:hidden}
 
 <nav class="barre-mobile" aria-label="Actions rapides">
   <a href="#carte"><b>📖</b>La carte</a>
-  <a href="#salon"><b>🛋️</b>Le salon</a>
+  <a href="tel:+32468590986"><b>📞</b>Appeler</a>
   <a href="https://www.google.com/maps/dir/?api=1&destination=Chauss%C3%A9e+de+Helmet+294+1030+Schaerbeek" target="_blank" rel="noopener" class="principal"><b>📍</b>Itinéraire</a>
 </nav>
 
