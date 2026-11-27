@@ -1,0 +1,806 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dar Meryem — Cuisine marocaine à Schaerbeek</title>
+<meta name="description" content="Dar Meryem, la maison de Meryem : tajines, couscous, harira et thé à la menthe dans un vrai salon marocain, Chaussée de Helmet 294, Schaerbeek.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cormorant+Garamond:wght@500;600;700&family=Great+Vibes&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --creme:#fbf4e8;
+  --sable:#f3e3c7;
+  --terre:#c8553d;      /* murs ocre-corail du salon */
+  --terre-fonce:#9e3b27;
+  --or:#c99a2e;         /* lanternes en laiton */
+  --or-clair:#f0cf73;
+  --zellige:#1f7a6d;    /* vert-bleu des zelliges */
+  --rouge:#b3202b;      /* coussins rouges */
+  --encre:#3a2418;
+  --encre-douce:#6d5243;
+  --ombre:0 18px 40px -18px rgba(120,60,30,.45);
+  /* couleurs de leur carte papier */
+  --nuit:#1e2a5a;
+  --orange:#ef8a2b;
+  --turquoise:#1597a6;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:"Poppins",system-ui,sans-serif;color:var(--encre);background:var(--creme);
+  line-height:1.65;overflow-x:hidden;
+}
+img{display:block;max-width:100%}
+a{color:inherit}
+h1,h2,h3{font-family:"Cormorant Garamond",serif;line-height:1.1;color:var(--terre-fonce)}
+.arabe{font-family:"Amiri",serif}
+.wrap{width:min(1180px,100% - 32px);margin-inline:auto}
+
+/* ---------- motif zellige (SVG en fond) ---------- */
+.zellige-bg{
+  background-color:var(--sable);
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'%3E%3Cg fill='none' stroke='%23c8553d' stroke-opacity='.16' stroke-width='2'%3E%3Cpath d='M40 4l10 26 26 10-26 10-10 26-10-26L4 40l26-10z'/%3E%3Ccircle cx='40' cy='40' r='8'/%3E%3Cpath d='M0 0l14 14M80 0L66 14M0 80l14-14M80 80L66 66'/%3E%3C/g%3E%3C/svg%3E");
+}
+.frise{
+  height:14px;
+  background:
+    linear-gradient(45deg,var(--zellige) 25%,transparent 25%) 0 0/14px 14px,
+    linear-gradient(-45deg,var(--zellige) 25%,transparent 25%) 0 0/14px 14px,
+    linear-gradient(45deg,transparent 75%,var(--terre) 75%) 0 0/14px 14px,
+    linear-gradient(-45deg,transparent 75%,var(--terre) 75%) 0 0/14px 14px,
+    var(--or-clair);
+}
+
+/* ---------- photo avec repli si l'image manque ---------- */
+.photo{position:relative;overflow:hidden;background:
+  radial-gradient(circle at 30% 30%,rgba(240,207,115,.55),transparent 60%),
+  linear-gradient(135deg,var(--terre),var(--rouge) 60%,var(--terre-fonce));}
+.photo img{width:100%;height:100%;object-fit:cover;transition:transform .8s ease}
+.photo.vide img{display:none}
+.photo.vide::after{
+  content:attr(data-label);position:absolute;inset:0;display:grid;place-items:center;text-align:center;padding:16px;
+  color:#fff8e6;font:600 1.1rem "Cormorant Garamond",serif;letter-spacing:.04em;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60' viewBox='0 0 60 60'%3E%3Cpath d='M30 3l8 19 19 8-19 8-8 19-8-19-19-8 19-8z' fill='none' stroke='%23fff3c4' stroke-opacity='.25' stroke-width='1.5'/%3E%3C/svg%3E");
+}
+
+/* ---------- navigation ---------- */
+header.nav{
+  position:fixed;inset:0 0 auto;z-index:50;transition:background .3s,box-shadow .3s;
+}
+header.nav.scrolled{background:rgba(251,244,232,.94);backdrop-filter:blur(8px);box-shadow:0 6px 20px -12px rgba(120,60,30,.4)}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;height:72px}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+.logo .etoile{width:38px;height:38px;flex:none}
+.logo b{font:700 1.6rem "Cormorant Garamond",serif;color:var(--terre-fonce)}
+.logo small{display:block;font:400 .95rem "Amiri",serif;color:var(--or);margin-top:-6px}
+.nav ul{display:flex;gap:26px;list-style:none}
+.nav ul a{text-decoration:none;font-size:.92rem;font-weight:500;position:relative}
+.nav ul a::after{content:"";position:absolute;left:0;right:0;bottom:-4px;height:2px;background:var(--or);transform:scaleX(0);transition:.3s}
+.nav ul a:hover::after{transform:scaleX(1)}
+.btn{
+  display:inline-flex;align-items:center;gap:8px;padding:13px 24px;border-radius:999px;border:0;cursor:pointer;
+  font:600 .95rem "Poppins",sans-serif;text-decoration:none;color:#fff;
+  background:linear-gradient(180deg,#d8664c,var(--terre-fonce));
+  box-shadow:0 6px 0 #7a2c1c,0 12px 22px -8px rgba(122,44,28,.6);
+  transition:transform .15s,box-shadow .15s;
+}
+.btn:hover{transform:translateY(-2px);box-shadow:0 8px 0 #7a2c1c,0 16px 26px -8px rgba(122,44,28,.6)}
+.btn:active{transform:translateY(4px);box-shadow:0 2px 0 #7a2c1c,0 6px 12px -6px rgba(122,44,28,.6)}
+.btn.or{background:linear-gradient(180deg,var(--or-clair),var(--or));color:var(--encre);box-shadow:0 6px 0 #8f6a17,0 12px 22px -8px rgba(143,106,23,.6)}
+.btn.or:hover{box-shadow:0 8px 0 #8f6a17,0 16px 26px -8px rgba(143,106,23,.6)}
+.burger{display:none;background:none;border:0;cursor:pointer;width:44px;height:44px}
+.burger span{display:block;height:2px;margin:6px 10px;background:var(--encre);border-radius:2px}
+
+/* ---------- héros : arche marocaine 3D ---------- */
+.hero{position:relative;min-height:100vh;padding:110px 0 70px;display:flex;align-items:center}
+.hero .wrap{display:grid;grid-template-columns:1.05fr .95fr;gap:50px;align-items:center}
+.surtitre{display:inline-flex;align-items:center;gap:10px;font-size:.82rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--zellige)}
+.surtitre::before{content:"";width:34px;height:2px;background:var(--zellige)}
+.hero h1{font-size:clamp(3rem,7vw,5.6rem);margin:14px 0 6px}
+.hero h1 .arabe{display:block;font-size:.5em;color:var(--or);margin-top:6px}
+.hero p.lead{font-size:1.08rem;color:var(--encre-douce);max-width:520px;margin:18px 0 30px}
+.hero .actions{display:flex;flex-wrap:wrap;gap:16px}
+.note{display:flex;align-items:center;gap:12px;margin-top:30px;font-size:.92rem}
+.note .etoiles{color:var(--or);font-size:1.15rem;letter-spacing:2px}
+.note b{font-size:1.3rem;font-family:"Cormorant Garamond",serif}
+
+.scene{perspective:1200px}
+.arche{
+  position:relative;aspect-ratio:3/4;max-width:460px;margin-inline:auto;
+  border-radius:230px 230px 22px 22px;padding:14px;
+  background:linear-gradient(145deg,var(--or-clair),var(--or));
+  box-shadow:var(--ombre),inset 0 0 0 3px rgba(255,255,255,.5);
+  transform-style:preserve-3d;transition:transform .25s ease-out;
+}
+.arche .photo{width:100%;height:100%;border-radius:216px 216px 12px 12px}
+.arche::before{ /* ombre de profondeur */
+  content:"";position:absolute;inset:26px -18px -22px 18px;border-radius:230px 230px 22px 22px;
+  background:var(--terre);opacity:.25;transform:translateZ(-60px);filter:blur(2px);
+}
+.badge-3d{
+  position:absolute;background:#fff;border-radius:18px;padding:12px 16px;box-shadow:var(--ombre);
+  transform:translateZ(70px);font-size:.85rem;display:flex;align-items:center;gap:10px;
+}
+.badge-3d .ico{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;font-size:1.2rem;background:var(--sable)}
+.badge-3d.b1{left:-34px;bottom:70px}
+.badge-3d.b2{right:-26px;top:90px}
+.badge-3d strong{display:block;font-size:.95rem;color:var(--terre-fonce)}
+
+/* lanternes suspendues */
+.lanternes{position:absolute;top:0;left:0;right:0;height:0;pointer-events:none;z-index:2}
+.lanterne{position:absolute;top:0;transform-origin:top center;animation:balance 5s ease-in-out infinite}
+.lanterne .fil{width:2px;margin:auto;background:linear-gradient(var(--or),#8f6a17)}
+.lanterne svg{display:block;filter:drop-shadow(0 0 18px rgba(255,190,80,.75))}
+@keyframes balance{0%,100%{transform:rotate(-3deg)}50%{transform:rotate(3deg)}}
+
+/* ---------- sections ---------- */
+section{padding:100px 0;position:relative}
+.titre-section{text-align:center;max-width:680px;margin:0 auto 54px}
+.titre-section h2{font-size:clamp(2.3rem,5vw,3.4rem);margin:10px 0 12px}
+.titre-section p{color:var(--encre-douce)}
+.titre-section .surtitre{justify-content:center}
+.titre-section .surtitre::after{content:"";width:34px;height:2px;background:var(--zellige)}
+.etoile-sep{display:block;margin:0 auto 6px;width:34px;color:var(--or)}
+
+/* ---------- le salon ---------- */
+.salon{background:#fff8ee}
+.salon-grid{display:grid;grid-template-columns:1.25fr 1fr;gap:56px;align-items:center}
+.mosaique{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:220px 220px;gap:16px}
+.mosaique .photo{border-radius:20px;box-shadow:var(--ombre)}
+.mosaique .grande{grid-row:span 2;border-radius:180px 180px 20px 20px;border:6px solid #fff}
+.carte3d{transition:transform .3s ease, box-shadow .3s;transform-style:preserve-3d;will-change:transform}
+.carte3d:hover img{transform:scale(1.06)}
+.salon-texte h2{font-size:clamp(2.2rem,4.5vw,3.2rem);margin:12px 0 18px}
+.salon-texte p{color:var(--encre-douce);margin-bottom:16px}
+.points{list-style:none;display:grid;gap:14px;margin:26px 0 30px}
+.points li{display:flex;gap:14px;align-items:flex-start;background:var(--creme);border-radius:16px;padding:14px 16px;border:1px solid #ecdcc0}
+.points .ico{flex:none;width:42px;height:42px;border-radius:12px;display:grid;place-items:center;font-size:1.3rem;background:#fff;box-shadow:0 4px 0 #ecdcc0}
+.points b{display:block;color:var(--terre-fonce)}
+.points span{font-size:.9rem;color:var(--encre-douce)}
+
+/* ---------- menu ---------- */
+.onglets{display:flex;justify-content:center;flex-wrap:wrap;gap:10px;margin-bottom:40px}
+.onglet{
+  padding:10px 22px;border-radius:999px;border:2px solid var(--terre);background:#fff;color:var(--terre-fonce);
+  font:600 .9rem "Poppins",sans-serif;cursor:pointer;transition:.2s;box-shadow:0 4px 0 #ecc7b9;
+}
+.onglet:hover{transform:translateY(-2px)}
+.onglet.actif{background:var(--terre);color:#fff;box-shadow:0 4px 0 var(--terre-fonce)}
+.plats{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:28px}
+.plat{
+  background:#fff;border-radius:24px;overflow:hidden;box-shadow:var(--ombre);border:1px solid #f0e0c6;
+  display:flex;flex-direction:column;
+}
+.plat.cache{display:none}
+.plat .photo{aspect-ratio:4/3}
+.plat .corps{padding:18px 20px 22px;flex:1;display:flex;flex-direction:column}
+.plat h3{font-size:1.5rem;display:flex;justify-content:space-between;gap:10px;align-items:baseline}
+.plat .prix{font:600 1rem "Poppins",sans-serif;color:#fff;background:var(--zellige);padding:3px 12px;border-radius:999px;white-space:nowrap}
+.plat p{font-size:.9rem;color:var(--encre-douce);margin-top:6px;flex:1}
+.plat .tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}
+.plat .tags span{font-size:.72rem;font-weight:600;padding:3px 10px;border-radius:999px;background:var(--sable);color:var(--terre-fonce)}
+.menu-note{text-align:center;margin-top:30px;font-size:.85rem;color:var(--encre-douce)}
+
+/* formule */
+.formule{
+  margin-top:60px;display:grid;grid-template-columns:auto 1fr auto;gap:30px;align-items:center;
+  background:linear-gradient(120deg,var(--zellige),#15594f);color:#fff;border-radius:28px;padding:34px 40px;
+  box-shadow:0 10px 0 #0f4038,var(--ombre);position:relative;overflow:hidden;
+}
+.formule::before{content:"";position:absolute;inset:0;opacity:.15;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60' viewBox='0 0 60 60'%3E%3Cpath d='M30 3l8 19 19 8-19 8-8 19-8-19-19-8 19-8z' fill='none' stroke='%23fff' stroke-width='1.5'/%3E%3C/svg%3E")}
+.formule > *{position:relative}
+.formule h3{color:var(--or-clair);font-size:2rem}
+.formule .gros{font:700 3.2rem "Cormorant Garamond",serif;color:var(--or-clair)}
+.formule .tajine-ico{font-size:3.4rem}
+
+/* ---------- la carte complète (style de leur menu papier) ---------- */
+.carte-papier{
+  position:relative;margin-top:70px;background:#fff;border-radius:28px;padding:56px 40px 60px;
+  box-shadow:0 12px 0 #ecdcc0,var(--ombre);overflow:hidden;
+}
+.coin{position:absolute;width:150px;height:150px;pointer-events:none}
+.coin.hg{top:-40px;left:-40px}.coin.hd{top:-40px;right:-40px;transform:scaleX(-1)}
+.coin.bg{bottom:-40px;left:-40px;transform:scaleY(-1)}.coin.bd{bottom:-40px;right:-40px;transform:scale(-1)}
+.carte-papier > h3{text-align:center;font:400 clamp(2.6rem,6vw,3.6rem) "Great Vibes",cursive;color:var(--nuit)}
+.carte-papier > p.sous{text-align:center;color:var(--encre-douce);margin-bottom:28px}
+.onglets.carte-onglets .onglet{border-color:var(--nuit);color:var(--nuit);box-shadow:0 4px 0 #c9cde0}
+.onglets.carte-onglets .onglet.actif{background:var(--nuit);color:#fff;box-shadow:0 4px 0 #0f1636}
+.rubriques{display:grid;grid-template-columns:repeat(2,1fr);gap:20px 60px;max-width:960px;margin:0 auto;position:relative}
+.rubrique{break-inside:avoid}
+.rubrique h4{
+  font:400 2.1rem "Great Vibes",cursive;color:var(--nuit);text-align:center;margin:18px 0 10px;
+  display:flex;align-items:center;justify-content:center;gap:12px;
+}
+.rubrique h4::before,.rubrique h4::after{content:"";width:46px;height:12px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='46' height='12' viewBox='0 0 46 12'%3E%3Cpath d='M2 6c8 0 10-5 16-5s6 6 1 6-3-4 2-4c6 0 9 3 25 3' fill='none' stroke='%231e2a5a' stroke-width='1.4'/%3E%3C/svg%3E") no-repeat center}
+.rubrique h4::after{transform:scaleX(-1)}
+.ligne{padding:9px 0;border-bottom:1px dotted #e3d6c2}
+.ligne .haut{display:flex;align-items:baseline;gap:8px;font-weight:500;color:var(--nuit)}
+.ligne .haut .pts{flex:1;border-bottom:2px dotted #d5c7b0;transform:translateY(-4px)}
+.ligne .haut .px{font-weight:600;color:var(--nuit);white-space:nowrap}
+.ligne .haut em{font-style:normal;color:var(--orange)}
+.ligne small{display:block;color:#b57a3e;font-size:.84rem;line-height:1.45;margin-top:2px}
+.rubrique .remarque{font-size:.82rem;color:#b57a3e;text-align:center;margin-top:10px}
+
+/* ---------- galerie ---------- */
+.galerie{background:var(--terre);color:#fff}
+.galerie .titre-section h2{color:#fff}
+.galerie .titre-section p{color:#ffe6d6}
+.galerie .surtitre{color:var(--or-clair)}
+.galerie .surtitre::before,.galerie .surtitre::after{background:var(--or-clair)}
+.galerie-grid{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:200px;gap:14px}
+.galerie-grid .photo{border-radius:18px;cursor:zoom-in;border:4px solid rgba(255,255,255,.25)}
+.galerie-grid .h2{grid-row:span 2}
+.galerie-grid .w2{grid-column:span 2}
+.galerie-grid .arc{border-radius:140px 140px 18px 18px}
+
+/* lightbox */
+.lightbox{position:fixed;inset:0;z-index:100;background:rgba(40,20,10,.88);display:none;place-items:center;padding:20px}
+.lightbox.ouvert{display:grid}
+.lightbox img{max-height:86vh;max-width:min(1100px,100%);border-radius:14px;border:6px solid #fff}
+.lightbox button{position:absolute;top:16px;right:20px;background:#fff;border:0;width:46px;height:46px;border-radius:50%;font-size:1.5rem;cursor:pointer}
+
+/* ---------- avis ---------- */
+.avis-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:26px}
+.avis{
+  background:#fff;border-radius:22px;padding:28px 26px;box-shadow:var(--ombre);position:relative;border-top:5px solid var(--or);
+}
+.avis::before{content:"“";position:absolute;top:-6px;right:20px;font:700 5rem "Cormorant Garamond",serif;color:var(--sable)}
+.avis .etoiles{color:var(--or);letter-spacing:2px}
+.avis p{margin:12px 0 18px;font-size:.95rem;color:var(--encre-douce);font-style:italic;position:relative}
+.avis .qui{display:flex;align-items:center;gap:12px}
+.avis .av{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;font-weight:600;color:#fff;background:var(--zellige)}
+.avis .qui small{display:block;color:var(--encre-douce);font-size:.78rem}
+.google-note{display:flex;justify-content:center;align-items:center;gap:16px;flex-wrap:wrap;margin-top:40px}
+.google-note .score{font:700 2.6rem "Cormorant Garamond",serif;color:var(--terre-fonce)}
+
+/* ---------- infos / contact ---------- */
+.infos{background:#fff8ee}
+.infos-grid{display:grid;grid-template-columns:1fr 1fr;gap:34px}
+.bloc{background:#fff;border-radius:24px;padding:32px;box-shadow:var(--ombre);border:1px solid #f0e0c6}
+.bloc h3{font-size:1.9rem;margin-bottom:16px}
+.horaires{list-style:none}
+.horaires li{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px dashed #e6d2b3}
+.horaires li.ferme span:last-child{color:var(--rouge)}
+.horaires li.aujourdhui{font-weight:600;color:var(--zellige)}
+.contact-ligne{display:flex;gap:14px;align-items:center;margin-bottom:16px}
+.contact-ligne .ico{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;background:var(--sable);font-size:1.2rem;flex:none}
+.carte{margin-top:18px;border-radius:18px;overflow:hidden;height:230px;border:4px solid var(--sable)}
+.carte iframe{width:100%;height:100%;border:0}
+.services{display:flex;gap:10px;flex-wrap:wrap;margin:6px 0 20px}
+.services span{font-size:.82rem;padding:6px 14px;border-radius:999px;background:var(--creme);border:1px solid #ecdcc0}
+
+footer{background:var(--encre);color:#e9d9c4;text-align:center;padding:40px 0 30px;font-size:.88rem}
+footer b{font:700 1.7rem "Cormorant Garamond",serif;color:var(--or-clair);display:block}
+footer .demo{margin-top:12px;opacity:.6;font-size:.78rem}
+
+/* apparitions */
+.reveal{opacity:0;transform:translateY(36px);transition:opacity .8s ease,transform .8s ease}
+.reveal.vu{opacity:1;transform:none}
+
+/* =========================================================
+   DESIGN DE LEUR CARTE : blanc, bleu nuit, orange, turquoise,
+   titres manuscrits et étoiles zellige dans les coins
+   ========================================================= */
+body{background:#fffdf9}
+h1,h2,h3{color:var(--nuit)}
+.titre-section h2,.salon-texte h2{font:400 clamp(2.8rem,6vw,4.2rem) "Great Vibes",cursive;color:var(--nuit)}
+.hero h1{color:var(--nuit)}
+.hero h1 .arabe{color:var(--orange)}
+.logo b{color:var(--nuit)}
+.logo small{color:var(--orange)}
+.surtitre{color:var(--turquoise)}
+.surtitre::before,.titre-section .surtitre::after{background:var(--orange)}
+.frise{
+  background:
+    linear-gradient(45deg,var(--nuit) 25%,transparent 25%) 0 0/14px 14px,
+    linear-gradient(-45deg,var(--nuit) 25%,transparent 25%) 0 0/14px 14px,
+    linear-gradient(45deg,transparent 75%,var(--turquoise) 75%) 0 0/14px 14px,
+    linear-gradient(-45deg,transparent 75%,var(--turquoise) 75%) 0 0/14px 14px,
+    var(--orange);
+}
+.zellige-bg{
+  background-color:#fffdf9;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='90' height='90' viewBox='0 0 90 90'%3E%3Cg fill='none' stroke-width='1.6'%3E%3Cpath d='M45 8l9 22 22 9-22 9-9 22-9-22-22-9 22-9z' stroke='%23ef8a2b' stroke-opacity='.18'/%3E%3Ccircle cx='45' cy='45' r='7' stroke='%231597a6' stroke-opacity='.2'/%3E%3C/g%3E%3C/svg%3E");
+}
+.btn{background:linear-gradient(180deg,#f5a04f,#dc6c1e);box-shadow:0 6px 0 #a64f12,0 12px 22px -8px rgba(166,79,18,.55)}
+.btn:hover{box-shadow:0 8px 0 #a64f12,0 16px 26px -8px rgba(166,79,18,.55)}
+.btn:active{box-shadow:0 2px 0 #a64f12,0 6px 12px -6px rgba(166,79,18,.55)}
+.onglet{border-color:var(--orange);color:#b9581a;box-shadow:0 4px 0 #f6d2b2}
+.onglet.actif{background:var(--orange);color:#fff;box-shadow:0 4px 0 #a64f12}
+.plat .prix{background:var(--nuit)}
+.plat h3{color:var(--nuit)}
+.plat .tags span{background:#e6f4f5;color:#0f6c77}
+.points b,.bloc h3{color:var(--nuit)}
+.points li{background:#fff;border-color:#f0e4d2}
+.salon{background:#fff8ee}
+.avis{border-top-color:var(--turquoise)}
+.avis .etoiles,.note .etoiles{color:var(--orange)}
+.formule{background:linear-gradient(120deg,var(--nuit),#2c3c7a);box-shadow:0 10px 0 #111a3d,var(--ombre)}
+.formule h3{font:400 2.6rem "Great Vibes",cursive;color:#ffd8ad}
+.formule .gros{color:#ffd8ad}
+.formule-img{width:130px;height:130px;border-radius:50%;overflow:hidden;border:5px solid var(--orange);box-shadow:0 8px 20px rgba(0,0,0,.35);margin-inline:auto}
+.formule-img img{width:100%;height:100%;object-fit:cover}
+.badge-3d strong{color:var(--nuit)}
+.badge-3d .ico{background:#fdebd8}
+.arche{background:linear-gradient(145deg,#f5a04f,var(--orange) 40%,var(--turquoise))}
+.arche::before{background:var(--nuit)}
+.mosaique .grande{border-color:#fff;box-shadow:0 0 0 4px var(--orange),var(--ombre)}
+.galerie{background:linear-gradient(160deg,var(--terre),#b2432c)}
+footer{background:var(--nuit)}
+footer b{color:#ffd8ad}
+/* étoiles zellige dans les coins des sections */
+section > .coin{opacity:.95;z-index:0}
+section > .wrap{position:relative;z-index:1}
+section.deco{overflow:hidden}
+
+/* ---------- responsive ---------- */
+@media (max-width:960px){
+  .hero .wrap,.salon-grid,.infos-grid{grid-template-columns:1fr}
+  .hero{padding-top:100px}
+  .hero .texte{text-align:center}
+  .hero p.lead{margin-inline:auto}
+  .hero .actions,.note{justify-content:center}
+  .surtitre{justify-content:center}
+  .avis-grid{grid-template-columns:1fr}
+  .galerie-grid{grid-template-columns:repeat(2,1fr);grid-auto-rows:170px}
+  .formule{grid-template-columns:1fr;text-align:center}
+}
+@media (max-width:760px){
+  .nav ul{position:fixed;top:72px;left:0;right:0;flex-direction:column;gap:0;background:var(--creme);padding:10px 16px 20px;box-shadow:0 12px 20px -10px rgba(0,0,0,.25);display:none}
+  .nav ul.ouvert{display:flex}
+  .nav ul a{display:block;padding:12px 0}
+  .nav .btn.resa{display:none}
+  .burger{display:block}
+  section{padding:70px 0}
+  .badge-3d.b1{left:-6px}.badge-3d.b2{right:-6px}
+  .mosaique{grid-template-rows:170px 170px}
+  .formule{padding:28px 22px}
+  .rubriques{grid-template-columns:1fr}
+  .carte-papier{padding:44px 18px 50px}
+  .coin{width:100px;height:100px}
+  .galerie-grid .w2{grid-column:span 2}
+}
+@media (prefers-reduced-motion:reduce){
+  .lanterne{animation:none}.reveal{opacity:1;transform:none;transition:none}
+}
+</style>
+</head>
+<body>
+
+<!-- ===== NAVIGATION ===== -->
+<header class="nav" id="nav">
+  <div class="wrap">
+    <a href="#accueil" class="logo">
+      <svg class="etoile" viewBox="0 0 40 40"><path d="M20 2l5 9 10-1-4 9 6 7-10 2-2 10-5-8-5 8-2-10-10-2 6-7-4-9 10 1z" fill="#c99a2e"/><circle cx="20" cy="20" r="6" fill="#c8553d"/></svg>
+      <span><b>Dar Meryem</b><small class="arabe">دار مريم</small></span>
+    </a>
+    <ul id="menuNav">
+      <li><a href="#salon">Le salon</a></li>
+      <li><a href="#menu">La carte</a></li>
+      <li><a href="#galerie">Photos</a></li>
+      <li><a href="#avis">Avis</a></li>
+      <li><a href="#infos">Infos</a></li>
+    </ul>
+    <a href="tel:+32000000000" class="btn resa">Réserver</a>
+    <button class="burger" id="burger" aria-label="Ouvrir le menu"><span></span><span></span><span></span></button>
+  </div>
+</header>
+
+<!-- ===== HÉROS ===== -->
+<section class="hero zellige-bg" id="accueil">
+  <div class="lanternes" aria-hidden="true" id="lanternes"></div>
+  <div class="wrap">
+    <div class="texte reveal">
+      <span class="surtitre">Cuisine marocaine · Schaerbeek</span>
+      <h1>Dar Meryem<span class="arabe">دار مريم · la maison de Meryem</span></h1>
+      <p class="lead">Poussez la porte et vous êtes à Marrakech. Banquettes brodées, zelliges, lanternes en laiton et thé à la menthe versé de haut. Ici, les tajines mijotent lentement, comme à la maison.</p>
+      <div class="actions">
+        <a href="#menu" class="btn">Voir la carte</a>
+        <a href="#salon" class="btn or">Découvrir le salon</a>
+      </div>
+      <div class="note">
+        <span class="etoiles">★★★★★</span>
+        <span><b>4,8</b> / 5 · 459 avis Google</span>
+      </div>
+    </div>
+    <div class="scene reveal">
+      <div class="arche" id="arche">
+        <div class="photo" data-label="Le salon marocain"><img src="img/salon-zellige.jpg" alt="Le salon de Dar Meryem, banquettes marocaines et tables en cuivre"></div>
+        <div class="badge-3d b1"><span class="ico">🫖</span><span><strong>Thé à la menthe</strong>en berrad dès 5 €</span></div>
+        <div class="badge-3d b2"><span class="ico">🥘</span><span><strong>Tajines maison</strong>mijotés lentement</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="frise"></div>
+
+<!-- ===== LE SALON ===== -->
+<section class="salon deco" id="salon">
+  <svg class="coin hd" viewBox="0 0 150 150" aria-hidden="true"><use href="#zstar"/></svg>
+  <svg class="coin bg" viewBox="0 0 150 150" aria-hidden="true"><use href="#zstar"/></svg>
+  <div class="wrap salon-grid">
+    <div class="mosaique reveal">
+      <div class="photo grande carte3d" data-label="Salon — banquettes"><img src="img/salon-banquettes.jpg" alt="Les longues banquettes brodées du salon"></div>
+      <div class="photo carte3d" data-label="Salle & lanternes"><img src="img/salle-soir.jpg" alt="La salle le soir, lanternes allumées"></div>
+      <div class="photo carte3d" data-label="Table dressée"><img src="img/table-festin.jpg" alt="Une table marocaine garnie de petits plats"></div>
+    </div>
+    <div class="salon-texte reveal">
+      <span class="surtitre">Le salon</span>
+      <h2>Ici, on mange assis comme au Maroc</h2>
+      <p>Le cœur de Dar Meryem, c'est son salon. De longues banquettes recouvertes de tissus berbères rouges et verts, des coussins brodés, des petites tables basses en cuivre martelé et une lumière dorée qui tombe des lanternes.</p>
+      <p>On s'y installe pour un repas en famille, entre amis ou pour un thé qui dure. Prenez le temps : ici on partage.</p>
+      <ul class="points">
+        <li><span class="ico">🛋️</span><span><b>Banquettes traditionnelles</b><span>Tissus brodés et coussins faits main</span></span></li>
+        <li><span class="ico">🏮</span><span><b>Lanternes en laiton</b><span>Une lumière chaude, comme dans un riad</span></span></li>
+        <li><span class="ico">🔷</span><span><b>Sol en zelliges</b><span>Les motifs bleus et blancs de Fès</span></span></li>
+      </ul>
+      <a href="#infos" class="btn">Réserver une table</a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== MENU ===== -->
+<section id="menu" class="zellige-bg">
+  <div class="wrap">
+    <div class="titre-section reveal">
+      <span class="surtitre">La carte</span>
+      <h2>Les plats de Meryem</h2>
+      <p>Tajines qui mijotent, couscous du vendredi, rfissa, seffa et harira : la vraie cuisine de la maison, généreuse et halal.</p>
+    </div>
+    <div class="onglets reveal" id="onglets">
+      <button class="onglet actif" data-cat="tout">Tout</button>
+      <button class="onglet" data-cat="tajine">Tajines</button>
+      <button class="onglet" data-cat="specialite">Soupes & pastilla</button>
+      <button class="onglet" data-cat="douceur">Thé & msemen</button>
+    </div>
+    <div class="plats" id="plats"></div>
+
+    <div class="formule reveal">
+      <span class="formule-img"><img src="img/msemen-soupe.jpg" alt="Msemen et harira"></span>
+      <div>
+        <h3>Le petit-déjeuner marocain</h3>
+        <p>Le Fassi, le Beldi, le Berbère… Pain beldi, msemen, harcha, amlou, huile d'argan et miel, avec boisson chaude et jus de fruit.</p>
+      </div>
+      <span class="gros">15 €</span>
+    </div>
+
+    <!-- carte complète, dans le style de leur menu papier -->
+    <div class="carte-papier reveal" id="carte">
+      <svg class="coin hg" viewBox="0 0 150 150" aria-hidden="true"><use href="#zstar"/></svg>
+      <svg class="coin hd" viewBox="0 0 150 150" aria-hidden="true"><use href="#zstar"/></svg>
+      <svg class="coin bg" viewBox="0 0 150 150" aria-hidden="true"><use href="#zstar"/></svg>
+      <svg class="coin bd" viewBox="0 0 150 150" aria-hidden="true"><use href="#zstar"/></svg>
+      <h3>La Carte</h3>
+      <p class="sous">Toute la carte de Dar Meryem</p>
+      <div class="onglets carte-onglets" id="carteOnglets"></div>
+      <div class="rubriques" id="rubriques"></div>
+    </div>
+
+    <!-- étoile zellige réutilisée dans les coins -->
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+      <defs>
+        <g id="zstar">
+          <g transform="translate(75 75)">
+            <g fill="#ef8a2b"><path d="M0-62 14-34 0-20-14-34z"/><path d="M0-62 14-34 0-20-14-34z" transform="rotate(90)"/><path d="M0-62 14-34 0-20-14-34z" transform="rotate(180)"/><path d="M0-62 14-34 0-20-14-34z" transform="rotate(270)"/></g>
+            <g fill="#1597a6"><path d="M0-62 14-34 0-20-14-34z" transform="rotate(45)"/><path d="M0-62 14-34 0-20-14-34z" transform="rotate(135)"/><path d="M0-62 14-34 0-20-14-34z" transform="rotate(225)"/><path d="M0-62 14-34 0-20-14-34z" transform="rotate(315)"/></g>
+            <g fill="#1e2a5a"><path d="M0-20 8-8 20 0 8 8 0 20-8 8-20 0-8-8z"/></g>
+            <g fill="#d63a2f"><rect x="-6" y="-6" width="12" height="12" transform="rotate(45)"/></g>
+          </g>
+        </g>
+      </defs>
+    </svg>
+  </div>
+</section>
+<div class="frise"></div>
+
+<!-- ===== GALERIE ===== -->
+<section class="galerie" id="galerie">
+  <div class="wrap">
+    <div class="titre-section reveal">
+      <span class="surtitre">En images</span>
+      <h2>Un voyage sans quitter Bruxelles</h2>
+      <p>Le salon, la salle, les tables dressées et les plats tels qu'ils arrivent chez vous.</p>
+    </div>
+    <div class="galerie-grid reveal" id="galerieGrid">
+      <div class="photo h2 arc" data-label="Le salon"><img src="img/salon-zellige.jpg" alt="Le salon aux zelliges"></div>
+      <div class="photo w2" data-label="Le festin"><img src="img/table-festin.jpg" alt="Une table garnie de petits plats marocains"></div>
+      <div class="photo" data-label="Service du thé"><img src="img/service-the.jpg" alt="Le thé versé de haut, dattes et abricots"></div>
+      <div class="photo h2 arc" data-label="Banquettes"><img src="img/salon-banquettes.jpg" alt="Les banquettes brodées"></div>
+      <div class="photo" data-label="Tajine aux pruneaux"><img src="img/tajine-pruneaux.jpg" alt="Tajine aux pruneaux et amandes"></div>
+      <div class="photo" data-label="Tajine aux œufs"><img src="img/tajine-oeufs.jpg" alt="Tajine aux œufs, amandes et sésame"></div>
+      <div class="photo w2" data-label="La salle le soir"><img src="img/salle-soir.jpg" alt="La salle le soir"></div>
+      <div class="photo" data-label="Harira & msemen"><img src="img/msemen-soupe.jpg" alt="Msemen et harira"></div>
+      <div class="photo" data-label="Pastilla"><img src="img/pastilla.jpg" alt="Pastilla"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== AVIS ===== -->
+<section id="avis" class="deco">
+  <svg class="coin hg" viewBox="0 0 150 150" aria-hidden="true"><use href="#zstar"/></svg>
+  <svg class="coin bd" viewBox="0 0 150 150" aria-hidden="true"><use href="#zstar"/></svg>
+  <div class="wrap">
+    <div class="titre-section reveal">
+      <span class="surtitre">Ils en parlent</span>
+      <h2>Ce que disent nos clients</h2>
+    </div>
+    <div class="avis-grid">
+      <!-- DÉMO : remplacer par de vrais avis Google copiés avec l'accord du restaurant -->
+      <div class="avis carte3d reveal">
+        <span class="etoiles">★★★★★</span>
+        <p>Dès qu'on passe la porte, on se croirait à Marrakech. Le salon est magnifique et le tajine aux pruneaux fond dans la bouche.</p>
+        <div class="qui"><span class="av">S</span><span><b>Sarah</b><small>Avis Google</small></span></div>
+      </div>
+      <div class="avis carte3d reveal">
+        <span class="etoiles">★★★★★</span>
+        <p>Une harira comme chez ma grand-mère et un couscous très généreux. Accueil chaleureux, on reviendra en famille.</p>
+        <div class="qui"><span class="av" style="background:var(--terre)">Y</span><span><b>Youssef</b><small>Avis Google</small></span></div>
+      </div>
+      <div class="avis carte3d reveal">
+        <span class="etoiles">★★★★★</span>
+        <p>Le décor est superbe, les banquettes sont confortables et le thé à la menthe est parfait. Une vraie pépite à Schaerbeek.</p>
+        <div class="qui"><span class="av" style="background:var(--or)">L</span><span><b>Laura</b><small>Avis Google</small></span></div>
+      </div>
+    </div>
+    <div class="google-note reveal">
+      <span class="score">4,8</span>
+      <span><span class="etoiles" style="color:var(--or);letter-spacing:2px">★★★★★</span><br>459 avis sur Google</span>
+      <a class="btn or" href="https://www.google.com/maps/search/?api=1&query=Dar+Meryem+Chauss%C3%A9e+de+Helmet+294+Schaerbeek" target="_blank" rel="noopener">Laisser un avis Google</a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== INFOS ===== -->
+<section class="infos deco" id="infos">
+  <svg class="coin hd" viewBox="0 0 150 150" aria-hidden="true"><use href="#zstar"/></svg>
+  <svg class="coin bg" viewBox="0 0 150 150" aria-hidden="true"><use href="#zstar"/></svg>
+  <div class="wrap">
+    <div class="titre-section reveal">
+      <span class="surtitre">Nous trouver</span>
+      <h2>Venez vous asseoir chez Meryem</h2>
+    </div>
+    <div class="infos-grid">
+      <div class="bloc reveal">
+        <h3>Horaires</h3>
+        <ul class="horaires" id="horaires">
+          <li data-j="1"><span>Lundi</span><span>16:00 – 22:30</span></li>
+          <li data-j="2"><span>Mardi</span><span>16:00 – 22:30</span></li>
+          <li data-j="3"><span>Mercredi</span><span>16:00 – 22:30</span></li>
+          <li data-j="4"><span>Jeudi</span><span>16:00 – 22:30</span></li>
+          <li data-j="5"><span>Vendredi</span><span>16:00 – 22:30</span></li>
+          <li data-j="6"><span>Samedi</span><span>16:00 – 22:30</span></li>
+          <li data-j="0" class="ferme"><span>Dimanche</span><span>Fermé</span></li>
+        </ul>
+      </div>
+      <div class="bloc reveal">
+        <h3>Contact</h3>
+        <div class="services"><span>🍽️ Sur place</span><span>🛍️ À emporter</span><span>🛵 Livraison</span><span>✅ Halal</span></div>
+        <div class="contact-ligne"><span class="ico">📍</span><span>Chaussée de Helmet 294<br>1030 Schaerbeek, Bruxelles</span></div>
+        <div class="contact-ligne"><span class="ico">📞</span><a href="tel:+32000000000">Numéro du restaurant</a></div>
+        <div class="carte"><iframe loading="lazy" title="Carte Dar Meryem" src="https://maps.google.com/maps?q=Chauss%C3%A9e%20de%20Helmet%20294%2C%201030%20Schaerbeek&z=15&output=embed"></iframe></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="frise" style="margin:-40px 0 30px"></div>
+  <b>Dar Meryem</b>
+  <span class="arabe" style="color:var(--or-clair)">دار مريم</span>
+  <p>Chaussée de Helmet 294 · 1030 Schaerbeek</p>
+  <p class="demo">Site de démonstration</p>
+</footer>
+
+<div class="lightbox" id="lightbox"><button aria-label="Fermer">×</button><img alt=""></div>
+
+<script>
+/* ---- carte des plats ---- */
+const PLATS = [
+  {cat:"tajine", nom:"Tajine de veau, pruneaux & amandes", prix:"22 €", img:"tajine-pruneaux.jpg", desc:"Le tajine sucré-salé de la maison : veau fondant, pruneaux et amandes grillées.", tags:["Signature","Veau"]},
+  {cat:"tajine", nom:"Tajine de poulet citron & olives", prix:"18 €", img:"tajine-poulet.jpg", desc:"Poulet mijoté au citron confit et aux olives. Aussi avec frites (20 €) ou aux légumes (19 €).", tags:["Poulet"]},
+  {cat:"tajine", nom:"Tajine kefta aux œufs", prix:"15 €", img:"tajine-kefta.jpg", desc:"Boulettes de kefta dans une sauce tomate épicée, œufs cuits dans le tajine.", tags:["Sauce tomate"]},
+  {cat:"specialite", nom:"Harira", prix:"7 €", img:"harira.jpg", desc:"La soupe traditionnelle, servie avec dattes, œuf dur et citron.", tags:["Signature"]},
+  {cat:"specialite", nom:"Pastilla", prix:"dès 5 €", img:"pastilla.jpg", desc:"Poulet 8 €, poisson 10 €, viande hachée 7 €, légumes 5 €.", tags:["Fait maison"]},
+  {cat:"douceur", nom:"Thé à la menthe", prix:"5 €", img:"the.jpg", desc:"En berrad (théière) : 2 pers. 5 €, 4 pers. 7 €, 8 pers. 10 €.", tags:["Incontournable"]},
+  {cat:"douceur", nom:"Crêpe marocaine", prix:"4 €", img:"msemen.jpg", desc:"Msemen avec miel, fromage, amlou, huile d'olive ou beurre.", tags:["Maison"]}
+];
+const VEDETTES = PLATS.map(p => p.nom);
+
+/* ---- la carte complète (prix de leur menu le plus récent) ---- */
+const CARTE = [
+  {onglet:"Petit-déjeuner", rubriques:[
+    {titre:"Petit déjeuner", items:[
+      ["Le Fassi","15 €","Pain beldi, œufs brouillés au khliaa, olives noires, boisson chaude au choix et jus de fruit."],
+      ["Le Beldi","15 €","Msemen ou harcha, fromage, beurre, huile d'olive, miel, olives, boisson chaude au choix et jus de fruit."],
+      ["Le Berbère","15 €","Pain beldi, amlou, huile d'argan, miel et beurre, boisson chaude au choix, jus de fruit."],
+      ["Le Classique","15 €","Pain beldi, omelette, fromage, olives noires, boisson chaude au choix, jus de fruit."],
+      ["Le Turkish","15 €","Œufs au plat sucuk, feta, salade, olives noires, boisson chaude au choix et jus de fruit."],
+      ["L'Européen","15 €","Croque madame ou croque monsieur, boisson chaude au choix et salade fraîche."]
+    ]}
+  ]},
+  {onglet:"Entrées", rubriques:[
+    {titre:"Entrées froides", items:[
+      ["Salade marocaine","5 €","Tomate, concombre, oignon, persil, coriandre et huile d'olive."],
+      ["Salade de betterave","5 €","Huile d'olive, vinaigre, persil et coriandre."],
+      ["Salade de riz","5 €","Thon, maïs, huile d'olive et mayonnaise."]
+    ]},
+    {titre:"Entrées chaudes", items:[
+      ["Zaalouk","6 €","Caviar d'aubergines et de tomates mijoté à l'ail et aux épices."],
+      ["Fèves mchermel","6 €","Fèves assaisonnées d'épices, de jus de citron et d'huile d'olive."],
+      ["Tortilla","5 €","Omelette traditionnelle aux pommes de terre et aux oignons."],
+      ["Salade de carottes au cumin","6 €","Carottes tendres parfumées au cumin et au citron."],
+      ["Épinards à la marocaine « Bakoula »","6 €","Épinards cuisinés aux épices marocaines, à l'ail et au jus de citron."],
+      ["Taktouka","6 €","Salade chaude de poivrons grillés et tomates épicées."],
+      ["Salade de pommes de terre","5 €","Pommes de terre assaisonnées aux herbes et épices."],
+      ["Salade de poivrons à l'ail et au cumin","6 €","Poivrons marinés à l'ail, au cumin et à l'huile d'olive."]
+    ]}
+  ]},
+  {onglet:"Soupes & Pastilla", rubriques:[
+    {titre:"Nos soupes", items:[
+      ["Soupe marocaine « Harira »","7 €","Soupe traditionnelle aux saveurs du Maroc. Accompagnement inclus : dattes, œuf dur et citron. Supplément (selon disponibilité) : chebakia 2 € ou sfouf 5 €."],
+      ["Soupe de petits pois « Bissara Jeblia »","10 €","Soupe de petits pois relevée au cumin, au paprika et à l'huile d'olive."]
+    ]},
+    {titre:"Pastilla", items:[
+      ["Pastilla poulet","8 €"],["Pastilla poisson","10 €"],["Pastilla viande hachée","7 €"],["Pastilla aux légumes","5 €"]
+    ]},
+    {titre:"Assiette", items:[
+      ["Escalope de poulet mariné","18 €","Accompagnée d'une salade fraîche, frites et olives."]
+    ]}
+  ]},
+  {onglet:"Tajines", rubriques:[
+    {titre:"Tajine viande", items:[
+      ["Tajine de veau <em>au citron et aux olives</em>","20 €"],
+      ["Tajine de veau <em>aux pruneaux et aux amandes</em>","22 €"],
+      ["Tajine de veau <em>aux légumes variés</em>","24 €"],
+      ["Tajine de veau <em>aux olives et frites</em>","25 €"]
+    ]},
+    {titre:"Tajine poulet", items:[
+      ["Tajine de poulet <em>au citron et aux olives</em>","18 €"],
+      ["Tajine de poulet <em>au citron, aux olives et frites</em>","20 €"],
+      ["Tajine de poulet <em>aux légumes variés</em>","19 €"]
+    ]},
+    {titre:"Tajine sauce tomate", items:[
+      ["Tajine kefta à la sauce tomate et aux œufs","15 €"],
+      ["Tajine à la sauce tomate et aux œufs","13 €"],
+      ["Tajine blanc de poulet à la sauce tomate et au fromage","16 €"]
+    ]}
+  ]},
+  {onglet:"Couscous & Spécialités", rubriques:[
+    {titre:"Couscous", items:[
+      ["Couscous viande de veau <em>aux légumes</em>","20 €"],
+      ["Couscous poulet <em>aux légumes</em>","18 €"],
+      ["Couscous végétarien <em>aux légumes</em>","15 €"],
+      ["Couscous merguez <em>aux légumes</em>","17 €"],
+      ["Couscous kefta <em>aux légumes</em>","18 €"],
+      ["Couscous Royal Marocain","25 €","Veau, poulet, merguez et légumes."]
+    ], remarque:"Supplément oignons caramélisés 2,50 €"},
+    {titre:"Spécialités marocaines", items:[
+      ["Rfissa au poulet à la marocaine","18 €","Poulet mijoté aux épices marocaines, servi sur une rfissa traditionnelle."],
+      ["Seffa marocaine","10 €","Vermicelles fins cuits à la vapeur, garnis de sucre glace, cannelle et amandes."]
+    ]},
+    {titre:"Plats traditionnels", items:[
+      ["Lentilles à la marocaine","11 €","Lentilles mijotées aux oignons, à l'ail, au persil et aux épices marocaines."],
+      ["Haricots blancs à la marocaine","11 €","Haricots blancs cuisinés dans une sauce tomate parfumée à l'ail et aux épices."],
+      ["Douara marocaine","15 €","Tripes de mouton ou de veau préparées selon la tradition marocaine."],
+      ["Hargma marocaine","15 €","Pieds de veau mijotés aux pois chiches et aux épices marocaines."]
+    ]}
+  ]},
+  {onglet:"Desserts", rubriques:[
+    {titre:"Dessert", items:[
+      ["Crêpe marocaine","4 €","Servie avec du miel, fromage, amlou, huile d'olive ou beurre."],
+      ["Gâteau traditionnel aux amandes","2 € / pièce"],
+      ["Cake au chocolat","4 € / morceau"],
+      ["Cake à la semoule","4 € / morceau"],
+      ["Chabbakia","1 € / pièce"],
+      ["Makrout aux dattes","2 € / pièce"]
+    ], remarque:"Certaines pâtisseries peuvent contenir du gluten, du lactose, des œufs et des fruits à coque. Demandez à notre personnel."}
+  ]},
+  {onglet:"Boissons", rubriques:[
+    {titre:"Boissons chaudes", items:[
+      ["Thé à la menthe, berrad / théière","5 €","2 pers. 5 € · 4 pers. 7 € · 8 pers. 10 €"],
+      ["Thé chamali","3 €"],["Café noir","3 €"],["Café au lait","4 €"],["Chocolat chaud","4 €"]
+    ]},
+    {titre:"Boissons froides", items:[
+      ["Coca-Cola 33cl","3 €"],["Fanta Orange 33cl","3 €"],["Schweppes Agrumes 33cl","3 €"],["Schweppes Tonic 33cl","3 €"],
+      ["Red Bull 33cl","4 €"],["Ice Tea pétillant 33cl","3 €"],["Ice Tea pêche 33cl","3 €"],["Sprite 33cl","3 €"],
+      ["Hawaï 33cl","3 €"],["Poms 33cl","3 €"],["Eau plate 50cl","3 €"],["Eau pétillante 50cl","3 €"],
+      ["Eau plate 1,5l","8 €"],["Eau pétillante 1,5l","9 €"]
+    ]},
+    {titre:"Milkshakes", items:[["Mangue","7 €"],["Fraise","7 €"],["Avocat","7 €"],["Banane avocat","7 €"]]},
+    {titre:"Smoothies & Mojito", items:[
+      ["Fraise-banane","9 €"],["Mangue-banane","9 €"],["Fruits rouges","9 €"],["Multi-fruit","9 €"],
+      ["Jus d'orange pressé","9 €"],["Virgin mojito à la menthe","8 €"]
+    ]}
+  ]}
+];
+const carteOnglets = document.getElementById("carteOnglets"), rubriquesEl = document.getElementById("rubriques");
+carteOnglets.innerHTML = CARTE.map((c,i) => `<button class="onglet${i===3?" actif":""}" data-i="${i}">${c.onglet}</button>`).join("");
+function afficherCarte(i){
+  rubriquesEl.innerHTML = CARTE[i].rubriques.map(r => `
+    <div class="rubrique">
+      <h4>${r.titre}</h4>
+      ${r.items.map(([n,p,d]) => `<div class="ligne"><div class="haut"><span>${n}</span><span class="pts"></span><span class="px">${p}</span></div>${d?`<small>${d}</small>`:""}</div>`).join("")}
+      ${r.remarque?`<p class="remarque">${r.remarque}</p>`:""}
+    </div>`).join("");
+  carteOnglets.querySelectorAll(".onglet").forEach(b => b.classList.toggle("actif", +b.dataset.i === i));
+}
+afficherCarte(3);
+carteOnglets.addEventListener("click", e => { const b = e.target.closest(".onglet"); if(b) afficherCarte(+b.dataset.i); });
+const platsEl = document.getElementById("plats");
+platsEl.innerHTML = PLATS.map(p => `
+  <article class="plat carte3d reveal${VEDETTES.includes(p.nom) ? "" : " cache"}" data-cat="${p.cat}" data-vedette="${VEDETTES.includes(p.nom)}">
+    <div class="photo" data-label="${p.nom}"><img src="img/${p.img}" alt="${p.nom}" loading="lazy"></div>
+    <div class="corps">
+      <h3>${p.nom}<span class="prix">${p.prix}</span></h3>
+      <p>${p.desc}</p>
+      <div class="tags">${p.tags.map(t=>`<span>${t}</span>`).join("")}</div>
+    </div>
+  </article>`).join("");
+
+document.getElementById("onglets").addEventListener("click", e => {
+  const b = e.target.closest(".onglet"); if(!b) return;
+  document.querySelectorAll(".onglet").forEach(o => o.classList.toggle("actif", o === b));
+  document.querySelectorAll(".plat").forEach(p => {
+    const montrer = b.dataset.cat === "tout" ? p.dataset.vedette === "true" : p.dataset.cat === b.dataset.cat;
+    p.classList.toggle("cache", !montrer);
+    p.classList.add("vu");
+  });
+});
+
+/* ---- photo manquante : afficher un joli repli ---- */
+document.querySelectorAll(".photo img").forEach(img => {
+  const marquer = () => img.parentElement.classList.add("vide");
+  if (img.complete && img.naturalWidth === 0) marquer();
+  img.addEventListener("error", marquer);
+});
+
+/* ---- lanternes suspendues ---- */
+const lanterneSVG = c => `<svg width="46" height="78" viewBox="0 0 46 78"><path d="M23 0v6" stroke="#8f6a17" stroke-width="2"/><path d="M14 8h18l-3 6H17z" fill="#c99a2e"/><path d="M12 14h22c2 10 4 22 0 40H12c-4-18-2-30 0-40z" fill="${c}" opacity=".9"/><path d="M12 14h22c2 10 4 22 0 40H12c-4-18-2-30 0-40z" fill="none" stroke="#c99a2e" stroke-width="2"/><path d="M23 14v40M17 14c-2 12-2 28 0 40M29 14c2 12 2 28 0 40" stroke="#c99a2e" stroke-width="1.2" fill="none"/><path d="M10 54h26l-5 8H15z" fill="#c99a2e"/><path d="M23 62v12" stroke="#c99a2e" stroke-width="2"/><circle cx="23" cy="75" r="3" fill="#c99a2e"/></svg>`;
+const L = [{x:6,h:40,c:"#f0a34a",d:0},{x:18,h:90,c:"#e0503a",d:1.2},{x:44,h:30,c:"#f6c453",d:.6},{x:88,h:70,c:"#e0503a",d:2},{x:96,h:20,c:"#f0a34a",d:.3}];
+document.getElementById("lanternes").innerHTML = L.map(l =>
+  `<div class="lanterne" style="left:${l.x}%;animation-delay:-${l.d}s"><div class="fil" style="height:${l.h}px"></div>${lanterneSVG(l.c)}</div>`).join("");
+if (innerWidth < 760) document.querySelectorAll(".lanterne").forEach((l,i)=>{ if(i===1||i===2) l.remove(); });
+
+/* ---- inclinaison 3D ---- */
+const peutSurvoler = matchMedia("(hover:hover)").matches && !matchMedia("(prefers-reduced-motion:reduce)").matches;
+function tilt(el, force){
+  el.addEventListener("mousemove", e => {
+    const r = el.getBoundingClientRect();
+    const x = (e.clientX - r.left)/r.width - .5, y = (e.clientY - r.top)/r.height - .5;
+    el.style.transform = `perspective(900px) rotateY(${x*force}deg) rotateX(${-y*force}deg) translateZ(0)`;
+    el.style.boxShadow = `${-x*24}px ${18 - y*14}px 40px -18px rgba(120,60,30,.5)`;
+  });
+  el.addEventListener("mouseleave", () => { el.style.transform = ""; el.style.boxShadow = ""; });
+}
+if (peutSurvoler){
+  document.querySelectorAll(".carte3d").forEach(el => tilt(el, 10));
+  tilt(document.getElementById("arche"), 14);
+}
+
+/* ---- apparition au défilement ---- */
+const io = new IntersectionObserver(es => es.forEach(e => { if(e.isIntersecting){ e.target.classList.add("vu"); io.unobserve(e.target); } }), {threshold:.12});
+document.querySelectorAll(".reveal").forEach(el => io.observe(el));
+
+/* ---- navigation ---- */
+const nav = document.getElementById("nav");
+addEventListener("scroll", () => nav.classList.toggle("scrolled", scrollY > 30), {passive:true});
+const menuNav = document.getElementById("menuNav");
+document.getElementById("burger").onclick = () => menuNav.classList.toggle("ouvert");
+menuNav.addEventListener("click", e => { if(e.target.tagName === "A") menuNav.classList.remove("ouvert"); });
+
+/* ---- jour actuel dans les horaires ---- */
+const j = new Date().getDay();
+document.querySelector(`#horaires li[data-j="${j}"]`)?.classList.add("aujourdhui");
+
+/* ---- galerie plein écran ---- */
+const lb = document.getElementById("lightbox"), lbImg = lb.querySelector("img");
+document.getElementById("galerieGrid").addEventListener("click", e => {
+  const ph = e.target.closest(".photo"); if(!ph || ph.classList.contains("vide")) return;
+  lbImg.src = ph.querySelector("img").src; lb.classList.add("ouvert");
+});
+lb.addEventListener("click", e => { if(e.target !== lbImg) lb.classList.remove("ouvert"); });
+addEventListener("keydown", e => { if(e.key === "Escape") lb.classList.remove("ouvert"); });
+</script>
+</body>
+</html>
