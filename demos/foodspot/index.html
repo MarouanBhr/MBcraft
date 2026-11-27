@@ -1,0 +1,712 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Food Spot — Good Food, Good Vibes · Bruxelles</title>
+<meta name="description" content="The Food Spot : smash burgers, tacos, pains grecs et crousty halal. Formules à 10 €, à Schaerbeek et Molenbeek. Sur place, à emporter et en livraison jusqu'à tard.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Permanent+Marker&family=Yellowtail&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --orange:#f26b1d;
+  --orange-vif:#ff7a1a;
+  --orange-fonce:#c9500c;
+  --noir:#161311;
+  --gris:#5d544d;
+  --creme:#fff7ef;
+  --peche:#ffe7d4;
+  --blanc:#ffffff;
+  --trait:3px solid var(--noir);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:"Poppins",system-ui,sans-serif;color:var(--noir);background:var(--creme);line-height:1.6;overflow-x:hidden}
+img{display:block;max-width:100%}
+a{color:inherit}
+.wrap{width:min(1180px,100% - 32px);margin-inline:auto}
+.anton{font-family:"Anton",Impact,sans-serif;text-transform:uppercase;letter-spacing:.01em;line-height:.95}
+.brush{font-family:"Permanent Marker",cursive}
+.script{font-family:"Yellowtail",cursive;text-transform:none}
+.orange{color:var(--orange)}
+
+/* éclaboussures orange en fond */
+.splash{position:absolute;pointer-events:none;z-index:0;opacity:.9}
+
+/* ---------- boutons "sticker" 3D ---------- */
+.btn{
+  display:inline-flex;align-items:center;gap:10px;padding:14px 26px;border-radius:14px;border:var(--trait);
+  font:800 1rem "Poppins",sans-serif;text-transform:uppercase;letter-spacing:.03em;text-decoration:none;cursor:pointer;
+  background:var(--orange);color:#fff;box-shadow:5px 5px 0 var(--noir);transition:transform .12s,box-shadow .12s;
+}
+.btn:hover{transform:translate(-2px,-2px);box-shadow:7px 7px 0 var(--noir)}
+.btn:active{transform:translate(4px,4px);box-shadow:1px 1px 0 var(--noir)}
+.btn.blanc{background:#fff;color:var(--noir)}
+
+/* ---------- navigation ---------- */
+header.nav{position:fixed;inset:0 0 auto;z-index:50;transition:.3s}
+header.nav.scrolled{background:rgba(255,247,239,.95);backdrop-filter:blur(8px);border-bottom:var(--trait)}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;height:76px}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+.logo-rond{
+  width:54px;height:54px;border-radius:50%;background:var(--noir);border:3px solid var(--orange);
+  display:grid;place-items:center;text-align:center;color:#fff;line-height:.8;flex:none;
+}
+.logo-rond .anton{font-size:.62rem}
+.logo-rond .anton b{display:block;color:var(--orange);font-size:1.05rem;font-weight:400}
+.logo-rond .script{font-size:.9rem;margin-top:-4px;color:#fff}
+.logo-txt{font:400 1.5rem "Anton",sans-serif;text-transform:uppercase;line-height:1}
+.logo-txt span{font-family:"Yellowtail",cursive;text-transform:none;color:var(--orange);font-size:1.6rem}
+.nav ul{display:flex;gap:26px;list-style:none}
+.nav ul a{text-decoration:none;font-weight:700;font-size:.9rem;text-transform:uppercase;letter-spacing:.04em}
+.nav ul a:hover{color:var(--orange)}
+.burger{display:none;background:#fff;border:var(--trait);border-radius:10px;width:46px;height:46px;cursor:pointer;box-shadow:3px 3px 0 var(--noir)}
+.burger span{display:block;height:3px;margin:5px 9px;background:var(--noir);border-radius:2px}
+
+/* étiquette "100 % Halal" suspendue sous le bouton, qui se balance */
+.nav-actions{position:relative;display:flex;align-items:center;gap:12px}
+.etiquette-halal{
+  position:absolute;top:calc(100% + 2px);left:50%;margin-left:-34px;width:68px;
+  display:flex;flex-direction:column;align-items:center;pointer-events:none;
+  transform-origin:50% 0;animation:balance-halal 2.8s ease-in-out infinite;
+}
+.fil-halal{width:3px;height:22px;background:var(--noir);border-radius:2px;position:relative}
+.fil-halal::before{content:"";position:absolute;top:-5px;left:50%;width:9px;height:9px;margin-left:-4.5px;border-radius:50%;background:var(--noir)}
+.rond-halal{
+  position:relative;width:68px;height:68px;border-radius:50%;background:#fff;border:3px solid var(--noir);
+  box-shadow:3px 4px 0 var(--noir);display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1;
+  background-image:radial-gradient(circle at 50% 50%,#fff 58%,var(--peche) 59%);
+}
+.rond-halal b{font:400 1.2rem "Anton",sans-serif;color:var(--orange)}
+.rond-halal small{font:800 .62rem "Poppins",sans-serif;text-transform:uppercase;letter-spacing:.12em;margin-top:2px}
+.rond-halal i{
+  position:absolute;top:-6px;right:-6px;width:22px;height:22px;border-radius:50%;background:#1fb35c;color:#fff;
+  border:2px solid var(--noir);font:900 .75rem/18px "Poppins",sans-serif;font-style:normal;text-align:center;
+}
+@keyframes balance-halal{0%,100%{transform:rotate(9deg)}50%{transform:rotate(-9deg)}}
+@media (max-width:760px){
+  .etiquette-halal{width:54px;margin-left:-27px;top:calc(100% - 2px)}
+  .fil-halal{height:12px}
+  .rond-halal{width:54px;height:54px}
+  .rond-halal b{font-size:1.05rem}
+  .rond-halal small{font-size:.5rem}
+  .rond-halal i{width:18px;height:18px;font-size:.62rem;line-height:14px}
+}
+@media (prefers-reduced-motion:reduce){.etiquette-halal{animation:none}}
+
+/* ---------- héros ---------- */
+.hero{position:relative;min-height:100vh;padding:120px 0 80px;display:flex;align-items:center;overflow:hidden}
+.hero .wrap{position:relative;z-index:1;display:grid;grid-template-columns:1.05fr .95fr;gap:40px;align-items:center}
+.tampon{display:inline-flex;align-items:center;gap:8px;background:var(--noir);color:#fff;padding:7px 16px;border-radius:999px;font-weight:700;font-size:.82rem;text-transform:uppercase;letter-spacing:.08em;transform:rotate(-2deg)}
+.tampon i{width:9px;height:9px;border-radius:50%;background:#3ddc84;box-shadow:0 0 0 3px rgba(61,220,132,.3)}
+.hero h1{font-size:clamp(3.6rem,9vw,7.4rem);margin:22px 0 10px}
+.hero h1 .script{display:inline-block;color:var(--orange);font-size:1.05em;transform:rotate(-6deg) translateY(6px);margin-left:6px}
+.hero h1 .ligne2{display:block;-webkit-text-stroke:3px var(--noir);color:transparent}
+.hero p.lead{font-size:1.1rem;color:var(--gris);max-width:500px;margin:18px 0 30px}
+.hero .actions{display:flex;gap:16px;flex-wrap:wrap}
+.pastilles{display:flex;gap:10px;flex-wrap:wrap;margin-top:30px}
+.pastilles span{background:#fff;border:2px solid var(--noir);border-radius:999px;padding:6px 14px;font-weight:600;font-size:.85rem}
+
+/* pile de photos en 3D */
+.pile{position:relative;height:560px;perspective:1200px}
+.carte-photo{
+  position:absolute;background:#fff;border:var(--trait);border-radius:20px;padding:10px;box-shadow:8px 8px 0 var(--noir);
+  transition:transform .35s cubic-bezier(.2,.8,.2,1);
+}
+.carte-photo img{border-radius:12px;width:100%;height:100%;object-fit:cover}
+.carte-photo .etiquette{
+  position:absolute;left:50%;bottom:-18px;transform:translateX(-50%) rotate(-3deg);white-space:nowrap;
+  background:var(--orange);color:#fff;border:var(--trait);border-radius:10px;padding:4px 14px;font:400 1.1rem "Permanent Marker",cursive;
+}
+.c1{width:62%;height:330px;left:20%;top:30px;transform:rotate(3deg);z-index:2}
+.c2{width:46%;height:250px;left:0;top:250px;transform:rotate(-7deg);z-index:3}
+.c3{width:46%;height:250px;right:0;top:270px;transform:rotate(6deg);z-index:1}
+.pile:hover .c1{transform:rotate(0) translateY(-10px) scale(1.03)}
+.pile:hover .c2{transform:rotate(-11deg) translateX(-14px)}
+.pile:hover .c3{transform:rotate(10deg) translateX(14px)}
+.prix-rond{
+  position:absolute;z-index:5;left:4%;top:6px;width:120px;height:120px;border-radius:50%;
+  background:var(--orange);border:var(--trait);box-shadow:5px 5px 0 var(--noir);color:#fff;
+  display:grid;place-items:center;text-align:center;transform:rotate(12deg);animation:flotte 4s ease-in-out infinite;
+}
+.prix-rond small{display:block;font:700 .7rem "Poppins";text-transform:uppercase;letter-spacing:.08em}
+.prix-rond b{font:400 2.6rem "Anton",sans-serif;line-height:1}
+@keyframes flotte{0%,100%{transform:rotate(12deg) translateY(0)}50%{transform:rotate(8deg) translateY(-10px)}}
+
+/* ---------- bande défilante ---------- */
+.bande{background:var(--orange);border-block:var(--trait);overflow:hidden;transform:rotate(-1.5deg);margin:-10px -20px 0;position:relative;z-index:2}
+.bande .piste{display:flex;gap:40px;width:max-content;padding:14px 0;animation:defile 22s linear infinite}
+.bande span{font:400 1.7rem "Anton",sans-serif;text-transform:uppercase;color:#fff;display:flex;align-items:center;gap:40px;white-space:nowrap}
+.bande span::after{content:"★";color:var(--noir);font-size:1.2rem}
+@keyframes defile{to{transform:translateX(-50%)}}
+
+/* ---------- sections ---------- */
+section{padding:100px 0;position:relative}
+.titre{text-align:center;margin:0 auto 54px;max-width:720px;position:relative;z-index:1}
+.titre .brush{color:var(--orange);font-size:1.3rem;display:inline-block;transform:rotate(-3deg)}
+.titre h2{font:400 clamp(2.8rem,7vw,4.8rem) "Anton",sans-serif;text-transform:uppercase;line-height:1;margin:6px 0 14px}
+.titre h2 .souligne{position:relative;display:inline-block}
+.titre h2 .souligne::after{content:"";position:absolute;left:-4%;right:-4%;bottom:2px;height:16px;background:var(--orange);z-index:-1;transform:skew(-12deg) rotate(-1deg);border-radius:4px}
+.titre p{color:var(--gris)}
+
+/* ---------- formules à 10 € ---------- */
+.formules{display:grid;grid-template-columns:repeat(2,1fr);gap:34px}
+.formule{
+  background:#fff;border:var(--trait);border-radius:24px;overflow:hidden;box-shadow:8px 8px 0 var(--noir);
+  display:grid;grid-template-rows:auto 1fr;transition:transform .2s,box-shadow .2s;transform-style:preserve-3d;
+}
+.formule .visuel{position:relative;aspect-ratio:16/11;overflow:hidden;border-bottom:var(--trait);background:var(--noir)}
+.formule .visuel img{width:100%;height:100%;object-fit:cover;transition:transform .6s}
+.formule:hover .visuel img{transform:scale(1.05)}
+.formule .corps{padding:20px 24px 24px;display:flex;flex-direction:column;gap:10px}
+.formule h3{font:400 2rem "Anton",sans-serif;text-transform:uppercase;line-height:1;display:flex;justify-content:space-between;align-items:center;gap:12px}
+.formule h3 .px{background:var(--orange);color:#fff;border:var(--trait);border-radius:12px;padding:4px 12px;font-size:1.5rem;transform:rotate(3deg);box-shadow:3px 3px 0 var(--noir)}
+.formule ul{list-style:none;display:flex;flex-wrap:wrap;gap:8px}
+.formule li{background:var(--peche);border-radius:999px;padding:5px 12px;font-size:.84rem;font-weight:600}
+
+/* ---------- deals à 5 € ---------- */
+.deals{background:var(--peche);border-block:var(--trait);overflow:hidden}
+.deals-grid{display:grid;grid-template-columns:1fr 1fr 1.1fr;gap:30px;align-items:start;position:relative;z-index:1}
+.affiche{background:#fff;border:var(--trait);border-radius:20px;padding:10px;box-shadow:8px 8px 0 var(--noir);transition:transform .3s}
+.affiche img{border-radius:12px;width:100%}
+.affiche:nth-child(1){transform:rotate(-2deg)}
+.affiche:nth-child(2){transform:rotate(2deg);margin-top:40px}
+.affiche:hover{transform:rotate(0) scale(1.03)}
+.deals-txt h3{font:400 2.6rem "Anton",sans-serif;text-transform:uppercase;line-height:1;margin-bottom:14px}
+.deals-txt p{color:var(--gris);margin-bottom:20px}
+.ticket{
+  display:flex;justify-content:space-between;align-items:center;background:#fff;border:var(--trait);border-radius:16px;
+  padding:14px 18px;margin-bottom:14px;box-shadow:4px 4px 0 var(--noir);position:relative;
+}
+.ticket::before,.ticket::after{content:"";position:absolute;top:50%;width:18px;height:18px;border-radius:50%;background:var(--peche);border:var(--trait);transform:translateY(-50%)}
+.ticket::before{left:-11px;clip-path:inset(0 0 0 50%)}
+.ticket::after{right:-11px;clip-path:inset(0 50% 0 0)}
+.ticket b{font-weight:800;text-transform:uppercase}
+.ticket small{display:block;color:var(--gris);font-size:.8rem}
+.ticket .px{font:400 2rem "Anton",sans-serif;color:var(--orange)}
+.deals-note{font-size:.8rem;color:var(--gris)}
+
+/* ---------- la carte ---------- */
+.carte-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:26px}
+.plat{background:#fff;border:var(--trait);border-radius:22px;overflow:hidden;box-shadow:6px 6px 0 var(--noir);transition:transform .2s,box-shadow .2s}
+.plat:hover{transform:translate(-3px,-3px) rotate(-1deg);box-shadow:10px 10px 0 var(--orange)}
+.plat .visuel{aspect-ratio:1;overflow:hidden;border-bottom:var(--trait);background:var(--peche);display:grid;place-items:center}
+.plat .visuel img{width:100%;height:100%;object-fit:cover}
+.plat .corps{padding:16px 18px 20px}
+.plat h3{font:400 1.45rem "Anton",sans-serif;text-transform:uppercase;line-height:1.05}
+.plat p{font-size:.86rem;color:var(--gris);margin-top:6px}
+
+/* ---------- le spot ---------- */
+.spot-grid{display:grid;grid-template-columns:1fr 1.2fr;gap:60px;align-items:center}
+.spot-photos{position:relative;height:460px}
+.spot-photos .carte-photo:first-child{width:78%;height:300px;left:0;top:0;transform:rotate(-3deg)}
+.spot-photos .carte-photo:nth-child(2){width:46%;height:330px;right:0;bottom:0;transform:rotate(4deg);z-index:2}
+.spot-txt h2{font:400 clamp(2.6rem,6vw,4.2rem) "Anton",sans-serif;text-transform:uppercase;line-height:1;margin:6px 0 18px}
+.spot-txt p{color:var(--gris);margin-bottom:16px}
+.atouts{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:26px 0 30px}
+.atout{background:#fff;border:var(--trait);border-radius:16px;padding:14px 16px;box-shadow:4px 4px 0 var(--noir)}
+.atout b{display:block;font-size:1.5rem}
+.atout span{font-weight:700;font-size:.92rem}
+
+/* ---------- adresses ---------- */
+.adresses{background:var(--orange);border-block:var(--trait);color:#fff;overflow:hidden}
+.adresses .titre h2{color:#fff}
+.adresses .titre h2 .souligne::after{background:var(--noir)}
+.adresses .titre .brush{color:var(--noir)}
+.adresses .titre p{color:#ffe7d4}
+.adr-grid{display:grid;grid-template-columns:1fr 1fr;gap:34px;position:relative;z-index:1}
+.adr{background:#fff;color:var(--noir);border:var(--trait);border-radius:24px;box-shadow:8px 8px 0 var(--noir);overflow:hidden}
+.adr .haut{padding:26px 28px 18px}
+.adr h3{font:400 2.4rem "Anton",sans-serif;text-transform:uppercase;line-height:1}
+.adr h3 small{display:block;font:400 1.2rem "Permanent Marker",cursive;color:var(--orange);text-transform:none}
+.adr .ligne{display:flex;gap:12px;align-items:center;margin-top:12px;font-weight:500}
+.adr .ligne .ico{width:40px;height:40px;border-radius:12px;background:var(--peche);display:grid;place-items:center;flex:none;font-size:1.1rem}
+.adr .services{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
+.adr .services span{border:2px solid var(--noir);border-radius:999px;padding:4px 12px;font-size:.8rem;font-weight:700}
+.adr .statut{display:inline-block;margin-top:14px;font-weight:800;font-size:.85rem;padding:5px 12px;border-radius:999px;background:#eee}
+.adr .statut.ouvert{background:#d9f7e6;color:#127a41}
+.adr .statut.ferme{background:#ffe1d2;color:var(--orange-fonce)}
+.adr iframe{width:100%;height:220px;border:0;border-top:var(--trait);display:block}
+
+/* ---------- Tanger ---------- */
+.tanger-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:50px;align-items:center}
+.tanger-affiches{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.tanger-affiches .affiche:nth-child(2){margin-top:50px}
+.tanger-txt h2{font:400 clamp(2.6rem,6vw,4.4rem) "Anton",sans-serif;text-transform:uppercase;line-height:1;margin:8px 0 18px}
+.tanger-txt p{color:var(--gris);margin-bottom:24px}
+
+/* ---------- avis ---------- */
+.avis-box{
+  display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:24px;background:#fff;border:var(--trait);border-radius:24px;
+  box-shadow:8px 8px 0 var(--noir);padding:30px;max-width:800px;margin:0 auto;text-align:center;
+}
+.avis-box h3{font:400 2.2rem "Anton",sans-serif;text-transform:uppercase}
+.avis-box p{color:var(--gris)}
+
+footer{background:var(--noir);color:#eee;padding:50px 0 30px;text-align:center}
+footer .logo{justify-content:center;margin-bottom:14px}
+footer .logo-txt{color:#fff}
+footer .slogan{font:400 1.4rem "Permanent Marker",cursive;color:var(--orange)}
+footer p{font-size:.88rem;opacity:.8;margin-top:8px}
+footer .demo{opacity:.5;font-size:.75rem;margin-top:18px}
+
+/* apparitions */
+.reveal{opacity:0;transform:translateY(40px);transition:opacity .7s ease,transform .7s ease}
+.reveal.vu{opacity:1;transform:none}
+.affiche.reveal.vu:nth-child(1){transform:rotate(-2deg)}
+.affiche.reveal.vu:nth-child(2){transform:rotate(2deg)}
+
+/* lightbox */
+.lightbox{position:fixed;inset:0;z-index:100;background:rgba(22,19,17,.9);display:none;place-items:center;padding:20px}
+.lightbox.ouvert{display:grid}
+.lightbox img{max-height:88vh;max-width:min(900px,100%);border-radius:16px;border:4px solid #fff}
+[data-zoom]{cursor:zoom-in}
+
+/* ---------- responsive ---------- */
+@media (max-width:980px){
+  .hero .wrap,.spot-grid,.tanger-grid{grid-template-columns:1fr}
+  .hero .texte{text-align:center}
+  .hero p.lead{margin-inline:auto}
+  .hero .actions,.pastilles{justify-content:center}
+  .carte-grid{grid-template-columns:repeat(2,1fr)}
+  .deals-grid{grid-template-columns:1fr 1fr}
+  .deals-txt{grid-column:1/-1;order:-1}
+}
+@media (max-width:760px){
+  .nav ul{position:fixed;top:76px;left:0;right:0;flex-direction:column;gap:0;background:var(--creme);border-bottom:var(--trait);padding:8px 16px 18px;display:none}
+  .nav ul.ouvert{display:flex}
+  .nav ul a{display:block;padding:12px 0}
+  .nav .btn.cmd{display:none}
+  .burger{display:block}
+  section{padding:70px 0}
+  .pile{height:430px}
+  .c1{height:250px;width:70%;left:15%}
+  .c2,.c3{height:180px;width:50%}
+  .c2{top:210px}.c3{top:230px}
+  .prix-rond{width:96px;height:96px;right:0}
+  .prix-rond b{font-size:2rem}
+  .formules,.adr-grid{grid-template-columns:1fr}
+  .deals-grid{grid-template-columns:1fr}
+  .affiche:nth-child(2){margin-top:0}
+  .spot-photos{height:380px}
+  .spot-photos .carte-photo:first-child{height:230px;width:85%}
+  .spot-photos .carte-photo:nth-child(2){height:250px;width:52%}
+  .tanger-affiches .affiche:nth-child(2){margin-top:30px}
+  .carte-grid{gap:16px}
+  .plat h3{font-size:1.15rem}
+  .plat p{font-size:.78rem}
+  .atouts{grid-template-columns:1fr 1fr}
+}
+
+/* bandes noires sur les côtés (grands écrans) : projections de peinture orange, style street de leurs affiches */
+@media (min-width:1340px){
+  body::before,body::after{
+    content:"";position:fixed;top:0;bottom:0;z-index:55;pointer-events:none;
+    width:calc(((100vw - 1180px) / 2 - 44px) / 2);
+    background-color:#141110;background-repeat:repeat-y;opacity:1;
+  }
+  body::before{left:0;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='320' height='520'%3E%3Cg fill='%23f26b1d'%3E%3Ccircle cx='83' cy='396' r='0.6' fill-opacity='0.7'/%3E%3Ccircle cx='72' cy='401' r='2' fill-opacity='0.27'/%3E%3Ccircle cx='118' cy='142' r='6.177557804339545' fill-opacity='0.59'/%3E%3Ccircle cx='301' cy='287' r='1.2' fill-opacity='0.74'/%3E%3Ccircle cx='296' cy='216' r='0.8' fill-opacity='0.37'/%3E%3Ccircle cx='275' cy='63' r='2.5' fill-opacity='0.58'/%3E%3Ccircle cx='61' cy='148' r='5.498086173374893' fill-opacity='0.86'/%3E%3Ccircle cx='72' cy='405' r='2.5' fill-opacity='0.52'/%3E%3Ccircle cx='154' cy='174' r='0.8' fill-opacity='0.76'/%3E%3Ccircle cx='178' cy='201' r='3.5' fill-opacity='0.28'/%3E%3Ccircle cx='179' cy='276' r='0.6' fill-opacity='0.75'/%3E%3Ccircle cx='162' cy='267' r='2' fill-opacity='0.55'/%3E%3Ccircle cx='111' cy='282' r='1' fill-opacity='0.59'/%3E%3Ccircle cx='269' cy='142' r='2' fill-opacity='0.62'/%3E%3Ccircle cx='90' cy='280' r='2' fill-opacity='0.55'/%3E%3Ccircle cx='46' cy='368' r='1' fill-opacity='0.81'/%3E%3Ccircle cx='255' cy='425' r='0.8' fill-opacity='0.3'/%3E%3Ccircle cx='78' cy='406' r='1' fill-opacity='0.47'/%3E%3Ccircle cx='77' cy='446' r='5.969969517132217' fill-opacity='0.67'/%3E%3Ccircle cx='184' cy='243' r='2.5' fill-opacity='0.77'/%3E%3Ccircle cx='261' cy='127' r='1.2' fill-opacity='0.88'/%3E%3Ccircle cx='86' cy='406' r='5.337005549027151' fill-opacity='0.58'/%3E%3Ccircle cx='128' cy='397' r='3.5' fill-opacity='0.4'/%3E%3Ccircle cx='197' cy='123' r='1.5' fill-opacity='0.33'/%3E%3Ccircle cx='50' cy='482' r='1.5' fill-opacity='0.85'/%3E%3Ccircle cx='112' cy='406' r='0.6' fill-opacity='0.63'/%3E%3Ccircle cx='140' cy='244' r='0.6' fill-opacity='0.5'/%3E%3Ccircle cx='-4' cy='351' r='2.5' fill-opacity='0.44'/%3E%3Ccircle cx='182' cy='127' r='1.5' fill-opacity='0.26'/%3E%3Ccircle cx='235' cy='177' r='1.5' fill-opacity='0.69'/%3E%3Ccircle cx='298' cy='179' r='3.5' fill-opacity='0.75'/%3E%3Ccircle cx='69' cy='344' r='1' fill-opacity='0.36'/%3E%3Ccircle cx='221' cy='155' r='2' fill-opacity='0.32'/%3E%3Ccircle cx='172' cy='171' r='3.5' fill-opacity='0.34'/%3E%3Ccircle cx='62' cy='420' r='4.44198514882861' fill-opacity='0.33'/%3E%3Ccircle cx='168' cy='193' r='1.2' fill-opacity='0.62'/%3E%3Ccircle cx='117' cy='154' r='0.8' fill-opacity='0.55'/%3E%3Ccircle cx='76' cy='401' r='0.8' fill-opacity='0.79'/%3E%3Ccircle cx='60' cy='408' r='1' fill-opacity='0.33'/%3E%3Ccircle cx='82' cy='411' r='2.5' fill-opacity='0.84'/%3E%3Ccircle cx='158' cy='275' r='0.8' fill-opacity='0.38'/%3E%3Ccircle cx='101' cy='406' r='4.886649580146753' fill-opacity='0.64'/%3E%3Ccircle cx='213' cy='172' r='3.5' fill-opacity='0.32'/%3E%3Ccircle cx='161' cy='228' r='3.5' fill-opacity='0.68'/%3E%3Ccircle cx='153' cy='246' r='0.8' fill-opacity='0.89'/%3E%3Ccircle cx='130' cy='224' r='1.2' fill-opacity='0.5'/%3E%3Ccircle cx='188' cy='141' r='4.737544387601318' fill-opacity='0.32'/%3E%3Ccircle cx='229' cy='285' r='1.2' fill-opacity='0.51'/%3E%3Ccircle cx='79' cy='405' r='2' fill-opacity='0.57'/%3E%3Ccircle cx='49' cy='261' r='0.8' fill-opacity='0.58'/%3E%3Ccircle cx='80' cy='394' r='6.464650434230544' fill-opacity='0.46'/%3E%3Ccircle cx='184' cy='264' r='0.6' fill-opacity='0.76'/%3E%3Ccircle cx='200' cy='350' r='1.2' fill-opacity='0.37'/%3E%3Ccircle cx='135' cy='423' r='1.2' fill-opacity='0.41'/%3E%3Ccircle cx='197' cy='152' r='3.5' fill-opacity='0.26'/%3E%3Ccircle cx='55' cy='253' r='2.5' fill-opacity='0.88'/%3E%3Ccircle cx='122' cy='287' r='1' fill-opacity='0.34'/%3E%3Ccircle cx='89' cy='293' r='0.8' fill-opacity='0.4'/%3E%3Ccircle cx='198' cy='218' r='5.917332538919641' fill-opacity='0.4'/%3E%3Ccircle cx='61' cy='252' r='2.5' fill-opacity='0.47'/%3E%3Ccircle cx='137' cy='211' r='0.8' fill-opacity='0.75'/%3E%3Ccircle cx='230' cy='175' r='1.2' fill-opacity='0.45'/%3E%3Ccircle cx='154' cy='184' r='0.8' fill-opacity='0.83'/%3E%3Ccircle cx='183' cy='92' r='1.2' fill-opacity='0.86'/%3E%3Ccircle cx='21' cy='406' r='2' fill-opacity='0.5'/%3E%3Ccircle cx='174' cy='517' r='0.8' fill-opacity='0.78'/%3E%3Ccircle cx='221' cy='158' r='5.850707944674735' fill-opacity='0.88'/%3E%3Ccircle cx='58' cy='412' r='6.913622584588844' fill-opacity='0.5'/%3E%3Ccircle cx='139' cy='86' r='1' fill-opacity='0.65'/%3E%3Ccircle cx='36' cy='432' r='1.5' fill-opacity='0.43'/%3E%3Ccircle cx='206' cy='240' r='3.5' fill-opacity='0.63'/%3E%3Ccircle cx='160' cy='241' r='1.2' fill-opacity='0.43'/%3E%3Ccircle cx='239' cy='124' r='1' fill-opacity='0.6'/%3E%3Ccircle cx='72' cy='410' r='0.8' fill-opacity='0.84'/%3E%3Ccircle cx='158' cy='173' r='1' fill-opacity='0.3'/%3E%3Ccircle cx='223' cy='87' r='0.8' fill-opacity='0.54'/%3E%3Ccircle cx='190' cy='151' r='3.5' fill-opacity='0.32'/%3E%3Ccircle cx='122' cy='290' r='5.906598871905301' fill-opacity='0.72'/%3E%3Ccircle cx='13' cy='275' r='2.5' fill-opacity='0.86'/%3E%3Ccircle cx='216' cy='148' r='1.2' fill-opacity='0.48'/%3E%3Ccircle cx='158' cy='260' r='0.8' fill-opacity='0.57'/%3E%3Ccircle cx='223' cy='226' r='0.6' fill-opacity='0.51'/%3E%3Ccircle cx='158' cy='248' r='0.8' fill-opacity='0.78'/%3E%3Ccircle cx='262' cy='132' r='2.5' fill-opacity='0.82'/%3E%3Ccircle cx='97' cy='438' r='1.5' fill-opacity='0.58'/%3E%3Ccircle cx='228' cy='162' r='3.5' fill-opacity='0.26'/%3E%3Ccircle cx='71' cy='387' r='1.2' fill-opacity='0.59'/%3E%3Ccircle cx='213' cy='206' r='2' fill-opacity='0.55'/%3E%3Ccircle cx='70' cy='369' r='1.5' fill-opacity='0.48'/%3E%3Ccircle cx='159' cy='134' r='1.5' fill-opacity='0.81'/%3E%3Ccircle cx='78' cy='408' r='2.5' fill-opacity='0.46'/%3E%3Ccircle cx='94' cy='336' r='1' fill-opacity='0.82'/%3E%3Ccircle cx='103' cy='195' r='1' fill-opacity='0.34'/%3E%3Ccircle cx='119' cy='255' r='2.5' fill-opacity='0.41'/%3E%3Ccircle cx='160' cy='247' r='0.8' fill-opacity='0.87'/%3E%3Ccircle cx='176' cy='242' r='0.6' fill-opacity='0.57'/%3E%3Ccircle cx='121' cy='296' r='0.8' fill-opacity='0.65'/%3E%3Ccircle cx='65' cy='414' r='2.5' fill-opacity='0.74'/%3E%3Ccircle cx='75' cy='147' r='2.5' fill-opacity='0.39'/%3E%3Ccircle cx='225' cy='182' r='0.6' fill-opacity='0.77'/%3E%3Ccircle cx='102' cy='199' r='1.2' fill-opacity='0.51'/%3E%3Ccircle cx='243' cy='79' r='0.6' fill-opacity='0.5'/%3E%3Ccircle cx='174' cy='294' r='0.8' fill-opacity='0.55'/%3E%3Ccircle cx='290' cy='18' r='1' fill-opacity='0.28'/%3E%3Ccircle cx='78' cy='405' r='3.5' fill-opacity='0.66'/%3E%3Ccircle cx='146' cy='243' r='1.5' fill-opacity='0.88'/%3E%3Ccircle cx='79' cy='435' r='1' fill-opacity='0.48'/%3E%3Ccircle cx='231' cy='190' r='1.2' fill-opacity='0.71'/%3E%3Ccircle cx='252' cy='283' r='0.8' fill-opacity='0.41'/%3E%3Ccircle cx='48' cy='478' r='0.6' fill-opacity='0.28'/%3E%3Ccircle cx='207' cy='234' r='0.6' fill-opacity='0.54'/%3E%3Ccircle cx='220' cy='149' r='3.5' fill-opacity='0.27'/%3E%3Ccircle cx='78' cy='405' r='0.6' fill-opacity='0.73'/%3E%3Ccircle cx='75' cy='450' r='0.8' fill-opacity='0.81'/%3E%3Ccircle cx='228' cy='190' r='5.527960392466666' fill-opacity='0.5'/%3E%3Ccircle cx='154' cy='67' r='0.6' fill-opacity='0.83'/%3E%3Ccircle cx='93' cy='82' r='2' fill-opacity='0.31'/%3E%3Ccircle cx='206' cy='259' r='2' fill-opacity='0.52'/%3E%3Ccircle cx='180' cy='158' r='1' fill-opacity='0.46'/%3E%3Ccircle cx='151' cy='125' r='1.5' fill-opacity='0.56'/%3E%3Ccircle cx='297' cy='504' r='0.8' fill-opacity='0.85'/%3E%3Ccircle cx='43' cy='272' r='1.5' fill-opacity='0.76'/%3E%3Ccircle cx='183' cy='160' r='1.5' fill-opacity='0.55'/%3E%3Ccircle cx='170' cy='87' r='1.2' fill-opacity='0.62'/%3E%3Ccircle cx='59' cy='214' r='0.6' fill-opacity='0.78'/%3E%3Ccircle cx='218' cy='372' r='0.8' fill-opacity='0.66'/%3E%3Ccircle cx='160' cy='300' r='1.2' fill-opacity='0.67'/%3E%3Ccircle cx='247' cy='118' r='1.5' fill-opacity='0.39'/%3E%3Ccircle cx='224' cy='153' r='2.5' fill-opacity='0.54'/%3E%3Ccircle cx='88' cy='382' r='4.769683556422078' fill-opacity='0.38'/%3E%3Ccircle cx='141' cy='151' r='2.5' fill-opacity='0.65'/%3E%3Ccircle cx='166' cy='229' r='1.2' fill-opacity='0.87'/%3E%3Ccircle cx='166' cy='239' r='1.5' fill-opacity='0.58'/%3E%3Ccircle cx='101' cy='404' r='1.5' fill-opacity='0.59'/%3E%3Ccircle cx='137' cy='296' r='3.5' fill-opacity='0.63'/%3E%3Ccircle cx='77' cy='444' r='2.5' fill-opacity='0.73'/%3E%3Ccircle cx='199' cy='127' r='0.6' fill-opacity='0.83'/%3E%3Ccircle cx='271' cy='199' r='2' fill-opacity='0.66'/%3E%3Ccircle cx='246' cy='202' r='3.5' fill-opacity='0.48'/%3E%3Ccircle cx='98' cy='404' r='2' fill-opacity='0.81'/%3E%3Ccircle cx='266' cy='139' r='2.5' fill-opacity='0.7'/%3E%3Ccircle cx='223' cy='174' r='2.5' fill-opacity='0.72'/%3E%3Ccircle cx='77' cy='397' r='1' fill-opacity='0.56'/%3E%3Ccircle cx='128' cy='376' r='0.8' fill-opacity='0.53'/%3E%3Ccircle cx='16' cy='114' r='0.6' fill-opacity='0.86'/%3E%3Ccircle cx='33' cy='287' r='0.8' fill-opacity='0.9'/%3E%3Ccircle cx='50' cy='408' r='0.6' fill-opacity='0.76'/%3E%3Ccircle cx='61' cy='410' r='3.5' fill-opacity='0.84'/%3E%3Ccircle cx='235' cy='170' r='1.2' fill-opacity='0.36'/%3E%3Ccircle cx='130' cy='357' r='1.2' fill-opacity='0.76'/%3E%3Ccircle cx='301' cy='220' r='2' fill-opacity='0.85'/%3E%3Ccircle cx='86' cy='281' r='0.8' fill-opacity='0.4'/%3E%3Ccircle cx='159' cy='240' r='0.6' fill-opacity='0.6'/%3E%3Ccircle cx='105' cy='395' r='3.5' fill-opacity='0.7'/%3E%3Ccircle cx='82' cy='474' r='1' fill-opacity='0.73'/%3E%3Ccircle cx='219' cy='158' r='2' fill-opacity='0.59'/%3E%3Ccircle cx='67' cy='425' r='1' fill-opacity='0.7'/%3E%3Ccircle cx='106' cy='226' r='1' fill-opacity='0.7'/%3E%3Ccircle cx='51' cy='475' r='0.6' fill-opacity='0.78'/%3E%3Ccircle cx='70' cy='386' r='2' fill-opacity='0.42'/%3E%3Ccircle cx='220' cy='158' r='1' fill-opacity='0.32'/%3E%3Ccircle cx='46' cy='298' r='0.8' fill-opacity='0.72'/%3E%3Ccircle cx='219' cy='158' r='2.5' fill-opacity='0.49'/%3E%3Ccircle cx='162' cy='302' r='1.5' fill-opacity='0.26'/%3E%3Ccircle cx='307' cy='58' r='6.372958063509903' fill-opacity='0.72'/%3E%3Ccircle cx='173' cy='114' r='2.5' fill-opacity='0.6'/%3E%3Ccircle cx='49' cy='372' r='0.6' fill-opacity='0.64'/%3E%3Ccircle cx='67' cy='401' r='1.5' fill-opacity='0.86'/%3E%3Ccircle cx='34' cy='435' r='2' fill-opacity='0.29'/%3E%3Ccircle cx='116' cy='289' r='0.6' fill-opacity='0.65'/%3E%3Ccircle cx='118' cy='454' r='1.2' fill-opacity='0.56'/%3E%3Ccircle cx='246' cy='190' r='1' fill-opacity='0.8'/%3E%3Ccircle cx='141' cy='211' r='4.435430666873361' fill-opacity='0.44'/%3E%3Ccircle cx='164' cy='237' r='1' fill-opacity='0.5'/%3E%3Ccircle cx='74' cy='406' r='2.5' fill-opacity='0.43'/%3E%3Ccircle cx='206' cy='161' r='0.6' fill-opacity='0.78'/%3E%3Ccircle cx='188' cy='276' r='1.5' fill-opacity='0.76'/%3E%3Ccircle cx='153' cy='247' r='1.2' fill-opacity='0.85'/%3E%3Ccircle cx='102' cy='442' r='2' fill-opacity='0.52'/%3E%3Ccircle cx='209' cy='143' r='6.316212205192073' fill-opacity='0.29'/%3E%3Ccircle cx='190' cy='204' r='1.2' fill-opacity='0.66'/%3E%3Ccircle cx='42' cy='460' r='1' fill-opacity='0.6'/%3E%3Ccircle cx='218' cy='158' r='1.2' fill-opacity='0.5'/%3E%3Ccircle cx='56' cy='373' r='2' fill-opacity='0.88'/%3E%3Ccircle cx='84' cy='379' r='3.5' fill-opacity='0.49'/%3E%3Ccircle cx='154' cy='241' r='3.5' fill-opacity='0.85'/%3E%3Ccircle cx='48' cy='196' r='0.6' fill-opacity='0.67'/%3E%3Ccircle cx='147' cy='196' r='1.5' fill-opacity='0.85'/%3E%3Ccircle cx='174' cy='210' r='4.056361223707302' fill-opacity='0.51'/%3E%3Ccircle cx='156' cy='230' r='5.632370609131379' fill-opacity='0.41'/%3E%3Ccircle cx='59' cy='374' r='1.2' fill-opacity='0.3'/%3E%3Ccircle cx='132' cy='223' r='2.5' fill-opacity='0.4'/%3E%3Ccircle cx='158' cy='231' r='0.8' fill-opacity='0.41'/%3E%3Ccircle cx='38' cy='335' r='0.8' fill-opacity='0.67'/%3E%3Ccircle cx='159' cy='239' r='1.5' fill-opacity='0.72'/%3E%3Ccircle cx='86' cy='404' r='2' fill-opacity='0.75'/%3E%3Ccircle cx='152' cy='219' r='1.2' fill-opacity='0.57'/%3E%3Ccircle cx='74' cy='466' r='1' fill-opacity='0.76'/%3E%3Ccircle cx='155' cy='314' r='2.5' fill-opacity='0.43'/%3E%3Ccircle cx='165' cy='379' r='4.677746188562446' fill-opacity='0.3'/%3E%3Ccircle cx='171' cy='227' r='3.5' fill-opacity='0.5'/%3E%3Ccircle cx='206' cy='218' r='0.6' fill-opacity='0.27'/%3E%3Ccircle cx='239' cy='179' r='0.8' fill-opacity='0.85'/%3E%3Ccircle cx='45' cy='105' r='2.5' fill-opacity='0.48'/%3E%3Ccircle cx='72' cy='369' r='1.5' fill-opacity='0.31'/%3E%3Ccircle cx='67' cy='241' r='0.8' fill-opacity='0.65'/%3E%3Ccircle cx='82' cy='30' r='2' fill-opacity='0.35'/%3E%3Ccircle cx='186' cy='183' r='2.5' fill-opacity='0.66'/%3E%3Ccircle cx='122' cy='378' r='4.636524561478544' fill-opacity='0.87'/%3E%3Ccircle cx='160' cy='240' r='1.5' fill-opacity='0.72'/%3E%3Ccircle cx='44' cy='348' r='1.2' fill-opacity='0.42'/%3E%3Ccircle cx='156' cy='234' r='1.2' fill-opacity='0.81'/%3E%3Ccircle cx='246' cy='219' r='0.8' fill-opacity='0.69'/%3E%3Ccircle cx='60' cy='8' r='3.5' fill-opacity='0.39'/%3E%3Ccircle cx='172' cy='481' r='0.8' fill-opacity='0.3'/%3E%3Ccircle cx='227' cy='173' r='2.5' fill-opacity='0.59'/%3E%3Ccircle cx='204' cy='134' r='0.8' fill-opacity='0.47'/%3E%3Ccircle cx='88' cy='417' r='1.5' fill-opacity='0.55'/%3E%3Ccircle cx='106' cy='403' r='2.5' fill-opacity='0.31'/%3E%3Ccircle cx='127' cy='264' r='3.5' fill-opacity='0.87'/%3E%3Ccircle cx='281' cy='165' r='2' fill-opacity='0.77'/%3E%3Ccircle cx='175' cy='221' r='2' fill-opacity='0.52'/%3E%3Ccircle cx='253' cy='299' r='0.6' fill-opacity='0.32'/%3E%3Ccircle cx='219' cy='125' r='2' fill-opacity='0.63'/%3E%3Ccircle cx='131' cy='287' r='0.6' fill-opacity='0.85'/%3E%3Ccircle cx='115' cy='76' r='0.8' fill-opacity='0.51'/%3E%3Ccircle cx='135' cy='187' r='1.5' fill-opacity='0.65'/%3E%3Ccircle cx='82' cy='373' r='1.5' fill-opacity='0.74'/%3E%3Ccircle cx='276' cy='187' r='1.5' fill-opacity='0.52'/%3E%3Ccircle cx='154' cy='208' r='1.2' fill-opacity='0.31'/%3E%3Ccircle cx='80' cy='402' r='6.466049109630279' fill-opacity='0.3'/%3E%3Ccircle cx='247' cy='125' r='3.5' fill-opacity='0.78'/%3E%3Ccircle cx='12' cy='514' r='1' fill-opacity='0.83'/%3E%3Ccircle cx='138' cy='236' r='1.2' fill-opacity='0.4'/%3E%3Ccircle cx='90' cy='236' r='3.5' fill-opacity='0.38'/%3E%3Ccircle cx='208' cy='92' r='0.6' fill-opacity='0.26'/%3E%3Ccircle cx='76' cy='518' r='0.6' fill-opacity='0.4'/%3E%3Ccircle cx='168' cy='90' r='4.600756105991534' fill-opacity='0.54'/%3E%3Ccircle cx='139' cy='210' r='1' fill-opacity='0.37'/%3E%3Ccircle cx='126' cy='255' r='0.6' fill-opacity='0.57'/%3E%3Ccircle cx='211' cy='301' r='2.5' fill-opacity='0.79'/%3E%3Ccircle cx='205' cy='113' r='3.5' fill-opacity='0.64'/%3E%3Ccircle cx='200' cy='144' r='1.5' fill-opacity='0.69'/%3E%3Ccircle cx='154' cy='238' r='0.6' fill-opacity='0.64'/%3E%3Ccircle cx='170' cy='172' r='3.5' fill-opacity='0.39'/%3E%3Ccircle cx='201' cy='174' r='0.8' fill-opacity='0.48'/%3E%3Ccircle cx='3' cy='391' r='1.5' fill-opacity='0.5'/%3E%3Ccircle cx='162' cy='122' r='0.6' fill-opacity='0.39'/%3E%3Ccircle cx='119' cy='423' r='1.5' fill-opacity='0.87'/%3E%3Ccircle cx='161' cy='419' r='1' fill-opacity='0.74'/%3E%3Ccircle cx='240' cy='333' r='2.5' fill-opacity='0.52'/%3E%3Ccircle cx='254' cy='144' r='1.2' fill-opacity='0.65'/%3E%3Ccircle cx='174' cy='332' r='2.5' fill-opacity='0.39'/%3E%3Ccircle cx='223' cy='158' r='1.5' fill-opacity='0.54'/%3E%3Ccircle cx='181' cy='425' r='2' fill-opacity='0.82'/%3E%3Ccircle cx='205' cy='140' r='1.5' fill-opacity='0.53'/%3E%3Ccircle cx='241' cy='332' r='1.2' fill-opacity='0.82'/%3E%3Ccircle cx='168' cy='237' r='5.310320110009661' fill-opacity='0.76'/%3E%3Ccircle cx='201' cy='283' r='6.9355102826121255' fill-opacity='0.29'/%3E%3Ccircle cx='73' cy='407' r='0.6' fill-opacity='0.29'/%3E%3C/g%3E%3C/svg%3E"),linear-gradient(90deg,#0e0c0b,#1a1614);background-size:320px 520px,100% 100%;background-position:0 0,0 0}
+  body::after{right:0;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='320' height='520'%3E%3Cg fill='%23f26b1d'%3E%3Ccircle cx='61' cy='87' r='2.5' fill-opacity='0.67'/%3E%3Ccircle cx='275' cy='265' r='3.5' fill-opacity='0.58'/%3E%3Ccircle cx='279' cy='189' r='6.723250330537891' fill-opacity='0.53'/%3E%3Ccircle cx='53' cy='92' r='1' fill-opacity='0.46'/%3E%3Ccircle cx='213' cy='385' r='1' fill-opacity='0.9'/%3E%3Ccircle cx='62' cy='76' r='2' fill-opacity='0.49'/%3E%3Ccircle cx='143' cy='497' r='3.5' fill-opacity='0.68'/%3E%3Ccircle cx='159' cy='37' r='2' fill-opacity='0.68'/%3E%3Ccircle cx='15' cy='70' r='1.2' fill-opacity='0.86'/%3E%3Ccircle cx='267' cy='456' r='3.5' fill-opacity='0.45'/%3E%3Ccircle cx='226' cy='262' r='2.5' fill-opacity='0.45'/%3E%3Ccircle cx='191' cy='408' r='0.8' fill-opacity='0.76'/%3E%3Ccircle cx='261' cy='418' r='0.6' fill-opacity='0.43'/%3E%3Ccircle cx='263' cy='428' r='1.5' fill-opacity='0.41'/%3E%3Ccircle cx='333' cy='461' r='1' fill-opacity='0.41'/%3E%3Ccircle cx='298' cy='436' r='0.6' fill-opacity='0.49'/%3E%3Ccircle cx='268' cy='446' r='1.2' fill-opacity='0.35'/%3E%3Ccircle cx='118' cy='64' r='0.8' fill-opacity='0.44'/%3E%3Ccircle cx='55' cy='5' r='2.5' fill-opacity='0.81'/%3E%3Ccircle cx='87' cy='80' r='2' fill-opacity='0.79'/%3E%3Ccircle cx='174' cy='454' r='2' fill-opacity='0.42'/%3E%3Ccircle cx='55' cy='79' r='1' fill-opacity='0.69'/%3E%3Ccircle cx='254' cy='437' r='0.6' fill-opacity='0.9'/%3E%3Ccircle cx='78' cy='96' r='1.2' fill-opacity='0.66'/%3E%3Ccircle cx='227' cy='133' r='0.6' fill-opacity='0.35'/%3E%3Ccircle cx='266' cy='509' r='1' fill-opacity='0.74'/%3E%3Ccircle cx='210' cy='439' r='1.5' fill-opacity='0.6'/%3E%3Ccircle cx='221' cy='250' r='0.6' fill-opacity='0.63'/%3E%3Ccircle cx='126' cy='56' r='0.8' fill-opacity='0.68'/%3E%3Ccircle cx='174' cy='373' r='2' fill-opacity='0.45'/%3E%3Ccircle cx='132' cy='55' r='0.6' fill-opacity='0.78'/%3E%3Ccircle cx='221' cy='359' r='0.8' fill-opacity='0.25'/%3E%3Ccircle cx='61' cy='69' r='2' fill-opacity='0.5'/%3E%3Ccircle cx='54' cy='92' r='0.8' fill-opacity='0.33'/%3E%3Ccircle cx='32' cy='11' r='3.5' fill-opacity='0.76'/%3E%3Ccircle cx='35' cy='185' r='4.424399468274163' fill-opacity='0.49'/%3E%3Ccircle cx='47' cy='95' r='1.5' fill-opacity='0.51'/%3E%3Ccircle cx='230' cy='439' r='0.8' fill-opacity='0.63'/%3E%3Ccircle cx='31' cy='185' r='4.439503143868694' fill-opacity='0.52'/%3E%3Ccircle cx='286' cy='385' r='1.5' fill-opacity='0.5'/%3E%3Ccircle cx='216' cy='394' r='1.5' fill-opacity='0.32'/%3E%3Ccircle cx='50' cy='38' r='1' fill-opacity='0.55'/%3E%3Ccircle cx='85' cy='62' r='1' fill-opacity='0.55'/%3E%3Ccircle cx='187' cy='397' r='1.5' fill-opacity='0.51'/%3E%3Ccircle cx='45' cy='33' r='2' fill-opacity='0.71'/%3E%3Ccircle cx='26' cy='426' r='1.2' fill-opacity='0.51'/%3E%3Ccircle cx='197' cy='353' r='3.5' fill-opacity='0.67'/%3E%3Ccircle cx='5' cy='490' r='2.5' fill-opacity='0.84'/%3E%3Ccircle cx='32' cy='424' r='1.2' fill-opacity='0.43'/%3E%3Ccircle cx='186' cy='255' r='0.6' fill-opacity='0.65'/%3E%3Ccircle cx='38' cy='85' r='1.2' fill-opacity='0.88'/%3E%3Ccircle cx='112' cy='471' r='0.8' fill-opacity='0.74'/%3E%3Ccircle cx='271' cy='323' r='0.8' fill-opacity='0.65'/%3E%3Ccircle cx='60' cy='114' r='1' fill-opacity='0.29'/%3E%3Ccircle cx='58' cy='100' r='0.6' fill-opacity='0.49'/%3E%3Ccircle cx='36' cy='77' r='1.5' fill-opacity='0.57'/%3E%3Ccircle cx='333' cy='409' r='1.5' fill-opacity='0.47'/%3E%3Ccircle cx='100' cy='334' r='0.8' fill-opacity='0.58'/%3E%3Ccircle cx='208' cy='353' r='0.8' fill-opacity='0.45'/%3E%3Ccircle cx='114' cy='109' r='2.5' fill-opacity='0.81'/%3E%3Ccircle cx='81' cy='98' r='1' fill-opacity='0.57'/%3E%3Ccircle cx='148' cy='70' r='1.2' fill-opacity='0.85'/%3E%3Ccircle cx='263' cy='402' r='1' fill-opacity='0.48'/%3E%3Ccircle cx='75' cy='420' r='2.5' fill-opacity='0.78'/%3E%3Ccircle cx='88' cy='61' r='5.507818965185974' fill-opacity='0.7'/%3E%3Ccircle cx='238' cy='391' r='1.5' fill-opacity='0.6'/%3E%3Ccircle cx='278' cy='477' r='5.062010566310615' fill-opacity='0.56'/%3E%3Ccircle cx='60' cy='500' r='0.6' fill-opacity='0.32'/%3E%3Ccircle cx='295' cy='427' r='2.5' fill-opacity='0.26'/%3E%3Ccircle cx='214' cy='334' r='2' fill-opacity='0.38'/%3E%3Ccircle cx='268' cy='420' r='1' fill-opacity='0.52'/%3E%3Ccircle cx='56' cy='57' r='2' fill-opacity='0.67'/%3E%3Ccircle cx='295' cy='513' r='3.5' fill-opacity='0.76'/%3E%3Ccircle cx='222' cy='340' r='2.5' fill-opacity='0.4'/%3E%3Ccircle cx='49' cy='88' r='0.8' fill-opacity='0.63'/%3E%3Ccircle cx='-33' cy='115' r='3.5' fill-opacity='0.28'/%3E%3Ccircle cx='240' cy='363' r='6.039187435060842' fill-opacity='0.84'/%3E%3Ccircle cx='59' cy='165' r='1.2' fill-opacity='0.36'/%3E%3Ccircle cx='256' cy='356' r='3.5' fill-opacity='0.28'/%3E%3Ccircle cx='77' cy='250' r='1' fill-opacity='0.7'/%3E%3Ccircle cx='278' cy='414' r='1.2' fill-opacity='0.34'/%3E%3Ccircle cx='157' cy='419' r='3.5' fill-opacity='0.39'/%3E%3Ccircle cx='243' cy='420' r='1' fill-opacity='0.58'/%3E%3Ccircle cx='48' cy='498' r='1.2' fill-opacity='0.44'/%3E%3Ccircle cx='83' cy='111' r='1.5' fill-opacity='0.78'/%3E%3Ccircle cx='52' cy='88' r='2.5' fill-opacity='0.71'/%3E%3Ccircle cx='284' cy='396' r='1.2' fill-opacity='0.39'/%3E%3Ccircle cx='260' cy='402' r='3.5' fill-opacity='0.6'/%3E%3Ccircle cx='291' cy='398' r='0.6' fill-opacity='0.7'/%3E%3Ccircle cx='45' cy='361' r='0.8' fill-opacity='0.89'/%3E%3Ccircle cx='148' cy='152' r='2' fill-opacity='0.71'/%3E%3Ccircle cx='194' cy='382' r='3.5' fill-opacity='0.44'/%3E%3Ccircle cx='204' cy='382' r='4.047244523787366' fill-opacity='0.52'/%3E%3Ccircle cx='218' cy='372' r='1.2' fill-opacity='0.53'/%3E%3Ccircle cx='250' cy='450' r='3.5' fill-opacity='0.65'/%3E%3Ccircle cx='181' cy='366' r='3.5' fill-opacity='0.8'/%3E%3Ccircle cx='284' cy='421' r='1' fill-opacity='0.69'/%3E%3Ccircle cx='202' cy='433' r='0.8' fill-opacity='0.26'/%3E%3Ccircle cx='63' cy='163' r='1.5' fill-opacity='0.77'/%3E%3Ccircle cx='48' cy='37' r='1' fill-opacity='0.39'/%3E%3Ccircle cx='56' cy='62' r='3.5' fill-opacity='0.84'/%3E%3Ccircle cx='68' cy='176' r='1.2' fill-opacity='0.38'/%3E%3Ccircle cx='51' cy='81' r='2.5' fill-opacity='0.4'/%3E%3Ccircle cx='265' cy='445' r='2.5' fill-opacity='0.33'/%3E%3Ccircle cx='22' cy='93' r='1.2' fill-opacity='0.41'/%3E%3Ccircle cx='244' cy='355' r='0.6' fill-opacity='0.5'/%3E%3Ccircle cx='242' cy='444' r='2' fill-opacity='0.59'/%3E%3Ccircle cx='186' cy='367' r='1.2' fill-opacity='0.43'/%3E%3Ccircle cx='254' cy='464' r='1' fill-opacity='0.67'/%3E%3Ccircle cx='33' cy='290' r='1' fill-opacity='0.53'/%3E%3Ccircle cx='40' cy='86' r='0.6' fill-opacity='0.86'/%3E%3Ccircle cx='55' cy='94' r='2' fill-opacity='0.49'/%3E%3Ccircle cx='203' cy='419' r='1' fill-opacity='0.27'/%3E%3Ccircle cx='256' cy='359' r='0.6' fill-opacity='0.81'/%3E%3Ccircle cx='156' cy='396' r='1' fill-opacity='0.36'/%3E%3Ccircle cx='235' cy='355' r='2' fill-opacity='0.69'/%3E%3Ccircle cx='321' cy='420' r='0.8' fill-opacity='0.84'/%3E%3Ccircle cx='246' cy='351' r='1.2' fill-opacity='0.32'/%3E%3Ccircle cx='238' cy='412' r='2.5' fill-opacity='0.53'/%3E%3Ccircle cx='50' cy='67' r='0.6' fill-opacity='0.88'/%3E%3Ccircle cx='235' cy='358' r='5.7977308545484565' fill-opacity='0.78'/%3E%3Ccircle cx='143' cy='258' r='6.558127485609532' fill-opacity='0.34'/%3E%3Ccircle cx='197' cy='416' r='3.5' fill-opacity='0.56'/%3E%3Ccircle cx='59' cy='98' r='0.6' fill-opacity='0.78'/%3E%3Ccircle cx='367' cy='462' r='3.5' fill-opacity='0.62'/%3E%3Ccircle cx='211' cy='457' r='3.5' fill-opacity='0.84'/%3E%3Ccircle cx='256' cy='349' r='0.8' fill-opacity='0.58'/%3E%3Ccircle cx='239' cy='340' r='4.351505356266823' fill-opacity='0.64'/%3E%3Ccircle cx='91' cy='106' r='2.5' fill-opacity='0.54'/%3E%3Ccircle cx='228' cy='384' r='2' fill-opacity='0.36'/%3E%3Ccircle cx='228' cy='333' r='1' fill-opacity='0.51'/%3E%3Ccircle cx='183' cy='211' r='1.5' fill-opacity='0.69'/%3E%3Ccircle cx='19' cy='60' r='0.8' fill-opacity='0.32'/%3E%3Ccircle cx='116' cy='315' r='1' fill-opacity='0.74'/%3E%3Ccircle cx='251' cy='274' r='1.2' fill-opacity='0.54'/%3E%3Ccircle cx='278' cy='465' r='0.6' fill-opacity='0.46'/%3E%3Ccircle cx='271' cy='352' r='1.2' fill-opacity='0.39'/%3E%3Ccircle cx='227' cy='475' r='3.5' fill-opacity='0.55'/%3E%3Ccircle cx='253' cy='433' r='2' fill-opacity='0.8'/%3E%3Ccircle cx='58' cy='126' r='1.2' fill-opacity='0.39'/%3E%3Ccircle cx='16' cy='84' r='2.5' fill-opacity='0.75'/%3E%3Ccircle cx='257' cy='405' r='1' fill-opacity='0.8'/%3E%3Ccircle cx='228' cy='336' r='0.8' fill-opacity='0.55'/%3E%3Ccircle cx='246' cy='382' r='0.6' fill-opacity='0.26'/%3E%3Ccircle cx='98' cy='297' r='0.8' fill-opacity='0.3'/%3E%3Ccircle cx='228' cy='456' r='4.188642247027014' fill-opacity='0.35'/%3E%3Ccircle cx='346' cy='394' r='1.5' fill-opacity='0.44'/%3E%3Ccircle cx='245' cy='368' r='3.5' fill-opacity='0.85'/%3E%3Ccircle cx='223' cy='239' r='1.2' fill-opacity='0.8'/%3E%3Ccircle cx='78' cy='39' r='1.2' fill-opacity='0.35'/%3E%3Ccircle cx='9' cy='62' r='0.8' fill-opacity='0.58'/%3E%3Ccircle cx='312' cy='495' r='2' fill-opacity='0.34'/%3E%3Ccircle cx='257' cy='361' r='1' fill-opacity='0.72'/%3E%3Ccircle cx='241' cy='71' r='2.5' fill-opacity='0.69'/%3E%3Ccircle cx='43' cy='146' r='1' fill-opacity='0.88'/%3E%3Ccircle cx='284' cy='415' r='1.5' fill-opacity='0.75'/%3E%3Ccircle cx='255' cy='379' r='4.68609443839484' fill-opacity='0.72'/%3E%3Ccircle cx='9' cy='-3' r='0.6' fill-opacity='0.79'/%3E%3Ccircle cx='57' cy='81' r='1' fill-opacity='0.59'/%3E%3Ccircle cx='317' cy='517' r='1.2' fill-opacity='0.66'/%3E%3Ccircle cx='309' cy='308' r='1' fill-opacity='0.38'/%3E%3Ccircle cx='216' cy='38' r='4.387943815497892' fill-opacity='0.4'/%3E%3Ccircle cx='237' cy='378' r='2.5' fill-opacity='0.26'/%3E%3Ccircle cx='52' cy='98' r='2.5' fill-opacity='0.4'/%3E%3Ccircle cx='304' cy='524' r='0.8' fill-opacity='0.67'/%3E%3Ccircle cx='148' cy='57' r='0.8' fill-opacity='0.79'/%3E%3Ccircle cx='276' cy='484' r='2' fill-opacity='0.8'/%3E%3Ccircle cx='84' cy='82' r='4.928247145764027' fill-opacity='0.62'/%3E%3Ccircle cx='67' cy='26' r='4.519590548860765' fill-opacity='0.77'/%3E%3Ccircle cx='216' cy='310' r='0.6' fill-opacity='0.42'/%3E%3Ccircle cx='222' cy='361' r='3.5' fill-opacity='0.59'/%3E%3Ccircle cx='265' cy='463' r='1' fill-opacity='0.88'/%3E%3Ccircle cx='162' cy='464' r='0.8' fill-opacity='0.45'/%3E%3Ccircle cx='250' cy='368' r='1' fill-opacity='0.39'/%3E%3Ccircle cx='14' cy='292' r='1.5' fill-opacity='0.4'/%3E%3Ccircle cx='86' cy='76' r='1.2' fill-opacity='0.58'/%3E%3Ccircle cx='-22' cy='23' r='2.5' fill-opacity='0.58'/%3E%3Ccircle cx='259' cy='453' r='0.6' fill-opacity='0.55'/%3E%3Ccircle cx='271' cy='478' r='3.5' fill-opacity='0.42'/%3E%3Ccircle cx='23' cy='109' r='2.5' fill-opacity='0.7'/%3E%3Ccircle cx='56' cy='75' r='1' fill-opacity='0.75'/%3E%3Ccircle cx='328' cy='455' r='3.5' fill-opacity='0.53'/%3E%3Ccircle cx='230' cy='346' r='0.6' fill-opacity='0.3'/%3E%3Ccircle cx='273' cy='325' r='0.6' fill-opacity='0.44'/%3E%3Ccircle cx='174' cy='321' r='6.696728801920753' fill-opacity='0.32'/%3E%3Ccircle cx='257' cy='359' r='1' fill-opacity='0.84'/%3E%3Ccircle cx='252' cy='340' r='0.8' fill-opacity='0.41'/%3E%3Ccircle cx='269' cy='432' r='0.6' fill-opacity='0.36'/%3E%3Ccircle cx='241' cy='419' r='0.8' fill-opacity='0.82'/%3E%3Ccircle cx='379' cy='438' r='1' fill-opacity='0.39'/%3E%3Ccircle cx='310' cy='474' r='1.5' fill-opacity='0.67'/%3E%3Ccircle cx='55' cy='101' r='3.5' fill-opacity='0.58'/%3E%3Ccircle cx='235' cy='358' r='5.871286133429842' fill-opacity='0.9'/%3E%3Ccircle cx='254' cy='403' r='1' fill-opacity='0.29'/%3E%3Ccircle cx='147' cy='461' r='1.2' fill-opacity='0.56'/%3E%3Ccircle cx='246' cy='473' r='1' fill-opacity='0.41'/%3E%3Ccircle cx='73' cy='81' r='0.6' fill-opacity='0.25'/%3E%3Ccircle cx='264' cy='417' r='0.8' fill-opacity='0.27'/%3E%3Ccircle cx='162' cy='505' r='5.272156260015011' fill-opacity='0.58'/%3E%3Ccircle cx='253' cy='340' r='1.2' fill-opacity='0.3'/%3E%3Ccircle cx='239' cy='356' r='0.8' fill-opacity='0.75'/%3E%3Ccircle cx='246' cy='157' r='0.8' fill-opacity='0.36'/%3E%3Ccircle cx='292' cy='347' r='3.5' fill-opacity='0.55'/%3E%3Ccircle cx='251' cy='466' r='0.8' fill-opacity='0.41'/%3E%3Ccircle cx='263' cy='448' r='2.5' fill-opacity='0.89'/%3E%3Ccircle cx='31' cy='59' r='2.5' fill-opacity='0.39'/%3E%3Ccircle cx='63' cy='255' r='2.5' fill-opacity='0.68'/%3E%3Ccircle cx='260' cy='447' r='1.2' fill-opacity='0.78'/%3E%3Ccircle cx='235' cy='357' r='2.5' fill-opacity='0.42'/%3E%3Ccircle cx='61' cy='-20' r='1.2' fill-opacity='0.74'/%3E%3Ccircle cx='264' cy='86' r='0.8' fill-opacity='0.74'/%3E%3Ccircle cx='172' cy='322' r='1' fill-opacity='0.71'/%3E%3Ccircle cx='336' cy='464' r='1.5' fill-opacity='0.6'/%3E%3Ccircle cx='50' cy='519' r='2.5' fill-opacity='0.9'/%3E%3Ccircle cx='296' cy='447' r='1.5' fill-opacity='0.29'/%3E%3Ccircle cx='252' cy='423' r='3.5' fill-opacity='0.54'/%3E%3Ccircle cx='5' cy='161' r='1.2' fill-opacity='0.78'/%3E%3Ccircle cx='-9' cy='61' r='1' fill-opacity='0.72'/%3E%3Ccircle cx='165' cy='14' r='0.6' fill-opacity='0.65'/%3E%3Ccircle cx='240' cy='346' r='1' fill-opacity='0.29'/%3E%3Ccircle cx='218' cy='394' r='1.2' fill-opacity='0.82'/%3E%3Ccircle cx='83' cy='96' r='3.5' fill-opacity='0.51'/%3E%3Ccircle cx='243' cy='486' r='1.2' fill-opacity='0.32'/%3E%3Ccircle cx='81' cy='259' r='1.5' fill-opacity='0.55'/%3E%3Ccircle cx='106' cy='2' r='0.8' fill-opacity='0.52'/%3E%3Ccircle cx='207' cy='366' r='2.5' fill-opacity='0.74'/%3E%3Ccircle cx='81' cy='9' r='2' fill-opacity='0.39'/%3E%3Ccircle cx='30' cy='465' r='2' fill-opacity='0.28'/%3E%3Ccircle cx='251' cy='325' r='3.5' fill-opacity='0.58'/%3E%3Ccircle cx='172' cy='153' r='3.5' fill-opacity='0.53'/%3E%3Ccircle cx='162' cy='143' r='1' fill-opacity='0.32'/%3E%3Ccircle cx='175' cy='401' r='1.5' fill-opacity='0.85'/%3E%3Ccircle cx='155' cy='285' r='2' fill-opacity='0.66'/%3E%3Ccircle cx='65' cy='431' r='1.5' fill-opacity='0.71'/%3E%3Ccircle cx='240' cy='412' r='2.5' fill-opacity='0.71'/%3E%3Ccircle cx='138' cy='263' r='2.5' fill-opacity='0.43'/%3E%3Ccircle cx='65' cy='97' r='1.2' fill-opacity='0.74'/%3E%3Ccircle cx='60' cy='87' r='0.8' fill-opacity='0.41'/%3E%3Ccircle cx='76' cy='86' r='6.018817742048878' fill-opacity='0.52'/%3E%3Ccircle cx='272' cy='483' r='6.067996931049235' fill-opacity='0.67'/%3E%3Ccircle cx='83' cy='74' r='1.2' fill-opacity='0.66'/%3E%3Ccircle cx='203' cy='109' r='2.5' fill-opacity='0.27'/%3E%3Ccircle cx='25' cy='170' r='2.5' fill-opacity='0.28'/%3E%3Ccircle cx='256' cy='473' r='1.2' fill-opacity='0.74'/%3E%3Ccircle cx='248' cy='446' r='2' fill-opacity='0.58'/%3E%3Ccircle cx='257' cy='447' r='2' fill-opacity='0.43'/%3E%3Ccircle cx='103' cy='95' r='2.5' fill-opacity='0.37'/%3E%3Ccircle cx='191' cy='270' r='1' fill-opacity='0.83'/%3E%3Ccircle cx='92' cy='94' r='1.2' fill-opacity='0.63'/%3E%3Ccircle cx='249' cy='428' r='1' fill-opacity='0.75'/%3E%3Ccircle cx='299' cy='391' r='3.5' fill-opacity='0.25'/%3E%3Ccircle cx='272' cy='451' r='1' fill-opacity='0.51'/%3E%3Ccircle cx='35' cy='73' r='3.5' fill-opacity='0.85'/%3E%3Ccircle cx='122' cy='385' r='1.2' fill-opacity='0.69'/%3E%3Ccircle cx='66' cy='121' r='0.8' fill-opacity='0.42'/%3E%3Ccircle cx='258' cy='421' r='1.2' fill-opacity='0.78'/%3E%3Ccircle cx='302' cy='466' r='0.8' fill-opacity='0.49'/%3E%3Ccircle cx='276' cy='413' r='3.5' fill-opacity='0.74'/%3E%3Ccircle cx='196' cy='334' r='1' fill-opacity='0.46'/%3E%3Ccircle cx='260' cy='447' r='1.5' fill-opacity='0.68'/%3E%3C/g%3E%3C/svg%3E"),linear-gradient(270deg,#0e0c0b,#1a1614);background-size:320px 520px,100% 100%;background-position:0 140px,0 0}
+}
+/* =========== MOBILE SOIGNÉ (prioritaire) =========== */
+.barre-mobile{display:none}
+.swipe-hint{display:none}
+@media (max-width:760px){
+  body{padding-bottom:84px}
+  .nav .wrap{height:64px}
+  .nav ul{top:64px}
+  .logo-rond{width:44px;height:44px}
+  .logo-txt{font-size:1.25rem}
+  .logo-txt span{font-size:1.35rem}
+
+  /* héros : titre, photos, puis texte — la photo est visible tout de suite */
+  .hero{min-height:auto;padding:84px 0 40px}
+  .hero .texte{display:contents}
+  .hero .wrap{gap:0;justify-items:center;text-align:center}
+  .tampon{order:1;font-size:.72rem}
+  .hero h1{order:2;font-size:clamp(3rem,15vw,4.2rem);margin:14px 0 6px}
+  .hero h1 .ligne2{-webkit-text-stroke:2px var(--noir)}
+  .pile{order:3;width:100%;height:330px;margin:6px 0 34px}
+  .c1{height:205px;width:66%;left:17%;top:20px}
+  .c2,.c3{height:150px;width:48%}
+  .c2{top:175px;left:-2%}
+  .c3{top:190px;right:-2%}
+  .carte-photo{padding:6px;border-radius:16px;box-shadow:5px 5px 0 var(--noir)}
+  .carte-photo .etiquette{font-size:.9rem;bottom:-14px}
+  .prix-rond{width:84px;height:84px;top:-6px;right:-4px}
+  .prix-rond b{font-size:1.8rem}
+  .hero p.lead{order:4;font-size:1rem;margin:0 0 22px}
+  .hero .actions{order:5;width:100%;display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .hero .actions .btn{justify-content:center;padding:14px 10px;font-size:.85rem}
+  .pastilles{order:6;margin-top:22px}
+  .pastilles span{font-size:.78rem;padding:5px 11px}
+  .bande span{font-size:1.3rem;gap:28px}
+
+  .titre{margin-bottom:30px}
+  .titre h2{font-size:clamp(2.4rem,12vw,3.2rem)}
+
+  /* formules : carrousel à glisser */
+  .formules{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;margin:0 -16px;padding:4px 16px 18px;scrollbar-width:none}
+  .formules::-webkit-scrollbar{display:none}
+  .formule{flex:0 0 84%;scroll-snap-align:center;box-shadow:6px 6px 0 var(--noir)}
+  .formule h3{font-size:1.6rem}
+  .formule h3 .px{font-size:1.2rem}
+  .swipe-hint{display:flex;justify-content:center;gap:8px;align-items:center;font-weight:700;font-size:.8rem;color:var(--gris);margin-top:6px}
+  .swipe-hint i{width:8px;height:8px;border-radius:50%;background:#e3d3c4;transition:.2s}
+  .swipe-hint i.on{background:var(--orange);width:22px;border-radius:6px}
+
+  /* deals : affiches côte à côte, tickets en dessous */
+  .deals-grid{grid-template-columns:1fr 1fr;gap:14px}
+  .deals-txt{text-align:center}
+  .deals-txt h3{font-size:2.3rem}
+  .affiche{padding:6px;border-radius:14px;box-shadow:5px 5px 0 var(--noir)}
+  .affiche img{border-radius:9px}
+  .affiche:nth-child(2){margin-top:22px}
+  .ticket{text-align:left}
+
+  .carte-grid{grid-template-columns:1fr 1fr;gap:14px}
+  .plat{border-radius:16px;box-shadow:4px 4px 0 var(--noir)}
+  .plat .corps{padding:12px 12px 14px}
+
+  .spot-txt{text-align:center}
+  .spot-txt h2{font-size:2.5rem}
+  .atout{text-align:center}
+
+  .adr .haut{padding:22px 20px 16px}
+  .adr h3{font-size:2rem}
+  .adr iframe{height:180px}
+  .tanger-txt{text-align:center}
+  .tanger-txt h2{font-size:2.4rem}
+  .avis-box{padding:24px 18px}
+
+  /* barre d'actions fixe en bas, comme une appli */
+  .barre-mobile{
+    display:grid;grid-template-columns:1fr 1fr 1.25fr;gap:8px;position:fixed;left:10px;right:10px;bottom:10px;z-index:60;
+    background:#fff;border:var(--trait);border-radius:18px;padding:8px;box-shadow:4px 4px 0 var(--noir);
+    padding-bottom:calc(8px + env(safe-area-inset-bottom,0px));
+  }
+  .barre-mobile a{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;text-decoration:none;font-weight:800;font-size:.72rem;text-transform:uppercase;border-radius:12px;padding:7px 4px}
+  .barre-mobile a b{font-size:1.2rem;line-height:1}
+  .barre-mobile a.principal{background:var(--orange);color:#fff;border:2px solid var(--noir)}
+}
+/* tickets : encoches retirées (rendu propre sur tous les écrans) */
+.ticket::before,.ticket::after{display:none}
+
+@media (prefers-reduced-motion:reduce){
+  .bande .piste,.prix-rond{animation:none}
+  .reveal{opacity:1;transform:none;transition:none}
+}
+</style>
+</head>
+<body>
+
+<!-- éclaboussure réutilisable -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <g id="tache">
+      <path d="M120 30c20-10 30 15 48 10s30-25 45-8-5 35 10 50 40 5 40 28-30 18-32 38 25 35 5 50-35-8-52 5-15 40-40 38-20-30-40-35-40 20-58 2 10-35-5-50-40-5-42-28 30-25 28-45-25-30-5-45 35 10 50-2 10-38 30-38 15 25 18 25z" fill="#f26b1d"/>
+      <circle cx="290" cy="60" r="12" fill="#f26b1d"/><circle cx="315" cy="95" r="6" fill="#f26b1d"/>
+      <circle cx="30" cy="250" r="10" fill="#f26b1d"/><circle cx="60" cy="285" r="5" fill="#f26b1d"/>
+      <circle cx="260" cy="270" r="8" fill="#f26b1d"/>
+    </g>
+  </defs>
+</svg>
+
+<!-- ===== NAVIGATION ===== -->
+<header class="nav" id="nav">
+  <div class="wrap">
+    <a href="#accueil" class="logo" aria-label="The Food Spot, accueil">
+      <span class="logo-rond"><span class="anton">The<b>Food</b></span><span class="script">Spot</span></span>
+      <span class="logo-txt">The Food <span>Spot</span></span>
+    </a>
+    <ul id="menuNav">
+      <li><a href="#formules">Formules</a></li>
+      <li><a href="#deals">Deals 5 €</a></li>
+      <li><a href="#carte">La carte</a></li>
+      <li><a href="#spot">Le spot</a></li>
+      <li><a href="#adresses">Adresses</a></li>
+    </ul>
+    <div class="nav-actions">
+      <a href="#adresses" class="btn cmd">Commander</a>
+      <button class="burger" id="burger" aria-label="Ouvrir le menu"><span></span><span></span><span></span></button>
+      <!-- étiquette suspendue qui se balance -->
+      <span class="etiquette-halal" aria-label="100 % halal">
+        <span class="fil-halal"></span>
+        <span class="rond-halal"><b>100%</b><small>Halal</small><i>✓</i></span>
+      </span>
+    </div>
+  </div>
+</header>
+
+<!-- ===== HÉROS ===== -->
+<section class="hero" id="accueil">
+  <svg class="splash" viewBox="0 0 340 320" style="width:420px;right:-90px;top:60px;opacity:.18"><use href="#tache"/></svg>
+  <svg class="splash" viewBox="0 0 340 320" style="width:260px;left:-80px;bottom:40px;opacity:.14;transform:rotate(90deg)"><use href="#tache"/></svg>
+  <div class="wrap">
+    <div class="texte reveal">
+      <span class="tampon"><i></i> Schaerbeek & Molenbeek</span>
+      <h1 class="anton">Good food<span class="script">&amp;</span><span class="ligne2">Good vibes</span></h1>
+      <p class="lead">Smash burgers, tacos, pains grecs, crousty et hot dogs bien chargés. 100 % halal, des formules à 10 € et ouvert tard le soir : le spot pour manger entre potes à Bruxelles.</p>
+      <div class="actions">
+        <a href="#formules" class="btn">Voir les formules</a>
+        <a href="#adresses" class="btn blanc">📍 Nos 2 spots</a>
+      </div>
+      <div class="pastilles">
+        <span>✅ Halal</span><span>🌙 Ouvert tard</span><span>🛵 Livraison</span><span>💸 Dès 5 €</span>
+      </div>
+    </div>
+    <div class="pile reveal" id="pile">
+      <div class="prix-rond"><span><small>Formules</small><b>10€</b></span></div>
+      <div class="carte-photo c1"><img src="img/pain-grec.jpg" alt="Pain grec poulet cheddar et frites"><span class="etiquette">Pain grec cheese</span></div>
+      <div class="carte-photo c2"><img src="img/hotdog.jpg" alt="Hot dog chargé, oignons frits"><span class="etiquette">Hot dog</span></div>
+      <div class="carte-photo c3"><img src="img/gaufrettes.jpg" alt="Frites gaufrettes"><span class="etiquette">Gaufrettes</span></div>
+    </div>
+  </div>
+</section>
+
+<div class="bande" aria-hidden="true">
+  <div class="piste">
+    <span>Play</span><span>Eat</span><span>Repeat</span><span>Good food</span><span>Good vibes</span><span>Formules 10 €</span><span>100 % halal</span>
+    <span>Play</span><span>Eat</span><span>Repeat</span><span>Good food</span><span>Good vibes</span><span>Formules 10 €</span><span>100 % halal</span>
+  </div>
+</div>
+
+<!-- ===== FORMULES 10 € ===== -->
+<section id="formules">
+  <div class="wrap">
+    <div class="titre reveal">
+      <span class="brush">Le bon plan du spot</span>
+      <h2>Les formules à <span class="souligne">10 €</span></h2>
+      <p>Un vrai repas complet avec boisson pour 10 €. Choisis ta formule, on s'occupe du reste.</p>
+    </div>
+    <div class="formules">
+      <article class="formule tilt reveal">
+        <div class="visuel"><img src="img/formule-grec-dog.jpg" alt="Formule Grec & Dog" data-zoom></div>
+        <div class="corps">
+          <h3>Grec & Dog <span class="px">10 €</span></h3>
+          <ul><li>Pain grec poulet</li><li>Hot dog</li><li>Frites cheddar</li><li>Sauce</li><li>Cola</li></ul>
+        </div>
+      </article>
+      <article class="formule tilt reveal">
+        <div class="visuel"><img src="img/formule-double-cheese.jpg" alt="Formule Double & Cheese" data-zoom></div>
+        <div class="corps">
+          <h3>Double & Cheese <span class="px">10 €</span></h3>
+          <ul><li>2 double cheese</li><li>Frites</li><li>Sauce</li><li>Cola</li></ul>
+        </div>
+      </article>
+      <article class="formule tilt reveal">
+        <div class="visuel"><img src="img/pain-grec.jpg" alt="Formule Grec & Cheese" data-zoom></div>
+        <div class="corps">
+          <h3>Grec & Cheese <span class="px">10 €</span></h3>
+          <ul><li>Pain grec poulet</li><li>Cheeseburger</li><li>Frites cheddar</li><li>Sauce</li><li>Cola</li></ul>
+        </div>
+      </article>
+      <article class="formule tilt reveal">
+        <div class="visuel"><img src="img/formule-tacos-cheese.jpg" alt="Formule Tacos & Cheese" data-zoom></div>
+        <div class="corps">
+          <h3>Tacos & Cheese <span class="px">10 €</span></h3>
+          <ul><li>Tacos</li><li>Cheeseburger</li><li>Frites cheddar</li><li>Sauce</li><li>Cola</li></ul>
+        </div>
+      </article>
+    </div>
+    <div class="swipe-hint" id="swipeHint"><i class="on"></i><i></i><i></i><i></i><span>Glisse pour voir les formules</span></div>
+  </div>
+</section>
+
+<!-- ===== DEALS 5 € ===== -->
+<section class="deals" id="deals">
+  <svg class="splash" viewBox="0 0 340 320" style="width:360px;left:-120px;top:-60px;opacity:.2"><use href="#tache"/></svg>
+  <div class="wrap">
+    <div class="deals-grid">
+      <div class="affiche reveal"><img src="img/mardi-fou.jpg" alt="Mardi Fou : Grand Crousty à 5 €" data-zoom></div>
+      <div class="affiche reveal"><img src="img/weekend-5.jpg" alt="Week-end de folie : plats à 5 €" data-zoom></div>
+      <div class="deals-txt reveal">
+        <span class="brush orange" style="font-size:1.3rem">Petits prix, grosses portions</span>
+        <h3>Les deals <span class="orange">à 5 €</span></h3>
+        <p>Chaque semaine, des promos qui font plaisir. Le mardi, c'est Mardi Fou !</p>
+        <div class="ticket"><span><b>Grand Crousty</b><small>Mardi Fou, tous les mardis</small></span><span class="px">5 €</span></div>
+        <div class="ticket"><span><b>Mac & Cheese</b><small>Poulet crousty, sauce cheese</small></span><span class="px">5 €</span></div>
+        <div class="ticket"><span><b>Loaded Fries</b><small>Frites chargées, poulet, sauces</small></span><span class="px">5 €</span></div>
+        <div class="ticket"><span><b>Tacos poulet</b><small>Poulet, frites, sauce fromagère</small></span><span class="px">5 €</span></div>
+        <p class="deals-note">Promos selon les jours, suivez notre Instagram pour les nouveautés.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== LA CARTE ===== -->
+<section id="carte">
+  <div class="wrap">
+    <div class="titre reveal">
+      <span class="brush">Ce qu'on fait de mieux</span>
+      <h2>La <span class="souligne">carte</span></h2>
+      <p>Tout est préparé à la commande, halal et bien généreux.</p>
+    </div>
+    <div class="carte-grid">
+      <article class="plat reveal"><div class="visuel"><img src="img/tanger-smash.jpg" alt="Smash burger" style="object-position:50% 72%"></div><div class="corps"><h3>Smash burger</h3><p>Steaks écrasés, cheddar fondu, oignons caramélisés.</p></div></article>
+      <article class="plat reveal"><div class="visuel"><img src="img/pain-grec.jpg" alt="Pain grec"></div><div class="corps"><h3>Pain grec</h3><p>Poulet mariné, cheddar fondu, frites à côté.</p></div></article>
+      <article class="plat reveal"><div class="visuel"><img src="img/smash-tacos.jpg" alt="Tacos" style="object-position:85% 60%"></div><div class="corps"><h3>Tacos</h3><p>Viande, frites et sauce fromagère, grillé à la presse.</p></div></article>
+      <article class="plat reveal"><div class="visuel"><img src="img/hotdog.jpg" alt="Hot dog"></div><div class="corps"><h3>Hot dog</h3><p>Ketchup, moutarde, oignons frits et persil.</p></div></article>
+      <article class="plat reveal"><div class="visuel"><img src="img/gaufrettes.jpg" alt="Frites gaufrettes"></div><div class="corps"><h3>Gaufrettes</h3><p>Frites gaufrettes croustillantes et épicées.</p></div></article>
+      <article class="plat reveal"><div class="visuel"><img src="img/crousty.jpg" alt="Crousty" style="object-position:50% 25%"></div><div class="corps"><h3>Crousty</h3><p>Poulet croustillant sur riz, sauces maison.</p></div></article>
+      <article class="plat reveal"><div class="visuel"><img src="img/mac-cheese.jpg" alt="Mac & Cheese" style="object-position:50% 25%"></div><div class="corps"><h3>Mac & Cheese</h3><p>Pâtes, sauce cheese et poulet crousty.</p></div></article>
+      <article class="plat reveal"><div class="visuel"><img src="img/loaded-fries.jpg" alt="Loaded fries" style="object-position:50% 25%"></div><div class="corps"><h3>Loaded fries</h3><p>Frites chargées de poulet et de sauces.</p></div></article>
+    </div>
+  </div>
+</section>
+
+<!-- ===== LE SPOT ===== -->
+<section id="spot" style="padding-top:20px">
+  <div class="wrap spot-grid">
+    <div class="spot-photos reveal">
+      <div class="carte-photo"><img src="img/salle-2.jpg" alt="La salle du Food Spot, murs en lattes de bois et posters" data-zoom></div>
+      <div class="carte-photo"><img src="img/salle-1.jpg" alt="Coin tables et posters" data-zoom></div>
+    </div>
+    <div class="spot-txt reveal">
+      <span class="brush orange" style="font-size:1.3rem">Play · Eat · Repeat</span>
+      <h2>Un spot pour manger <span class="orange">entre potes</span></h2>
+      <p>Murs en lattes de bois, posters manga version burger aux murs, petites tables en bois : chez The Food Spot on vient pour bien manger, mais aussi pour l'ambiance.</p>
+      <p>Sur place, à emporter ou livré chez toi : comme tu veux.</p>
+      <div class="atouts">
+        <div class="atout"><b>🍔</b><span>Sur place</span></div>
+        <div class="atout"><b>🛍️</b><span>À emporter</span></div>
+        <div class="atout"><b>🛵</b><span>Livraison</span></div>
+        <div class="atout"><b>✅</b><span>100 % halal</span></div>
+      </div>
+      <a href="#adresses" class="btn">Venir au spot</a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== ADRESSES ===== -->
+<section class="adresses" id="adresses">
+  <svg class="splash" viewBox="0 0 340 320" style="width:380px;right:-120px;bottom:-80px;opacity:.25;filter:brightness(.3)"><use href="#tache"/></svg>
+  <div class="wrap">
+    <div class="titre reveal">
+      <span class="brush">Deux spots à Bruxelles</span>
+      <h2>Viens <span class="souligne">nous voir</span></h2>
+      <p>Sur place, à emporter ou en livraison.</p>
+    </div>
+    <div class="adr-grid">
+      <div class="adr reveal">
+        <div class="haut">
+          <h3><small>The Food Spot</small>Schaerbeek</h3>
+          <div class="ligne"><span class="ico">📍</span>Rue Van Oost 6, 1030 Schaerbeek</div>
+          <div class="ligne"><span class="ico">🕔</span>Ouvre à 17h · livraison jusqu'à 2h</div>
+          <span class="statut" data-ouv="17" data-ferm="26"></span>
+          <div class="services"><span>Sur place</span><span>À emporter</span><span>Livraison</span></div>
+        </div>
+        <iframe loading="lazy" title="Carte The Food Spot Schaerbeek" src="https://maps.google.com/maps?q=Rue%20Van%20Oost%206%2C%201030%20Schaerbeek&z=15&output=embed"></iframe>
+      </div>
+      <div class="adr reveal">
+        <div class="haut">
+          <h3><small>The Food Spot</small>Molenbeek</h3>
+          <div class="ligne"><span class="ico">📍</span>Rue Vanderdussen 43, 1080 Bruxelles</div>
+          <div class="ligne"><span class="ico">🕔</span>De 16h à 4h du matin</div>
+          <span class="statut" data-ouv="16" data-ferm="28"></span>
+          <div class="services"><span>Sur place</span><span>À emporter</span><span>Livraison</span></div>
+        </div>
+        <iframe loading="lazy" title="Carte The Food Spot Molenbeek" src="https://maps.google.com/maps?q=Rue%20Vanderdussen%2043%2C%201080%20Bruxelles&z=15&output=embed"></iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== BIENTÔT TANGER ===== -->
+<section id="tanger">
+  <div class="wrap tanger-grid">
+    <div class="tanger-affiches">
+      <div class="affiche reveal"><img src="img/tanger-smash.jpg" alt="Tanger, êtes-vous prêts ?" data-zoom></div>
+      <div class="affiche reveal"><img src="img/tanger.jpg" alt="The Food Spot arrive à Tanger" data-zoom></div>
+    </div>
+    <div class="tanger-txt reveal">
+      <span class="brush orange" style="font-size:1.3rem">Bientôt chez vous !</span>
+      <h2>Le goût qui a conquis Bruxelles arrive à <span class="orange">Tanger</span></h2>
+      <p>Après Schaerbeek et Molenbeek, The Food Spot traverse la Méditerranée. Même qualité, même goût, même passion : là où l'Atlantique rencontre la Méditerranée.</p>
+      <a href="#adresses" class="btn blanc">En attendant, viens à Bruxelles</a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== AVIS ===== -->
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="avis-box reveal">
+      <div>
+        <h3>Tu as aimé ?</h3>
+        <p>Laisse-nous un avis sur Google, ça nous aide énormément 🧡</p>
+      </div>
+      <a class="btn" href="https://www.google.com/maps/search/?api=1&query=The+Food+Spot+Rue+Van+Oost+6+Schaerbeek" target="_blank" rel="noopener">⭐ Laisser un avis</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="logo">
+    <span class="logo-rond"><span class="anton">The<b>Food</b></span><span class="script">Spot</span></span>
+    <span class="logo-txt">The Food <span>Spot</span></span>
+  </div>
+  <div class="slogan">Good food · Good vibes</div>
+  <p>Schaerbeek · Rue Van Oost 6 — Molenbeek · Rue Vanderdussen 43</p>
+  <p class="demo">Site de démonstration</p>
+</footer>
+
+<nav class="barre-mobile" aria-label="Actions rapides">
+  <a href="#formules"><b>🍔</b>Formules</a>
+  <a href="#deals"><b>🔥</b>Deals 5 €</a>
+  <a href="#adresses" class="principal"><b>📍</b>Y aller</a>
+</nav>
+
+<div class="lightbox" id="lightbox"><img alt=""></div>
+
+<script>
+/* inclinaison 3D des cartes formules */
+const survol = matchMedia("(hover:hover)").matches && !matchMedia("(prefers-reduced-motion:reduce)").matches;
+if (survol) document.querySelectorAll(".tilt").forEach(el => {
+  el.addEventListener("mousemove", e => {
+    const r = el.getBoundingClientRect(), x = (e.clientX-r.left)/r.width-.5, y = (e.clientY-r.top)/r.height-.5;
+    el.style.transform = `perspective(900px) rotateY(${x*10}deg) rotateX(${-y*10}deg) translateY(-4px)`;
+    el.style.boxShadow = `${8-x*10}px ${8-y*10}px 0 var(--noir)`;
+  });
+  el.addEventListener("mouseleave", () => { el.style.transform = ""; el.style.boxShadow = ""; });
+});
+
+/* apparition au défilement */
+const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add("vu"); io.unobserve(e.target); } }), {threshold:.12});
+document.querySelectorAll(".reveal").forEach(el => io.observe(el));
+
+/* navigation */
+const nav = document.getElementById("nav"), menuNav = document.getElementById("menuNav");
+addEventListener("scroll", () => nav.classList.toggle("scrolled", scrollY > 30), {passive:true});
+document.getElementById("burger").onclick = () => menuNav.classList.toggle("ouvert");
+menuNav.addEventListener("click", e => { if (e.target.tagName === "A") menuNav.classList.remove("ouvert"); });
+
+/* ouvert / fermé en direct (heures après minuit comptées en +24) */
+const d = new Date(), h = d.getHours() + d.getMinutes()/60;
+document.querySelectorAll(".statut").forEach(s => {
+  const o = +s.dataset.ouv, f = +s.dataset.ferm;
+  const ouvert = (h >= o && h < f) || (h + 24 >= o && h + 24 < f);
+  s.textContent = ouvert ? "● Ouvert maintenant" : `● Fermé · ouvre à ${o}h`;
+  s.classList.add(ouvert ? "ouvert" : "ferme");
+});
+
+/* points du carrousel des formules */
+const rail = document.querySelector(".formules"), points = document.querySelectorAll("#swipeHint i");
+rail.addEventListener("scroll", () => {
+  const cartes = [...rail.children], centre = rail.scrollLeft + rail.clientWidth/2;
+  let i = 0, best = Infinity;
+  cartes.forEach((c,k) => { const d = Math.abs(c.offsetLeft + c.offsetWidth/2 - centre); if (d < best) { best = d; i = k; } });
+  points.forEach((p,k) => p.classList.toggle("on", k === i));
+}, {passive:true});
+
+/* zoom sur les affiches */
+const lb = document.getElementById("lightbox"), lbImg = lb.querySelector("img");
+document.addEventListener("click", e => {
+  const img = e.target.closest("[data-zoom]");
+  if (img) { lbImg.src = img.src; lbImg.alt = img.alt; lb.classList.add("ouvert"); }
+  else if (e.target === lb || e.target === lbImg) lb.classList.remove("ouvert");
+});
+addEventListener("keydown", e => { if (e.key === "Escape") lb.classList.remove("ouvert"); });
+</script>
+</body>
+</html>
