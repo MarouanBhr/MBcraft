@@ -128,7 +128,7 @@ header.nav.scrolled{background:rgba(251,244,232,.94);backdrop-filter:blur(8px);b
 .badge-3d strong{display:block;font-size:.95rem;color:var(--terre-fonce)}
 
 /* lanternes suspendues */
-.lanternes{position:absolute;top:0;left:0;right:0;height:0;pointer-events:none;z-index:2}
+.lanternes{position:absolute;top:72px;left:0;right:0;height:0;pointer-events:none;z-index:2}
 .lanterne{position:absolute;top:0;transform-origin:top center;animation:balance 5s ease-in-out infinite}
 .lanterne .fil{width:2px;margin:auto;background:linear-gradient(var(--or),#8f6a17)}
 .lanterne svg{display:block;filter:drop-shadow(0 0 18px rgba(255,190,80,.75))}
@@ -364,6 +364,82 @@ section.deco{overflow:hidden}
 @media (prefers-reduced-motion:reduce){
   .lanterne{animation:none}.reveal{opacity:1;transform:none;transition:none}
 }
+
+/* =========== MOBILE SOIGNÉ (prioritaire) =========== */
+.galerie-grid{grid-auto-flow:dense}
+.barre-mobile,.swipe-hint{display:none}
+@media (max-width:760px){
+  body{padding-bottom:86px}
+  .nav .wrap{height:64px}
+  .nav ul{top:64px}
+  .logo .etoile{width:32px;height:32px}
+  .logo b{font-size:1.4rem}
+
+  /* héros : titre, photo du salon, puis texte */
+  .hero{min-height:auto;padding:84px 0 46px}
+  .hero .texte{display:contents}
+  .hero .wrap{gap:0;justify-items:center;text-align:center}
+  .surtitre{order:1;font-size:.7rem;letter-spacing:.12em;flex-wrap:wrap;justify-content:center}
+  .surtitre::before{width:20px}
+  .hero h1{order:2;font-size:3.3rem;margin:8px 0 14px}
+  .hero h1 .arabe{font-size:.42em}
+  .scene{order:3;width:100%;margin-bottom:26px}
+  .arche{max-width:300px;padding:10px}
+  .arche .photo{border-radius:140px 140px 12px 12px}
+  .arche{border-radius:150px 150px 20px 20px}
+  .badge-3d{padding:8px 11px;font-size:.72rem;gap:8px;border-radius:14px}
+  .badge-3d .ico{width:30px;height:30px;font-size:1rem}
+  .badge-3d strong{font-size:.8rem}
+  .badge-3d.b1{left:-8px;bottom:34px}
+  .badge-3d.b2{right:-8px;top:54px}
+  .hero p.lead{order:4;font-size:1rem;margin:0 0 22px}
+  .hero .actions{order:5;width:100%;display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .hero .actions .btn{justify-content:center;padding:13px 8px;font-size:.88rem}
+  .note{order:6;margin-top:20px}
+  .lanternes{top:58px}
+  .lanterne{scale:.62}
+
+  section{padding:64px 0}
+  .titre-section{margin-bottom:30px}
+  .titre-section h2,.salon-texte h2{font-size:2.9rem}
+  .salon-texte{text-align:center}
+  .points li{text-align:left}
+
+  /* onglets : une seule ligne qu'on fait glisser */
+  .onglets{flex-wrap:nowrap;justify-content:flex-start;overflow-x:auto;margin:0 -16px 26px;padding:4px 16px 10px;scrollbar-width:none}
+  .onglets::-webkit-scrollbar{display:none}
+  .onglet{flex:none}
+
+  /* plats : carrousel à glisser */
+  .plats{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;margin:0 -16px;padding:4px 16px 22px;scrollbar-width:none}
+  .plats::-webkit-scrollbar{display:none}
+  .plat{flex:0 0 82%;scroll-snap-align:center}
+  .plat .corps{padding:16px 18px 18px}
+  .plat h3{font-size:1.35rem}
+  .swipe-hint{display:block;text-align:center;font-size:.8rem;font-weight:600;color:var(--encre-douce)}
+  .swipe-hint::before{content:"← ";color:var(--orange)}
+  .swipe-hint::after{content:" →";color:var(--orange)}
+
+  .formule{margin-top:40px}
+  .formule h3{font-size:2.2rem}
+  .formule .gros{font-size:2.6rem}
+  .carte-papier{margin-top:44px}
+  .rubrique h4{font-size:1.8rem}
+
+  .galerie-grid{grid-auto-rows:150px;gap:10px}
+  .avis{padding:24px 20px}
+  .bloc{padding:24px 20px}
+
+  /* barre d'actions fixe en bas, comme une appli */
+  .barre-mobile{
+    display:grid;grid-template-columns:1fr 1fr 1.3fr;gap:8px;position:fixed;left:10px;right:10px;bottom:10px;z-index:60;
+    background:rgba(255,255,255,.97);border:1px solid #f0e0c6;border-radius:20px;padding:8px;
+    box-shadow:0 10px 30px -8px rgba(30,42,90,.35);padding-bottom:calc(8px + env(safe-area-inset-bottom,0px));
+  }
+  .barre-mobile a{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;text-decoration:none;font-weight:600;font-size:.74rem;color:var(--nuit);border-radius:14px;padding:7px 4px}
+  .barre-mobile a b{font-size:1.2rem;line-height:1}
+  .barre-mobile a.principal{background:linear-gradient(180deg,#f5a04f,#dc6c1e);color:#fff;box-shadow:0 4px 0 #a64f12}
+}
 </style>
 </head>
 <body>
@@ -455,6 +531,7 @@ section.deco{overflow:hidden}
       <button class="onglet" data-cat="douceur">Thé & msemen</button>
     </div>
     <div class="plats" id="plats"></div>
+    <p class="swipe-hint">Glissez pour voir les plats</p>
 
     <div class="formule reveal">
       <span class="formule-img"><img src="img/msemen-soupe.jpg" alt="Msemen et harira"></span>
@@ -591,6 +668,12 @@ section.deco{overflow:hidden}
   <p>Chaussée de Helmet 294 · 1030 Schaerbeek</p>
   <p class="demo">Site de démonstration</p>
 </footer>
+
+<nav class="barre-mobile" aria-label="Actions rapides">
+  <a href="#carte"><b>📖</b>La carte</a>
+  <a href="#salon"><b>🛋️</b>Le salon</a>
+  <a href="https://www.google.com/maps/dir/?api=1&destination=Chauss%C3%A9e+de+Helmet+294+1030+Schaerbeek" target="_blank" rel="noopener" class="principal"><b>📍</b>Itinéraire</a>
+</nav>
 
 <div class="lightbox" id="lightbox"><button aria-label="Fermer">×</button><img alt=""></div>
 
@@ -760,7 +843,10 @@ const lanterneSVG = c => `<svg width="46" height="78" viewBox="0 0 46 78"><path 
 const L = [{x:6,h:40,c:"#f0a34a",d:0},{x:18,h:90,c:"#e0503a",d:1.2},{x:44,h:30,c:"#f6c453",d:.6},{x:88,h:70,c:"#e0503a",d:2},{x:96,h:20,c:"#f0a34a",d:.3}];
 document.getElementById("lanternes").innerHTML = L.map(l =>
   `<div class="lanterne" style="left:${l.x}%;animation-delay:-${l.d}s"><div class="fil" style="height:${l.h}px"></div>${lanterneSVG(l.c)}</div>`).join("");
-if (innerWidth < 760) document.querySelectorAll(".lanterne").forEach((l,i)=>{ if(i===1||i===2) l.remove(); });
+if (innerWidth < 760) document.querySelectorAll(".lanterne").forEach((l,i)=>{
+  if (i !== 0 && i !== 3) l.remove();
+  else { l.style.left = i === 0 ? "2%" : "86%"; l.querySelector(".fil").style.height = "8px"; }
+});
 
 /* ---- inclinaison 3D ---- */
 const peutSurvoler = matchMedia("(hover:hover)").matches && !matchMedia("(prefers-reduced-motion:reduce)").matches;
